@@ -74,6 +74,10 @@ client.on('message', msg => {
                 return;
             }
         }
+		if (msg === commandPrefix + "pendu" && penduIsLaunched) {
+			messageTabFaireDeviner = "Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)";
+			msg.channel.send(messageTabFaireDeviner);
+		}
         if (msg.content === commandPrefix + "pendu" && !penduIsLaunched) {
             penduIsLaunched = true;
 
@@ -102,10 +106,7 @@ client.on('message', msg => {
                 msg.channel.send(messageTabFaireDeviner);
             }
         }
-		if (msg === commandPrefix + "pendu" && penduIsLaunched) {
-			messageTabFaireDeviner = "Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)";
-			msg.channel.send(messageTabFaireDeviner);
-		}
+		
         if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/[a-zA-Z]/)) {
             lettreDemandee = msg.content.charAt(8);
             if (!alphabet.includes(lettreDemandee.toLowerCase())) {

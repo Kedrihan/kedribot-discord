@@ -14,17 +14,17 @@ let mod = ["aexillium", "kedrihan", "cruelladk"];
 
 exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
     if (msg.channel.name !== "pendu") {
-        if (msg.content.indexOf('!pendu') > -1) {
-            if (CooldownManager.canUse('!pendu')) {
-                CooldownManager.touch('!pendu');
+        if (msg.content.indexOf(commandPrefix + 'pendu') > -1) {
+            if (CooldownManager.canUse(commandPrefix + 'pendu')) {
+                CooldownManager.touch(commandPrefix + 'pendu');
             } else {
                 return;
             }
         }
 
-        if (msg.content.indexOf('!devine') > -1) {
-            if (CooldownManager.canUse('!devine')) {
-                CooldownManager.touch('!devine');
+        if (msg.content.indexOf(commandPrefix + 'devine') > -1) {
+            if (CooldownManager.canUse(commandPrefix + 'devine')) {
+                CooldownManager.touch(commandPrefix + 'devine');
             } else {
                 return;
             }

@@ -8,7 +8,7 @@ let AuthDetails = require("./auth.json");
 
 
 
-const commandPrefix = '?';
+const commandPrefix = '!';
 
 // Register our event handlers (defined below):
 var CooldownManager = {
@@ -30,16 +30,16 @@ var CooldownManager = {
         this.store[commandName] = Date.now();
     }
 };
-let VoHiYo = client.emojis.find(emoji => emoji.name === "VoHiYo");
-let POGGERS = client.emojis.find(emoji => emoji.name === "POGGERS");
-let cmonBruh = client.emojis.find(emoji => emoji.name === "cmonBruh");
-let FeelsBaguetteMan = client.emojis.find(emoji => emoji.name === "FeelsBaguetteMan");
-let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan];
+
 client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
         return;
     }
-
+    let VoHiYo = client.emojis.find(emoji => emoji.name === "VoHiYo");
+    let POGGERS = client.emojis.find(emoji => emoji.name === "POGGERS");
+    let cmonBruh = client.emojis.find(emoji => emoji.name === "cmonBruh");
+    let FeelsBaguetteMan = client.emojis.find(emoji => emoji.name === "FeelsBaguetteMan");
+    let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan];
     if (msg.content.indexOf('!alcool') > -1) {
         if (CooldownManager.canUse('!alcool')) {
             CooldownManager.touch('!alcool');

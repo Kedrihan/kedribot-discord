@@ -29,8 +29,8 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
                 return;
             }
         }
-        if (msg === commandPrefix + "pendu" && penduIsLaunched) {
-            messageTabFaireDeviner = "Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)";
+        if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
+            messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";
             msg.channel.send(messageTabFaireDeviner);
         }
         if (msg.content === commandPrefix + "pendu" && !penduIsLaunched) {
@@ -54,7 +54,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
                 arrayMotAFaireDeviner.push(letter.toUpperCase());
             }
             if (arrayMotAFaireDeviner.length === motAFaireDeviner.length) {
-                let messageInitOk1 = "``Le mot est choisi ! Pour demander une lettre, merci de rentrer la commande " + commandPrefix + "devine LETTRE où LETTRE est à remplacer par celle que vous voulez faire deviner, et si vous avez une idée du mot complet, faites " + commandPrefix + "devine MOT (et il y a 10 secondes de délai entre 2 commandes)``";
+                let messageInitOk1 = "``Le mot est choisi ! Pour demander une lettre, merci de rentrer la commande " + commandPrefix + "devine LETTRE oÃ¹ LETTRE est Ã  remplacer par celle que vous voulez faire deviner, et si vous avez une idÃ©e du mot complet, faites " + commandPrefix + "devine MOT (et il y a 8 secondes de dÃ©lai entre 2 commandes)``";
                 msg.channel.send(messageInitOk1);
 
                 messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";
@@ -65,17 +65,17 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
         if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/[a-zA-Z]/)) {
             lettreDemandee = msg.content.charAt(8);
             if (!alphabet.includes(lettreDemandee.toLowerCase())) {
-                let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";
+                let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a dÃ©jÃ  Ã©tÃ© demandÃ©e``";
                 msg.channel.send(messageDejaDemandee);
                 return;
             }
             if (!arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
                 chances--;
                 if (chances !== 0) {
-                    let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente. Il vous reste " + chances + " chances``";
+                    let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas prÃ©sente. Il vous reste " + chances + " chances``";
                     msg.channel.send(messageErreur);
                 } else {
-                    let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente. Vous n'avez plus de chances. Vous êtes pendu ! Le mot était " + motAFaireDeviner.toUpperCase() + " (bande de noobs)`` " + emojis[2] + emojis[3];
+                    let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas prÃ©sente. Vous n'avez plus de chances. Vous êtes pendu ! Le mot était " + motAFaireDeviner.toUpperCase() + " (bande de noobs)`` " + emojis[2] + emojis[3];
                     msg.channel.send(messageErreur);
                     penduIsLaunched = false;
                     return;
@@ -90,7 +90,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
                 }
                 alphabet.splice(alphabet.indexOf(lettreDemandee.toLowerCase()), 1);
                 if (tirets.indexOf('_') === -1) {
-                    let messageSuccess = "``Bravo pour la dernière bonne lettre `` " + msg.author.toString() + emojis[1] + " ``! Vous avez trouvé le mot qui était " + motAFaireDeviner.toUpperCase() + " ! Merci d'avoir joué !``";
+                    let messageSuccess = "``Bravo pour la derniÃ¨re bonne lettre `` " + msg.author.toString() + emojis[1] + " ``! Vous avez trouvÃ© le mot qui Ã©tait " + motAFaireDeviner.toUpperCase() + " ! Merci d'avoir joué !``";
                     msg.channel.send(messageSuccess);
                     penduIsLaunched = false;
                     return;
@@ -102,7 +102,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
         }
         if (penduIsLaunched && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.split(' ')[1].match(/^[a-zA-Z-]+$/) && msg.content.split(' ').length === 2 && msg.content.length > 9) {
             if (msg.content.split(' ')[1].toLowerCase() === motAFaireDeviner.toLowerCase()) {
-                let messageSuccess = "``Bravo pour avoir trouvé le mot `` " + msg.author.toString() + emojis[1] + " ``! Le mot était " + motAFaireDeviner.toUpperCase() + " ! Merci d'avoir joué !``";
+                let messageSuccess = "``Bravo pour avoir trouvÃ© le mot `` " + msg.author.toString() + emojis[1] + " ``! Le mot Ã©tait " + motAFaireDeviner.toUpperCase() + " ! Merci d'avoir jouÃ© !``";
                 msg.channel.send(messageSuccess);
                 penduIsLaunched = false;
                 return;
@@ -114,7 +114,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
                     msg.channel.send(messageErreur);
                     msg.channel.send(messageTabFaireDeviner);
                 } else {
-                    let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot. Vous n'avez plus de chances. Vous êtes pendu ! Le mot était " + motAFaireDeviner.toUpperCase() + " (bande de noobs)`` " + emojis[2] + emojis[3];
+                    let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot. Vous n'avez plus de chances. Vous Ãªtes pendu ! Le mot Ã©tait " + motAFaireDeviner.toUpperCase() + " (bande de noobs)`` " + emojis[2] + emojis[3];
                     msg.channel.send(messageErreur);
                     penduIsLaunched = false;
                     return;
@@ -123,6 +123,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
 
             }
         }
+        
         if (penduIsLaunched && msg.content === commandPrefix + "lettres" && msg.author.username === "Kedrihan") {
             let messageAlpha = "``Lettres restantes : " + alphabet.toString().toUpperCase() + "``";
             msg.author.send(messageAlpha);
@@ -130,7 +131,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
         }
         if (penduIsLaunched && msg.content === commandPrefix + "pendu stop" && mod.includes(msg.author.username.toLowerCase())) {
             penduIsLaunched = false;
-            let messageOver = "``Le modérateur ``" + msg.author.toString() + "`` a mit fin au pendu. ``";
+            let messageOver = "``Le modÃ©rateur ``" + msg.author.toString() + "`` a mit fin au pendu. ``";
             msg.channel.send(messageOver);
         }
     }

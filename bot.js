@@ -14,9 +14,9 @@ const commandPrefix = '!';
 var CooldownManager = {
     cooldownTime: 8000, // 8 seconds
     store: {
-        '?pendu': 1543848572,
-        '?devine': 1543848572,
-        '?alcool': 1543848572
+        '!pendu': 1543848572,
+        '!devine': 1543848572,
+        '!alcool': 1543848572
     },
 
     canUse: function (commandName) {
@@ -32,9 +32,11 @@ var CooldownManager = {
 };
 
 client.on('message', msg => {
+
     if (msg.author.username === "KedriBot") {
         return;
     }
+    
     let VoHiYo = client.emojis.find(emoji => emoji.name === "VoHiYo");
     let POGGERS = client.emojis.find(emoji => emoji.name === "POGGERS");
     let cmonBruh = client.emojis.find(emoji => emoji.name === "cmonBruh");
@@ -47,7 +49,6 @@ client.on('message', msg => {
             return;
         }
     }
-
     if (msg.content === commandPrefix + "alcool") {
         msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
     }

@@ -13,7 +13,7 @@ let dico = ["cruella", "abaissement", "abaisser", "abandon", "abandonnant", "aba
 let mod = ["aexillium", "kedrihan", "cruelladk"];
 
 exports.pendu = function (msg, emojis, CooldownManager, commandPrefix) {
-    if (msg.channel.name !== "pendu") {
+    if (msg.channel.name === "pendu") {
         if (msg.content.indexOf(commandPrefix + 'pendu') > -1) {
             if (CooldownManager.canUse(commandPrefix + 'pendu')) {
                 CooldownManager.touch(commandPrefix + 'pendu');

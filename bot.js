@@ -5,7 +5,7 @@ let pendu = require("./pendu.js");
 
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-
+let commandsList = ["pendu","devine","duel","alcool","jusdepomme","commu"]
 
 
 const commandPrefix = '!';
@@ -16,7 +16,9 @@ var CooldownManager = {
     store: {
         '!pendu': 1543848572,
         '!devine': 1543848572,
+		'!duel': 1543848572,
         '!alcool': 1543848572,
+		'!jusdepomme': 1543848572,
         '!commu': 1543848572,
     },
 

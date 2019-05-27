@@ -52,6 +52,10 @@ client.on('message', msg => {
             return;
         }
     }
+	if(msg.content === "testMove" && msg.author.username === "Kedrihan") {
+		msg.author.setVoiceChannel('293502765949386752')
+		  .catch(console.error);	
+	}
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
         msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
     }

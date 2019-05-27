@@ -53,7 +53,7 @@ client.on('message', msg => {
         }
     }
 	if(msg.content === "testMove" && msg.author.username === "Kedrihan") {
-		msg.author.setVoiceChannel('293502765949386752')
+		msg.member.setVoiceChannel('293502765949386752')
 		  .catch(console.error);	
 	}
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {

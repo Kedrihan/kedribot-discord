@@ -13,6 +13,9 @@ let dico = ["cruella", "abaissement", "abaisser", "abandon", "abandonnant", "aba
 let mod = ["aexillium", "kedrihan", "cruelladk"];
 let scores = {};
 
+exports.removeUserRanking = function(member) {
+    func.removeUserRank(member);
+};
 exports.pendu = function (msg, emojis, CooldownManager, commandPrefix, client) {
     
     if (msg.channel.name === "pendu") {

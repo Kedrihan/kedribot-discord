@@ -1,6 +1,13 @@
 let connection = require("./dbHandler.js");
 
 module.exports = {
+  removeUserRank: function(member) {
+    let memberId = member.id;
+    let sql = "DELETE FROM ranking WHERE id_user=?";
+    connection.query(sql, [memberId], (err, res) => {
+      if (err) console.log(err);
+    });
+  },
   winLetter: function(user) {
     let sql = "SELECT * FROM ranking WHERE id_user=?";
     connection.query(sql, [user.id], (err, res) => {

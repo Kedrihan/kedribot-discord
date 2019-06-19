@@ -48,9 +48,9 @@ client.on('message', msg => {
     let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde];
 
-    if (msg.content.indexOf('!alcool') > -1) {
-        if (CooldownManager.canUse('!alcool')) {
-            CooldownManager.touch('!alcool');
+    if (msg.content.indexOf(commandPrefix + "alcool") > -1 || msg.content.indexOf(commandPrefix + "jusdepomme") > -1) {
+        if (CooldownManager.canUse(commandPrefix + "alcool")) {
+            CooldownManager.touch(commandPrefix + "alcool");
         } else {
             return;
         }

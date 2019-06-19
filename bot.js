@@ -6,7 +6,7 @@ let duel = require("./duel.js");
 
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu","devine","duel","alcool","jusdepomme","commu"]
+let commandsList = ["pendu","devine","duel", "link","alcool","jusdepomme","commu"]
 
 
 const commandPrefix = '!';
@@ -17,7 +17,8 @@ var CooldownManager = {
     store: {
         '!pendu': 1543848572,
         '!devine': 1543848572,
-		'!duel': 1543848572,
+        '!duel': 1543848572,
+        '!link': 1543848572,
         '!alcool': 1543848572,
 		'!jusdepomme': 1543848572,
         '!commu': 1543848572,
@@ -59,7 +60,7 @@ client.on('message', msg => {
         msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> "+emojis[4]);
     }
     pendu.pendu(msg, emojis, CooldownManager, commandPrefix, client, commandsList);
-    duel.duel(msg, emojis, CooldownManager, commandPrefix, client, commandsList);
+    duel.duel(msg, emojis, CooldownManager, commandPrefix, client, commandsList, msg.guild.members);
 });
 
 client.login(AuthDetails.token).catch((err) => {

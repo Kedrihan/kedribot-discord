@@ -55,7 +55,7 @@ exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, c
             }
         }
 
-        if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/[a-zA-Z]/)) {
+        if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
             lettreDemandee = msg.content.charAt(8);
             if (!alphabet.includes(lettreDemandee.toLowerCase())) {
                 let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";

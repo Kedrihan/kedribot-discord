@@ -1,5 +1,6 @@
 var exports = module.exports = {};
 const func = require("./includes/functionsHangman.js");
+const funcGlobal = require("./includes/functions.js");
 let penduIsLaunched = false;
 let chances = 12;
 let tirets = [];
@@ -13,23 +14,11 @@ let dico = ["cruella", "abaissement", "abaisser", "abandon", "abandonnant", "aba
 let mod = ["aexillium", "kedrihan", "cruelladk"];
 let scores = {};
 
-exports.pendu = function (msg, emojis, CooldownManager, commandPrefix, client) {
+exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList) {
     
     if (msg.channel.name === "pendu") {
-        if (msg.content.indexOf(commandPrefix + 'pendu') > -1) {
-            if (CooldownManager.canUse(commandPrefix + 'pendu')) {
-                CooldownManager.touch(commandPrefix + 'pendu');
-            } else {
-                return;
-            }
-        }
-
-        if (msg.content.indexOf(commandPrefix + 'devine') > -1) {
-            if (CooldownManager.canUse(commandPrefix + 'devine')) {
-                CooldownManager.touch(commandPrefix + 'devine');
-            } else {
-                return;
-            }
+        if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+            funcGlobal.setCooldown(msg.content, cooldownManager);
         }
         if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
             messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";

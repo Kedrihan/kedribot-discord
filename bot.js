@@ -2,6 +2,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 let pendu = require("./pendu.js");
+let duel = require("./duel.js");
 
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
@@ -47,21 +48,18 @@ client.on('message', msg => {
     let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde];
 
-    if (msg.content.indexOf('!alcool') > -1) {
-        if (CooldownManager.canUse('!alcool')) {
-            CooldownManager.touch('!alcool');
-        } else {
-            return;
-        }
+    if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+        funcGlobal.setCooldown(msg.content, cooldownManager);
     }
+
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
         msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
     }
     if (msg.content === commandPrefix + "commu") {
         msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> "+emojis[4]);
     }
-    pendu.pendu(msg, emojis, CooldownManager, commandPrefix, client);
-    
+    pendu.pendu(msg, emojis, CooldownManager, commandPrefix, client, commandsList);
+    duel.duel(msg, emojis, CooldownManager, commandPrefix, client, commandsList);
 });
 
 client.login(AuthDetails.token).catch((err) => {

@@ -12,7 +12,5 @@ exports.duel = function(msg, emojis, cooldownManager, commandPrefix, client, com
 
 
 
-
-
     }
 }

@@ -60,6 +60,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', authorChar.name);
                                     message = message.replace('{Y}', opponentChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             else if (armorOpponent === 'P') {
@@ -67,6 +68,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', opponentChar.name);
                                     message = message.replace('{Y}', authorChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             break;
@@ -76,6 +78,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', authorChar.name);
                                     message = message.replace('{Y}', opponentChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             else if (armorOpponent === 'T') {
@@ -83,6 +86,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', opponentChar.name);
                                     message = message.replace('{Y}', authorChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             break;
@@ -92,6 +96,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', authorChar.name);
                                     message = message.replace('{Y}', opponentChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             else if (armorOpponent === 'C') {
@@ -99,6 +104,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', opponentChar.name);
                                     message = message.replace('{Y}', authorChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             break;
@@ -108,6 +114,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', authorChar.name);
                                     message = message.replace('{Y}', opponentChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             else if (armorOpponent === 'M') {
@@ -115,35 +122,34 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                                     message = message.replace('{X}', opponentChar.name);
                                     message = message.replace('{Y}', authorChar.name);
                                     msg.channel.send(message);
+                                    return;
                                 });
                             }
                             break;
                     }
                 }
 
-                if (percentWinAuthor < 10) {
-                    msg.channel.send(); //fuite auto de l'auteur
+                let win = Math.floor(Math.random() * Math.floor(100));
+                if (win < percentWinAuthor) {
+                    //Win de l'auteur
+                    func.winMessage(authorChar, opponentChar, (message) => {
+                        msg.channel.send(message);
+                    });
                     return;
                 }
-                else if (percentWinAuthor > 90) {
-                    msg.channel.send(); //fuite auto de l'adversaire
+                else if (win > percentWinAuthor) {
+                    //win de l'opposant
+                    func.winMessage(opponentChar, authorChar, (message) => {
+                        msg.channel.send(message);
+                    });
                     return;
                 }
                 else {
-                    let win = Math.floor(Math.random() * Math.floor(100));
-                    if (win < percentWinAuthor) {
-                        //Win de l'auteur
-                        return;
-                    }
-                    else if (win > percentWinAuthor) {
-                        //win de l'opposant
-                        return;
-                    }
-                    else {
-                        //égalité
-                        return;
-                    }
+                    //égalité
+                    msg.channel.send("C'est une étonnante égalité entre " + authorChar.name + " et " + opponentChar.name + " ! :o");
+                    return;
                 }
+
 
             }
             else {

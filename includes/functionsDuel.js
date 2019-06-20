@@ -87,13 +87,13 @@ module.exports = {
 
     /*
     Fonction fleeAway
-    R : Gère la fuite du duel
+    R : Gère la fuite du duel en cas de malus
     E : Classes du fuyard
     S : Message textuel si il y a une fuite
     */
     fleeAway: function (classFlee, callback) {
         let flee = Math.floor(Math.random() * Math.floor(100));
-        if(flee <= 10) {
+        if (flee <= 15) {
             let sql = "SELECT phrase FROM fleeCatchPhrases WHERE classId=?";
             connection.query(sql, [classFlee], (err, res) => {
                 if (err) console.log(err);
@@ -102,6 +102,33 @@ module.exports = {
                 }
             });
         }
-        
+
     },
+
+    /*
+    Fonction winMessage
+    R : Récupère un message de victoire aléatoire et le formate
+    E : Personnages des participants
+    S : Message textuel
+    */
+    winMessage: function (winner, looser, callback) {
+        let sql = "SELECT COUNT(phrase) FROM winPhrases";
+        connection.query(sql, [classFlee], (err, res) => {
+            if (err) console.log(err);
+            if (typeof res[0] != 'undefined') {
+                sql = "SELECT phrase FROM winPhrases WHERE id=?";
+                let rand = Math.floor(Math.random() * Math.floor(res[0]));
+                connection.query(sql, [rand], (err, res) => {
+                    if (err) console.log(err);
+                    if (typeof res[0] != 'undefined') {
+                        let message = res[0].replace('{X}', winner.name);
+                        message = res[0].replace('{Y}', looser.name);
+                        return callback(message);
+                    }
+                });
+            }
+        });
+    }
+
+},
 };

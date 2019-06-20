@@ -1,13 +1,18 @@
 let connection = require("./dbHandler.js");
-
+let AuthDetails = require("./includes/auth.json");
+const blizzard = require('blizzard.js').initialize({
+    key: AuthDetails.blizzardClientId,
+    secret: AuthDetails.blizzardClientSecret
+});
 
 
 module.exports = {
     CharFromAPI = {
-        class: '',
-        level: '',
-        ilvl: '',
+        class: 0,
+        level: 0,
+        ilvl: 0,
         server: '',
+        name: ''
     },
     /*
     Fonction getChar
@@ -25,7 +30,20 @@ module.exports = {
     E : Pseudo-Serveur en argument à la commande
     S : Vide
     */
-    linkChar: function (fullCharName) {
+    linkChar: function (fullCharName, authorId) {
+
+        this.getCharFromAPI(fullCharName)
+            .then(charObj => {
+                if (charObj === null) {
+                    //message d'erreur perso non trouvé
+                }
+                else {
+                    let sql = "INSERT INTO linkedChar (idDiscord, charName, charRealm, charIlvl, charClass, charLevel) VALUES (?, ?, ?, ?, ?, ?)";
+                    connection.query(sql, [authorId, charObj.name, charObj.server, charObj.ilvl, charObj.class, charObj.level], (err) => {
+                        if (err) console.log(err);
+                    });
+                }
+            });
 
     },
 
@@ -36,7 +54,18 @@ module.exports = {
     S : un objet CharFromAPI
     */
     getCharFromAPI: function (charName) {
-
+        let char = charName.split('-')[0];
+        let server = charName.split('-')[1];
+        let charReturn = new this.CharFromAPI;
+        blizzard.wow.character(['profile'], { origin: 'eu', realm: server.toLowerCase(), name: char.toLowerCase(), locale: 'fr_FR', fields: 'items' })
+            .then(response => {
+                charReturn.level = response.data.level;
+                charReturn.ilvl = response.data.items.averageItemLevel;
+                charReturn.server = response.data.realm;
+                charReturn.name = response.data.name;
+                charReturn.class = response.data.class;
+                return charReturn;
+            }); //faire un .then à l'appel de cette fonction
     },
 
     /*

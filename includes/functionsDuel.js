@@ -34,13 +34,14 @@ module.exports = {
 
         this.getCharFromAPI(fullCharName)
             .then(charObj => {
-                if (charObj === null) {
-                    //message d'erreur perso non trouvé
+                if (charObj.name === '') {
+                    return "Personnage non trouvé. Vérifiez la commande.";
                 }
                 else {
                     let sql = "INSERT INTO linkedChar (idDiscord, charName, charRealm, charIlvl, charClass, charLevel) VALUES (?, ?, ?, ?, ?, ?)";
                     connection.query(sql, [authorId, charObj.name, charObj.server, charObj.ilvl, charObj.class, charObj.level], (err) => {
                         if (err) console.log(err);
+                        return "Vous avez lié votre profil Discord à votre personnage " + fullCharName;
                     });
                 }
             });
@@ -57,7 +58,7 @@ module.exports = {
         let char = charName.split('-')[0];
         let server = charName.split('-')[1];
         let charReturn = new this.CharFromAPI;
-        blizzard.wow.character(['profile'], { origin: 'eu', realm: server.toLowerCase(), name: char.toLowerCase(), locale: 'fr_FR', fields: 'items' })
+        blizzard.wow.character(['items'], { origin: 'eu', realm: server.toLowerCase(), name: char.toLowerCase(), locale: 'fr_FR' })
             .then(response => {
                 charReturn.level = response.data.level;
                 charReturn.ilvl = response.data.items.averageItemLevel;
@@ -74,7 +75,33 @@ module.exports = {
     E : La classe du personnage
     S : Le type d'armure
     */
-    getArmorType: function (charClass) {
+    getArmorType: function (charClass, callback) {
+        let sql = "SELECT armorType FROM classArmorType WHERE class=?";
+        connection.query(sql, [charClass], (err, res) => {
+            if (err) console.log(err);
+            if (typeof res[0] != 'undefined') {
+                return callback(res[0]);
+            }
+        });
+    },
 
+    /*
+    Fonction fleeAway
+    R : Gère la fuite du duel
+    E : Classes du fuyard
+    S : Message textuel si il y a une fuite
+    */
+    fleeAway: function (classFlee, callback) {
+        let flee = Math.floor(Math.random() * Math.floor(100));
+        if(flee <= 10) {
+            let sql = "SELECT phrase FROM fleeCatchPhrases WHERE classId=?";
+            connection.query(sql, [classFlee], (err, res) => {
+                if (err) console.log(err);
+                if (typeof res[0] != 'undefined') {
+                    return callback(res[0]);
+                }
+            });
+        }
+        
     },
 };

@@ -5,6 +5,17 @@ let percentWinAuthor = 50;
 
 exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList, serverMembers) {
 
+    if (msg.channel.name === "botcommands") {
+        if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+            funcGlobal.setCooldown(msg.content, cooldownManager);
+        }
+        if (msg.content.split(' ')[0] === commandPrefix + "link" && msg.content.split(' ')[1].length != 0) {
+            func.linkChar(msg.content.split(' ')[1])
+                .then(message => {
+                    msg.channel.send(message);
+                });
+        }
+    }
     if (msg.channel.name === "duel") {
 
         if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
@@ -30,6 +41,84 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                 }
                 else {
                     percentWinAuthor += diffIlvl;
+                }
+
+                let armorAuthor = null;
+                func.getArmorType(authorChar.class, (res) => {
+                    armorAuthor = res;
+                });
+
+                let armorOpponent = null;
+                func.getArmorType(opponentChar.class, (res) => {
+                    armorOpponent = res;
+                });
+                if (armorAuthor != null && armorOpponent != null) {
+                    switch (armorAuthor) {
+                        case 'T':
+                            if (armorOpponent === 'C') {
+                                func.fleeAway(authorChar.class, (message) => {
+                                    message = message.replace('{X}', authorChar.name);
+                                    message = message.replace('{Y}', opponentChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            else if (armorOpponent === 'P') {
+                                func.fleeAway(opponentChar.class, (message) => {
+                                    message = message.replace('{X}', opponentChar.name);
+                                    message = message.replace('{Y}', authorChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            break;
+                        case 'C':
+                            if (armorOpponent === 'M') {
+                                func.fleeAway(authorChar.class, (message) => {
+                                    message = message.replace('{X}', authorChar.name);
+                                    message = message.replace('{Y}', opponentChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            else if (armorOpponent === 'T') {
+                                func.fleeAway(opponentChar.class, (message) => {
+                                    message = message.replace('{X}', opponentChar.name);
+                                    message = message.replace('{Y}', authorChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            break;
+                        case 'M':
+                            if (armorOpponent === 'P') {
+                                func.fleeAway(authorChar.class, (message) => {
+                                    message = message.replace('{X}', authorChar.name);
+                                    message = message.replace('{Y}', opponentChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            else if (armorOpponent === 'C') {
+                                func.fleeAway(opponentChar.class, (message) => {
+                                    message = message.replace('{X}', opponentChar.name);
+                                    message = message.replace('{Y}', authorChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            break;
+                        case 'P':
+                            if (armorOpponent === 'T') {
+                                func.fleeAway(authorChar.class, (message) => {
+                                    message = message.replace('{X}', authorChar.name);
+                                    message = message.replace('{Y}', opponentChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            else if (armorOpponent === 'M') {
+                                func.fleeAway(opponentChar.class, (message) => {
+                                    message = message.replace('{X}', opponentChar.name);
+                                    message = message.replace('{Y}', authorChar.name);
+                                    msg.channel.send(message);
+                                });
+                            }
+                            break;
+                    }
                 }
 
                 if (percentWinAuthor < 10) {

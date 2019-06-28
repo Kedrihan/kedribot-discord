@@ -176,9 +176,5 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                 }
             }
         }
-        else {
-            //ERREUR : commande non correcte ou pas une mention d'utilisateur comme argument
-            msg.channel.send("Erreur dans la commande, Essayez encore.");
-        }
     }
 }

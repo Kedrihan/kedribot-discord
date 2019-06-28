@@ -122,8 +122,8 @@ module.exports = {
                 connection.query(sql, [rand], (err, res) => {
                     if (err) console.log(err);
                     if (typeof res != 'undefined') {
-                        message = res[0].phrase.replace(/{X}/g, winner);
-                        message = res[0].phrase.replace(/{Y}/g, looser);
+                        message = res[0].phrase.replace('{X}', winner);
+                        message = message.replace('{Y}', looser);
                         return callback(message);
                     }
                 });

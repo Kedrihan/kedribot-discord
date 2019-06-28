@@ -134,6 +134,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                     //Win de l'auteur
                     func.winMessage(authorChar.name, opponentChar.name, (message) => {
                         msg.channel.send(message);
+                        msg.channel.send("("+msg.author.toString()+" avait "+percentWinAuthor+"% de chances de l'emporter.)");
                     });
                     return;
                 }
@@ -141,12 +142,14 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                     //win de l'opposant
                     func.winMessage(opponentChar.name, authorChar.name, (message) => {
                         msg.channel.send(message);
+                        msg.channel.send("("+msg.author.toString()+" avait "+percentWinAuthor+"% de chances de l'emporter.)");
                     });
                     return;
                 }
                 else {
                     //égalité
                     msg.channel.send("C'est une étonnante égalité entre " + authorChar.name + " et " + opponentChar.name + " ! :o");
+                    msg.channel.send("(Ils avaient chacun"+percentWinAuthor+"% de chances de l'emporter.)");
                     return;
                 }
 

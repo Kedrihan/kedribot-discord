@@ -120,7 +120,7 @@ module.exports = {
                 let rand = Math.floor(Math.random() * Math.floor(res[0]));
                 connection.query(sql, [rand], (err, res) => {
                     if (err) console.log(err);
-                    if (typeof res[0] != 'undefined') {
+                    if (typeof res != 'undefined') {
                         let message = res[0].replace('{X}', winner);
                         message = res[0].replace('{Y}', looser);
                         return callback(message);

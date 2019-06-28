@@ -7,7 +7,7 @@ const blizzard = require('blizzard.js').initialize({
 
 
 module.exports = {
-    CharFromAPI = {
+    CharFromAPI: {
         class: 0,
         level: 0,
         ilvl: 0,

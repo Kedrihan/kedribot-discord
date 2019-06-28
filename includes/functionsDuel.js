@@ -1,5 +1,5 @@
 let connection = require("./dbHandler.js");
-let AuthDetails = require("./includes/auth.json");
+let AuthDetails = require("./auth.json");
 const blizzard = require('blizzard.js').initialize({
     key: AuthDetails.blizzardClientId,
     secret: AuthDetails.blizzardClientSecret

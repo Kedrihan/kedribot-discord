@@ -113,6 +113,7 @@ module.exports = {
     */
     winMessage: function (winner, looser, callback) {
         let sql = "SELECT COUNT(phrase) FROM winPhrases";
+        let message = "";
         connection.query(sql, (err, res) => {
             if (err) console.log(err);
             if (typeof res != 'undefined') {
@@ -121,9 +122,8 @@ module.exports = {
                 connection.query(sql, [rand], (err, res) => {
                     if (err) console.log(err);
                     if (typeof res != 'undefined') {
-                        console.log(res);
-                        let message = res[0].phrase.replace('{X}', winner);
-                        message = res[0].phrase.replace('{Y}', looser);
+                        message = res[0].phrase.replace(/{X}/g, winner);
+                        message = res[0].phrase.replace(/{Y}/g, looser);
                         return callback(message);
                     }
                 });

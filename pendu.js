@@ -1,5 +1,6 @@
 var exports = module.exports = {};
-const func = require("./includes/functions.js");
+const func = require("./includes/functionsHangman.js");
+const funcGlobal = require("./includes/functions.js");
 let penduIsLaunched = false;
 let chances = 12;
 let tirets = [];
@@ -16,23 +17,11 @@ let scores = {};
 exports.removeUserRanking = function(member) {
     func.removeUserRank(member);
 };
-exports.pendu = function (msg, emojis, CooldownManager, commandPrefix, client) {
-    
-    if (msg.channel.name === "pendu") {
-        if (msg.content.indexOf(commandPrefix + 'pendu') > -1) {
-            if (CooldownManager.canUse(commandPrefix + 'pendu')) {
-                CooldownManager.touch(commandPrefix + 'pendu');
-            } else {
-                return;
-            }
-        }
 
-        if (msg.content.indexOf(commandPrefix + 'devine') > -1) {
-            if (CooldownManager.canUse(commandPrefix + 'devine')) {
-                CooldownManager.touch(commandPrefix + 'devine');
-            } else {
-                return;
-            }
+exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList) {
+    if (msg.channel.name === "pendu") {
+        if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+            funcGlobal.setCooldown(msg.content, cooldownManager);
         }
         if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
             messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";
@@ -69,7 +58,7 @@ exports.pendu = function (msg, emojis, CooldownManager, commandPrefix, client) {
             }
         }
 
-        if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/[a-zA-Z]/)) {
+        if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
             lettreDemandee = msg.content.charAt(8);
             if (!alphabet.includes(lettreDemandee.toLowerCase())) {
                 let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";

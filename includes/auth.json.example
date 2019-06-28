@@ -3,4 +3,6 @@
 	"bddUser":"",
     "bddPassword":"",
     "bdd":"",
+    "blizzardClientId":"",
+    "blizzardClientSecret":""
 }

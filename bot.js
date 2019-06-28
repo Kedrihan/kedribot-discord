@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 let pendu = require("./pendu.js");
 let duel = require("./duel.js");
-
+let funcGlobal = require("./includes/functions.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
 let commandsList = ["pendu","devine","duel", "link","alcool","jusdepomme","commu"]

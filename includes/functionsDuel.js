@@ -108,12 +108,12 @@ module.exports = {
     /*
     Fonction winMessage
     R : Récupère un message de victoire aléatoire et le formate
-    E : Personnages des participants
+    E : Noms des participants
     S : Message textuel
     */
     winMessage: function (winner, looser, callback) {
         let sql = "SELECT COUNT(phrase) FROM winPhrases";
-        connection.query(sql, [classFlee], (err, res) => {
+        connection.query(sql, (err, res) => {
             if (err) console.log(err);
             if (typeof res[0] != 'undefined') {
                 sql = "SELECT phrase FROM winPhrases WHERE id=?";
@@ -121,8 +121,8 @@ module.exports = {
                 connection.query(sql, [rand], (err, res) => {
                     if (err) console.log(err);
                     if (typeof res[0] != 'undefined') {
-                        let message = res[0].replace('{X}', winner.name);
-                        message = res[0].replace('{Y}', looser.name);
+                        let message = res[0].replace('{X}', winner);
+                        message = res[0].replace('{Y}', looser);
                         return callback(message);
                     }
                 });

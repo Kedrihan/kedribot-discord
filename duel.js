@@ -23,13 +23,13 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
         }
         if (msg.content.split(' ')[0] === commandPrefix + "duel" && msg.content.split(' ')[1].match(/[\\<>@!\d]/g)) {
             let targetId = msg.content.split(' ')[1].replace(/[\\<>@!]/g, "");
-
+            let opponentChar = null;
             let authorChar = func.getChar(msg.author.id);
             if (serverMembers.get(targetId) != undefined) {
-                let opponentChar = func.getChar(targetId);
+                opponentChar = func.getChar(targetId);
             }
             else {
-                //User ciblé pas sur discord
+                msg.channel.send("L'utilisateur ciblé n'est pas sur le serveur Discord.");
                 return;
             }
 
@@ -132,14 +132,14 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                 let win = Math.floor(Math.random() * Math.floor(100));
                 if (win < percentWinAuthor) {
                     //Win de l'auteur
-                    func.winMessage(authorChar, opponentChar, (message) => {
+                    func.winMessage(authorChar.name, opponentChar.name, (message) => {
                         msg.channel.send(message);
                     });
                     return;
                 }
                 else if (win > percentWinAuthor) {
                     //win de l'opposant
-                    func.winMessage(opponentChar, authorChar, (message) => {
+                    func.winMessage(opponentChar.name, authorChar.name, (message) => {
                         msg.channel.send(message);
                     });
                     return;
@@ -154,10 +154,31 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
             }
             else {
                 //Faire duel 100% random si l'auteur de la commande n'a pas de perso link OU que l'utilisateur tag en paramètre n'en a pas OU que les persos n'ont pas le même level
+                let win = Math.floor(Math.random() * Math.floor(100));
+                if (win < 50) {
+                    //Win de l'auteur
+                    func.winMessage(msg.author.toString(), "<@"+targetId+">", (message) => {
+                        msg.channel.send(message);
+                    });
+                    return;
+                }
+                else if (win > 50) {
+                    //win de l'opposant
+                    func.winMessage("<@"+targetId+">", msg.author.toString(), (message) => {
+                        msg.channel.send(message);
+                    });
+                    return;
+                }
+                else {
+                    //égalité
+                    msg.channel.send("C'est une étonnante égalité entre " + msg.author.toString() + " et " + "<@"+targetId+">" + " ! :o");
+                    return;
+                }
             }
         }
         else {
             //ERREUR : commande non correcte ou pas une mention d'utilisateur comme argument
+            msg.channel.send("Erreur dans la commande, Essayez encore.");
         }
     }
 }

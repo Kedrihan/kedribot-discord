@@ -38,6 +38,9 @@ var CooldownManager = {
 client.on('guildMemberAdd', member => {
 	member.addRole("308398054023626752").catch(console.error);
 });
+client.on('guildMemberRemove', member => {
+	pendu.removeUserRanking(member);
+});
 client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
         return;

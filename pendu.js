@@ -14,8 +14,11 @@ let dico = ["cruella", "abaissement", "abaisser", "abandon", "abandonnant", "aba
 let mod = ["aexillium", "kedrihan", "cruelladk"];
 let scores = {};
 
+exports.removeUserRanking = function(member) {
+    func.removeUserRank(member);
+};
+
 exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList) {
-    
     if (msg.channel.name === "pendu") {
         if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
             funcGlobal.setCooldown(msg.content, cooldownManager);

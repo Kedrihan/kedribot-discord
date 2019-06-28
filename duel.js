@@ -35,7 +35,7 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
 
             if (authorChar != null && opponentChar != null && authorChar.level === opponentChar.level) {
 
-                let diffIlvl = Math.abs(authorChar.ilvl - opponentChar.ilvl);
+                let diffIlvl = Math.ceil(Math.abs(authorChar.ilvl - opponentChar.ilvl) / 2);
                 if (authorChar.ilvl > opponentChar.ilvl) {
                     percentWinAuthor -= diffIlvl;
                 }
@@ -179,5 +179,6 @@ exports.duel = function (msg, emojis, cooldownManager, commandPrefix, client, co
                 }
             }
         }
+        
     }
 }

@@ -98,7 +98,7 @@ module.exports = {
             connection.query(sql, [classFlee], (err, res) => {
                 if (err) console.log(err);
                 if (typeof res[0] != 'undefined') {
-                    return callback(res[0]);
+                    return callback(res[0].phrase);
                 }
             });
         }

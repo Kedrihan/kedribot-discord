@@ -115,7 +115,7 @@ module.exports = {
         let sql = "SELECT COUNT(phrase) FROM winPhrases";
         connection.query(sql, (err, res) => {
             if (err) console.log(err);
-            if (typeof res[0] != 'undefined') {
+            if (typeof res != 'undefined') {
                 sql = "SELECT phrase FROM winPhrases WHERE id=?";
                 let rand = Math.floor(Math.random() * Math.floor(res[0]));
                 connection.query(sql, [rand], (err, res) => {

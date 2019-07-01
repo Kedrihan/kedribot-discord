@@ -34,7 +34,7 @@ exports.duel = function (
       }
     }
     if (msg.channel.name === "duel") {
-      HTMLFormControlsCollection.log("ça marche")
+      console.log("ça marche")
       if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
         console.log("cc jsuis la")
         let cd = funcGlobal.setCooldown(msg.content, cooldownManager);

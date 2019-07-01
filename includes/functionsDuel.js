@@ -12,7 +12,7 @@ module.exports = {
     E : Nom du personnage, serveur du personnage
     S : un objet
     */
-  getCharFromAPI: function(charName, callback) {
+  getCharFromAPI: function (charName, callback) {
     let char = charName.split("-")[0];
     let server = charName.split("-")[1];
 
@@ -44,7 +44,7 @@ module.exports = {
     E : ID de l'utilisateur
     S : objet CharFromAPI
     */
-  getChar: function(authorId, callback) {
+  getChar: function (authorId, callback) {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
     connection.query(sql, authorId, (err, res) => {
       if (typeof res[0] != "undefined") {
@@ -56,7 +56,7 @@ module.exports = {
         );
       }
       else {
-          return callback(null);
+        return callback(null);
       }
     });
   },
@@ -67,7 +67,7 @@ module.exports = {
     E : Pseudo-Serveur en argument à la commande
     S : Vide
     */
-  linkChar: function(fullCharName, authorId, callback) {
+  linkChar: function (fullCharName, authorId, callback) {
     this.getCharFromAPI(fullCharName, charObj => {
       let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
       connection.query(sql, authorId, (err, res) => {
@@ -86,7 +86,7 @@ module.exports = {
               if (err) console.log(err);
               return callback(
                 "Vous avez lié votre profil Discord à votre personnage " +
-                  fullCharName
+                fullCharName
               );
             }
           );
@@ -101,7 +101,7 @@ module.exports = {
     E : La classe du personnage
     S : Le type d'armure
     */
-  getArmorType: function(charClass, callback) {
+  getArmorType: function (charClass, callback) {
     let sql = "SELECT at.typeName FROM classArmorType AS cat INNER JOIN armorType AS at ON cat.armorType = at.id WHERE cat.class=?";
     connection.query(sql, [charClass], (err, res) => {
       if (err) console.log(err);
@@ -117,18 +117,14 @@ module.exports = {
     E : Classes du fuyard
     S : Message textuel si il y a une fuite
     */
-  fleeAway: function(classFlee, callback) {
-    let flee = Math.floor(Math.random() * Math.floor(100));
-    
-    if (flee < 15) {
-      let sql = "SELECT phrase FROM fleeCatchPhrases WHERE classId=?";
-      connection.query(sql, [classFlee], (err, res) => {
-        if (err) console.log(err);
-        if (typeof res[0] != "undefined") {
-          return callback(res[0].phrase);
-        }
-      });
-    }
+  fleeAway: function (classFlee, callback) {
+    let sql = "SELECT phrase FROM fleeCatchPhrases WHERE classId=?";
+    connection.query(sql, [classFlee], (err, res) => {
+      if (err) console.log(err);
+      if (typeof res[0] != "undefined") {
+        return callback(res[0].phrase);
+      }
+    });
   },
 
   /*
@@ -137,7 +133,7 @@ module.exports = {
     E : Noms des participants
     S : Message textuel
     */
-  winMessage: function(winner, looser, callback) {
+  winMessage: function (winner, looser, callback) {
     let sql = "SELECT COUNT(phrase) FROM winPhrases";
     let message = "";
     connection.query(sql, (err, res) => {
@@ -145,10 +141,10 @@ module.exports = {
       if (typeof res != "undefined") {
         sql = "SELECT phrase FROM winPhrases WHERE id=?";
         let rand = Math.floor(
-          Math.random() * Math.floor(res[0]["COUNT(phrase)"]+1)
+          Math.random() * Math.floor(res[0]["COUNT(phrase)"] + 1)
         );
-        if(rand === 0) {
-            rand = 1;
+        if (rand === 0) {
+          rand = 1;
         }
         connection.query(sql, [rand], (err, res) => {
           if (err) console.log(err);

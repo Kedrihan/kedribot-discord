@@ -35,6 +35,8 @@ exports.duel = function (
   if (msg.channel.name === "duel") {
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
       let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
+      console.log(cd);
+      console.log(cooldownManager);
       if (cd) {
         return;
       }
@@ -188,11 +190,6 @@ exports.duel = function (
                         target +
                         " ! :o"
                       );
-                      msg.channel.send(
-                        "(Ils avaient chacun" +
-                        percentWinAuthor +
-                        "% de chances de l'emporter.)"
-                      );
                       return;
                     }
                   }
@@ -243,9 +240,6 @@ exports.duel = function (
         );
         return;
       }
-    }
-    else if(msg.content.split(" ")[0] === commandPrefix + "duel" && !msg.content.split(" ")[1].match(/[\\<>@!\d]/g)) {
-      msg.channel.send("Merci de tag un utilisateur après la commande !duel (exemple : !duel @Pseudo#XXXX)");
     }
   }
 };

@@ -238,5 +238,8 @@ exports.duel = function (
         return;
       }
     }
+    else {
+      msg.channel.send("Merci de tag un utilisateur après la commande !duel (exemple : !duel @Pseudo#XXXX");
+    }
   }
 };

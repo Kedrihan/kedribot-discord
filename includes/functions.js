@@ -10,6 +10,7 @@ module.exports = {
 	setCooldown: function (message, cooldownManager) {
 		if (cooldownManager.canUse(message.split(' ')[0])) {
 			cooldownManager.touch(message.split(' ')[0]);
+			console.log(cooldownManager);
 		} else {
 			return;
 		}

@@ -50,6 +50,8 @@ exports.duel = function (
       let targetId = target.replace(/[\\<>@!]/g, "");
 
       if (serverMembers.get(targetId) != undefined) {
+        func.updateChar(msg.author.id);
+        func.updateChar(targetId);
         func.getChar(targetId, opponentChar => {
           func.getChar(msg.author.id, authorChar => {
             if (
@@ -228,8 +230,6 @@ exports.duel = function (
                   " ! :o"
                 );
               }
-              func.updateChar(msg.author.id);
-              func.updateChar(targetId);
               return;
             }
           });

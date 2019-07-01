@@ -168,7 +168,7 @@ module.exports = {
   updateChar: function (authorId) {
     this.getChar(authorId, (charAuthor) => {
       if (null != charAuthor) {
-        this.getCharFromAPI(charAuthor.name + "-" + charAuthor.realm, (apiChar) => {
+        this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, (apiChar) => {
           if (null != apiChar && (charAuthor.ilvl != apiChar.ilvl || charAuthor.level != apiChar.level)) {
             let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=?";
             connection.query(sql, [apiChar.ilvl, apiChar.level, authorId], (err) => {

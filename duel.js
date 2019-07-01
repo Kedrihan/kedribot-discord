@@ -64,15 +64,16 @@ exports.duel = function(
                             message = message.replace("{X}", msg.author.toString());
                             message = message.replace("{Y}", target);
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
+                          
                         } else if (armorOpponent.typeName === "P") {
                           func.fleeAway(opponentChar.class, message => {
                             message = message.replace("{X}", target);
                             message = message.replace("{Y}", msg.author.toString());
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         }
                         break;
                       case "C":
@@ -81,15 +82,15 @@ exports.duel = function(
                             message = message.replace("{X}", msg.author.toString());
                             message = message.replace("{Y}", target);
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         } else if (armorOpponent.typeName === "T") {
                           func.fleeAway(opponentChar.class, message => {
                             message = message.replace("{X}", target);
                             message = message.replace("{Y}", msg.author.toString());
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         }
                         break;
                       case "M":
@@ -98,15 +99,15 @@ exports.duel = function(
                             message = message.replace("{X}", msg.author.toString());
                             message = message.replace("{Y}", target);
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         } else if (armorOpponent.typeName === "C") {
                           func.fleeAway(opponentChar.class, message => {
                             message = message.replace("{X}", target);
                             message = message.replace("{Y}", msg.author.toString());
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         }
                         break;
                       case "P":
@@ -115,19 +116,18 @@ exports.duel = function(
                             message = message.replace("{X}", msg.author.toString());
                             message = message.replace("{Y}", target);
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         } else if (armorOpponent.typeName === "M") {
                           func.fleeAway(opponentChar.class, message => {
                             message = message.replace("{X}", target);
                             message = message.replace("{Y}", msg.author.toString());
                             msg.channel.send(message);
+                            return;
                           });
-                          return;
                         }
                         break;
                     }
-                    return;
                   }
 
                   let win = Math.floor(Math.random() * Math.floor(100));

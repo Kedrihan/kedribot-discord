@@ -13,7 +13,10 @@ exports.duel = function (
 ) {
   if (msg.channel.name === "botcommands") {
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-      funcGlobal.setCooldown(msg.content, cooldownManager);
+      let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
+      if (cd) {
+        return;
+      }
     }
     if (
       msg.content.split(" ")[0] === commandPrefix + "link" &&
@@ -31,7 +34,10 @@ exports.duel = function (
   }
   if (msg.channel.name === "duel") {
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-      funcGlobal.setCooldown(msg.content, cooldownManager);
+      let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
+      if (cd) {
+        return;
+      }
     }
     if (
       msg.content.split(" ")[0] === commandPrefix + "duel" &&

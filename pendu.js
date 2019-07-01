@@ -21,7 +21,10 @@ exports.removeUserRanking = function(member) {
 exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList) {
     if (msg.channel.name === "pendu") {
         if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-            funcGlobal.setCooldown(msg.content, cooldownManager);
+            let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
+            if(cd) {
+                return;
+            }
         }
         if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
             messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";

@@ -6,7 +6,7 @@ let duel = require("./duel.js");
 let funcGlobal = require("./includes/functions.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu","devine","duel", "link","alcool","jusdepomme","commu"]
+let commandsList = ["pendu","devine","duel", "link","alcool","jusdepomme","commu","unlink"]
 
 
 const commandPrefix = '!';

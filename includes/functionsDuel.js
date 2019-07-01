@@ -40,7 +40,7 @@ module.exports = {
   },
   /*
     Fonction getChar
-    R : Récupérer le personnage de l'utilisateur en base + avec l'API
+    R : Récupérer le personnage de l'utilisateur en base
     E : ID de l'utilisateur
     S : objet CharFromAPI
     */
@@ -48,12 +48,14 @@ module.exports = {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
     connection.query(sql, authorId, (err, res) => {
       if (typeof res[0] != "undefined") {
-        this.getCharFromAPI(
-          res[0].charName + "-" + res[0].charRealm,
-          charObj => {
-            return callback(charObj);
-          }
-        );
+        let charReturn = {
+          class: res[0].charClass,
+          level: res[0].level,
+          ilvl: res[0].ilvl,
+          server: res[0].charRealm,
+          name: res[0].charName
+        };
+        return callback(charReturn);
       }
       else {
         return callback(null);
@@ -78,10 +80,10 @@ module.exports = {
           return callback("Personnage non trouvé. Vérifiez la commande.");
         } else {
           sql =
-            "INSERT INTO linkedChar (idDiscord, charName, charRealm, charClass) VALUES (?, ?, ?, ?)";
+            "INSERT INTO linkedChar (idDiscord, charName, charRealm, charClass, ilvl, level) VALUES (?, ?, ?, ?, ?, ?)";
           connection.query(
             sql,
-            [authorId, charObj.name, charObj.server, charObj.class],
+            [authorId, charObj.name, charObj.server, charObj.class, charObj.ilvl, charObj.level],
             err => {
               if (err) console.log(err);
               return callback(
@@ -156,5 +158,45 @@ module.exports = {
         });
       }
     });
+  },
+  /*
+   Fonction updateChar
+   R : Met à jour le personnage lié a un participant du duel si besoin
+   E : Noms des participants
+   S : vide
+   */
+  updateChar: function (authorId) {
+    this.getChar(authorId, (charAuthor) => {
+      if (null != charAuthor) {
+        this.getCharFromAPI(charAuthor.name + "-" + charAuthor.realm, (apiChar) => {
+          if (null != apiChar && (charAuthor.ilvl != apiChar.ilvl || charAuthor.level != apiChar.level)) {
+            let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=?";
+            connection.query(sql, [apiChar.ilvl, apiChar.level, authorId], (err) => {
+              if (err) console.log(err);
+            });
+          }
+        });
+      }
+    });
+  },
+  /*
+   Fonction unlinkChar
+   R : Supprime le personnage lié à l'auteur de la commande !unlink
+   E : id de l'utilisateur
+   S : Message texte
+   */
+  unlinkChar: function (id, callback) {
+    this.getChar(id, (res) => {
+      if (null != res) {
+        let sql = "DELETE FROM linkedChar WHERE idDiscord=?";
+        connection.query(sql, [id], (err) => {
+          if (err) console.log(err);
+          return callback("Vous avez bien délié votre personnage.");
+        });
+      }
+      else {
+        return callback("Vous n'avez pas de personnage lié.")
+      }
+    })
   }
 };

@@ -23,6 +23,11 @@ exports.duel = function (
         msg.channel.send(message);
       });
     }
+    if (msg.content === commandPrefix + "unlink") {
+      func.unlinkChar(msg.author.id, message => {
+        msg.channel.send(message);
+      })
+    }
   }
   if (msg.channel.name === "duel") {
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
@@ -56,7 +61,7 @@ exports.duel = function (
                     percentWinAuthor += diffIlvl;
                   }
                   console.log("%win = " + percentWinAuthor)
-                  
+
                   let flee = Math.floor(Math.random() * Math.floor(100));
                   if (flee < 15) {
                     if (armorAuthor != null && armorOpponent != null) {
@@ -202,7 +207,6 @@ exports.duel = function (
                     msg.channel.send(message);
                   }
                 );
-                return;
               } else if (win > 50) {
                 //win de l'opposant
                 func.winMessage(
@@ -212,7 +216,6 @@ exports.duel = function (
                     msg.channel.send(message);
                   }
                 );
-                return;
               } else {
                 //égalité
                 msg.channel.send(
@@ -224,8 +227,10 @@ exports.duel = function (
                   ">" +
                   " ! :o"
                 );
-                return;
               }
+              func.updateChar(msg.author.id);
+              func.updateChar(targetId);
+              return;
             }
           });
         });

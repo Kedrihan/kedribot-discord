@@ -49,12 +49,13 @@ exports.duel = function(
                   let diffIlvl = Math.ceil(
                     Math.abs(authorChar.ilvl - opponentChar.ilvl) / 2
                   );
+                  console.log("diff ilvl = "+diffIlvl);
                   if (authorChar.ilvl > opponentChar.ilvl) {
                     percentWinAuthor -= diffIlvl;
                   } else {
                     percentWinAuthor += diffIlvl;
                   }
-
+                  console.log("%win = "+percentWinAuthor)
                   if (armorAuthor != null && armorOpponent != null) {
                     switch (armorAuthor.typeName) {
                       case "T":
@@ -130,6 +131,7 @@ exports.duel = function(
                   }
 
                   let win = Math.floor(Math.random() * Math.floor(100));
+                  console.log("win = "+win)
                   if (win < percentWinAuthor) {
                     //Win de l'auteur
                     func.winMessage(

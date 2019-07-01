@@ -244,8 +244,8 @@ exports.duel = function (
         return;
       }
     }
-    else {
-      msg.channel.send("Merci de tag un utilisateur après la commande !duel (exemple : !duel @Pseudo#XXXX");
+    else if(msg.content.split(" ")[0] === commandPrefix + "duel" && !msg.content.split(" ")[1].match(/[\\<>@!\d]/g)) {
+      msg.channel.send("Merci de tag un utilisateur après la commande !duel (exemple : !duel @Pseudo#XXXX)");
     }
   }
 };

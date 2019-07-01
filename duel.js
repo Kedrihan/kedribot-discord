@@ -2,7 +2,6 @@ var exports = (module.exports = {});
 const func = require("./includes/functionsDuel.js");
 const funcGlobal = require("./includes/functions.js");
 let percentWinAuthor = 50;
-let callbacks = 0;
 exports.duel = function(
   msg,
   emojis,
@@ -33,6 +32,7 @@ exports.duel = function(
       msg.content.split(" ")[0] === commandPrefix + "duel" &&
       msg.content.split(" ")[1].match(/[\\<>@!\d]/g)
     ) {
+      percentWinAuthor = 50;
       let target = msg.content.split(" ")[1];
       let targetId = target.replace(/[\\<>@!]/g, "");
 
@@ -146,7 +146,6 @@ exports.duel = function(
                         );
                       }
                     );
-                    percentWinAuthor = 50;
                     return;
                   } else if (win > percentWinAuthor) {
                     //win de l'opposant
@@ -164,7 +163,6 @@ exports.duel = function(
                         );
                       }
                     );
-                    percentWinAuthor = 50;
                     return;
                   } else {
                     //égalité
@@ -180,7 +178,6 @@ exports.duel = function(
                         percentWinAuthor +
                         "% de chances de l'emporter.)"
                     );
-                    percentWinAuthor = 50;
                     return;
                   }
                 });

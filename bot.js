@@ -54,7 +54,7 @@ client.on('message', msg => {
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde];
 
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-        funcGlobal.setCooldown(msg.content, cooldownManager);
+        funcGlobal.setCooldown(msg.content, CooldownManager);
     }
 
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {

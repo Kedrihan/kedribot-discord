@@ -46,6 +46,8 @@ client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
         return;
     }
+    msg.channel.send(msg);
+    console.log(msg)
     let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
     let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");
     let cmonBruh = msg.guild.emojis.find(emoji => emoji.name === "cmonBruh");

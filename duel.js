@@ -34,6 +34,7 @@ exports.duel = function (
   }
   if (msg.channel.name === "duel") {
     if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+      console.log("cc jsuis la")
       let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
       console.log(cd);
       console.log(cooldownManager);

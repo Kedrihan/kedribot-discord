@@ -66,8 +66,8 @@ client.on('message', msg => {
     if (msg.content === commandPrefix + "commu") {
         msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> "+emojis[4]);
     }
-    pendu.pendu(msg, emojis, CooldownManager, commandPrefix, client, commandsList);
-    duel.duel(msg, emojis, CooldownManager, commandPrefix, client, commandsList, msg.guild.members);
+    pendu.pendu(msg, emojis, commandPrefix, client);
+    duel.duel(msg, emojis, commandPrefix, msg.guild.members);
 });
 
 client.login(AuthDetails.token).catch((err) => {

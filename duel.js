@@ -1,24 +1,14 @@
 var exports = (module.exports = {});
 const func = require("./includes/functionsDuel.js");
-const funcGlobal = require("./includes/functions.js");
 let percentWinAuthor = 50;
 exports.duel = function (
   msg,
   emojis,
-  cooldownManager,
   commandPrefix,
-  client,
-  commandsList,
   serverMembers
 ) {
   try {
     if (msg.channel.name === "botcommands") {
-      if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-        let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
-        if (cd) {
-          return;
-        }
-      }
       if (
         msg.content.split(" ")[0] === commandPrefix + "link" &&
         msg.content.split(" ")[1].length != 0
@@ -35,15 +25,6 @@ exports.duel = function (
     }
     if (msg.channel.name === "duel") {
       console.log("ça marche")
-      if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-        console.log("cc jsuis la")
-        let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
-        console.log(cd);
-        console.log(cooldownManager);
-        if (cd) {
-          return;
-        }
-      }
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&
         msg.content.split(" ")[1].match(/[\\<>@!\d]/g)

@@ -18,14 +18,8 @@ exports.removeUserRanking = function(member) {
     func.removeUserRank(member);
 };
 
-exports.pendu = function (msg, emojis, cooldownManager, commandPrefix, client, commandsList) {
+exports.pendu = function (msg, emojis, commandPrefix, client) {
     if (msg.channel.name === "pendu") {
-        if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-            let cd = funcGlobal.setCooldown(msg.content, cooldownManager);
-            if(cd) {
-                return;
-            }
-        }
         if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
             messageTabFaireDeviner = "``Le mot : " + tirets.toString().replace(new RegExp(",", "g"), ' ') + " (" + tiretsLength + " lettres)``";
             msg.channel.send(messageTabFaireDeviner);

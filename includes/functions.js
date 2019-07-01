@@ -1,7 +1,7 @@
 module.exports = {
 	isCommand: function (message, commandPrefix, commandsList) {
 		for(const cmd of commandsList) {
-			if (message.split(' ')[0] === commandPrefix + cmd) {
+			if (message.indexOf(commandPrefix + cmd) > -1) {
 				return true;
 			}
 		}

@@ -1,10 +1,10 @@
 module.exports = {
 	isCommand: function (message, commandPrefix, commandsList) {
-		commandsList.forEach(cmd => {
+		for(const cmd of commandsList) {
 			if (message.split(' ')[0] === commandPrefix + cmd) {
 				return true;
 			}
-		});
+		}
 		return false;
 	},
 	setCooldown: function (message, cooldownManager) {

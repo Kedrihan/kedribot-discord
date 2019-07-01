@@ -55,9 +55,9 @@ exports.duel = function (
                     Math.abs(authorChar.ilvl - opponentChar.ilvl) / 2
                   );
                   if (authorChar.ilvl > opponentChar.ilvl) {
-                    percentWinAuthor -= diffIlvl;
-                  } else {
                     percentWinAuthor += diffIlvl;
+                  } else {
+                    percentWinAuthor -= diffIlvl;
                   }
 
                   let flee = Math.floor(Math.random() * Math.floor(100));

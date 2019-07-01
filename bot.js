@@ -22,6 +22,7 @@ var CooldownManager = {
         '!alcool': 1543848572,
 		'!jusdepomme': 1543848572,
         '!commu': 1543848572,
+        '!unlink':1543848572,
     },
 
     canUse: function (commandName) {

@@ -70,7 +70,7 @@ module.exports = {
     */
    getAllDbChar: function (callback) {
     let sql = "SELECT * FROM linkedChar";
-    connection.query(sql, authorId, (err, res) => {
+    connection.query(sql, (err, res) => {
       if (typeof res[0] != "undefined") {
         return callback(res);
       }

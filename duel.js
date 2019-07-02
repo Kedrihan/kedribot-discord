@@ -35,7 +35,7 @@ exports.duel = async function (
           rd = Math.floor(Math.random() * allChars.length-1);
           let third = allChars[rd];
           allChars.splice(rd, 1);
-
+          console.log(allChars)
           msg.channel.send("Top 3 de ce Royal Rumble by KedriBot : ")
           msg.channel.send("1er : "+ first.name+"-"+first.server);
           msg.channel.send("2eme : "+ second.name+"-"+second.server);

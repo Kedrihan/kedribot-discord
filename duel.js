@@ -32,8 +32,8 @@ exports.duel = async function (
         let target = msg.content.split(" ")[1];
         let targetId = target.replace(/[\\<>@!]/g, "");
         let randEmoji = Math.floor(Math.random() * emojis.length)
-        while (randEmoji === 4) {
-          randEmoji = Math.floor(Math.random() * emojis.length)
+        if (randEmoji === 4) {
+          randEmoji = 3;
         }
         let emojiToSend = emojis[randEmoji];
         if (serverMembers.get(targetId) != undefined) {

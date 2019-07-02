@@ -1,6 +1,5 @@
 var exports = module.exports = {};
 const func = require("./includes/functionsHangman.js");
-const funcGlobal = require("./includes/functions.js");
 let penduIsLaunched = false;
 let chances = 12;
 let tirets = [];

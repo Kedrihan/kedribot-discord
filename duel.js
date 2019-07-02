@@ -37,10 +37,12 @@ exports.duel = async function (
         }
         let emojiToSend = emojis[randEmoji];
         if((targetId === "252187834616774656" && msg.author.id === "288659667268141056") || (targetId === "288659667268141056" && msg.author.id === "252187834616774656")) {
-          msg.channel.send("La bromance entre "+msg.author.toString()+" et <@"+targetId+"> est trop puissante, le duel est annulé !")
+          msg.channel.send("La bromance entre "+msg.author.toString()+" et <@"+targetId+"> est trop puissante, le duel est annulé !");
+          return;
         }
         if(targetId === msg.author.id) {
           msg.channel.send("Un peu de bon sens "+msg.author.toString()+" ! Tu ne peux pas te combattre toi-même !");
+          return;
         }
         if (serverMembers.get(targetId) != undefined) {
           await func.updateChar(msg.author.id);

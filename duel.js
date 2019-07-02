@@ -27,13 +27,13 @@ exports.duel = async function (
       if (msg.content === commandPrefix + "royalrumble") {
         func.getAllDbChar(allChars => {
           let rd = Math.floor(Math.random() * allChars.length-1);
-          let first = allChars(rd);
+          let first = allChars[rd];
           allChars.splice(rd, 1);
           rd = Math.floor(Math.random() * allChars.length-1);
-          let second = allChars(rd);
+          let second = allChars[rd];
           allChars.splice(rd, 1);
           rd = Math.floor(Math.random() * allChars.length-1);
-          let third = allChars(rd);
+          let third = allChars[rd];
           allChars.splice(rd, 1);
 
           msg.channel.send("Top 3 de ce Royal Rumble by KedriBot : ")

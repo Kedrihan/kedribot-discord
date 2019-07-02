@@ -60,9 +60,9 @@ client.on('message', msg => {
         }
     }*/
     for (const cmd of commandsList) {
-        if (message.indexOf(commandPrefix + cmd) > -1) {
-            if (cooldownManager.canUse(message.split(' ')[0])) {
-                cooldownManager.touch(message.split(' ')[0]);
+        if (msg.content.indexOf(commandPrefix + cmd) > -1) {
+            if (cooldownManager.canUse(msg.content.split(' ')[0])) {
+                cooldownManager.touch(msg.content.split(' ')[0]);
             }
             else {
                 return;

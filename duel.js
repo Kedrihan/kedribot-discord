@@ -14,12 +14,12 @@ exports.duel = async function (
         msg.content.split(" ")[1].length != 0
       ) {
         func.linkChar(msg.content.split(" ")[1], msg.author.id, message => {
-          msg.channel.send(message + " " + emojiToSend);
+          msg.channel.send(message);
         });
       }
       if (msg.content === commandPrefix + "unlink") {
         func.unlinkChar(msg.author.id, message => {
-          msg.channel.send(message + " " + emojiToSend);
+          msg.channel.send(message);
         })
       }
     }
@@ -32,10 +32,16 @@ exports.duel = async function (
         let target = msg.content.split(" ")[1];
         let targetId = target.replace(/[\\<>@!]/g, "");
         let randEmoji = Math.floor(Math.random() * emojis.length)
-        if (randEmoji === 4) {
+        if (randEmoji === 4 || randEmoji == null) {
           randEmoji = 3;
         }
         let emojiToSend = emojis[randEmoji];
+        if((targetId === "252187834616774656" && msg.author.id === "288659667268141056") || (targetId === "288659667268141056" && msg.author.id === "252187834616774656")) {
+          msg.channel.send("La bromance entre "+msg.author.toString()+" et <@"+targetId+"> est trop puissante, le duel est annulé !")
+        }
+        if(targetId === msg.author.id) {
+          msg.channel.send("Un peu de bon sens "+msg.author.toString()+" ! Tu ne peux pas te combattre toi-même !");
+        }
         if (serverMembers.get(targetId) != undefined) {
           await func.updateChar(msg.author.id);
           await func.updateChar(targetId);

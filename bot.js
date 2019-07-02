@@ -3,7 +3,6 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 let pendu = require("./pendu.js");
 let duel = require("./duel.js");
-let funcGlobal = require("./includes/functions.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
 let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink"]
@@ -51,14 +50,17 @@ client.on('message', msg => {
     let cmonBruh = msg.guild.emojis.find(emoji => emoji.name === "cmonBruh");
     let FeelsBaguetteMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsBaguetteMan");
     let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
-    let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde];
-
-    /*if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
-        let cd = funcGlobal.setCooldown(msg.content, CooldownManager);
-        if(cd) {
-            return;
-        }
-    }*/
+    let Wowee = msg.guild.emojis.find(emoji => emoji.name === "Wowee");
+    let Pog = msg.guild.emojis.find(emoji => emoji.name === "Pog");
+    let MonkaMega = msg.guild.emojis.find(emoji => emoji.name === "MonkaMega");
+    let BibleThumb = msg.guild.emojis.find(emoji => emoji.name === "BibleThumb");
+    let FeelsCoolMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsCoolMan");
+    let issou = msg.guild.emojis.find(emoji => emoji.name === "issou");
+    let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
+    let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
+    let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
+    
+    //CD
     for (const cmd of commandsList) {
         if (msg.content.indexOf(commandPrefix + cmd) > -1) {
             if (CooldownManager.canUse(msg.content.split(' ')[0])) {

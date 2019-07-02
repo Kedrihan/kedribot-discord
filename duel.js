@@ -14,12 +14,12 @@ exports.duel = async function (
         msg.content.split(" ")[1].length != 0
       ) {
         func.linkChar(msg.content.split(" ")[1], msg.author.id, message => {
-          msg.channel.send(message);
+          msg.channel.send(message + " " + emojiToSend);
         });
       }
       if (msg.content === commandPrefix + "unlink") {
         func.unlinkChar(msg.author.id, message => {
-          msg.channel.send(message);
+          msg.channel.send(message + " " + emojiToSend);
         })
       }
     }
@@ -31,7 +31,11 @@ exports.duel = async function (
         percentWinAuthor = 50;
         let target = msg.content.split(" ")[1];
         let targetId = target.replace(/[\\<>@!]/g, "");
-
+        let randEmoji = Math.floor(Math.random() * emojis.length)
+        while (randEmoji === 4) {
+          randEmoji = Math.floor(Math.random() * emojis.length)
+        }
+        let emojiToSend = emojis[randEmoji];
         if (serverMembers.get(targetId) != undefined) {
           await func.updateChar(msg.author.id);
           await func.updateChar(targetId);
@@ -62,7 +66,7 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
 
@@ -70,7 +74,7 @@ exports.duel = async function (
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             }
@@ -80,14 +84,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             } else if (armorOpponent.typeName === "T") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             }
@@ -97,14 +101,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             } else if (armorOpponent.typeName === "C") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             }
@@ -114,14 +118,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             } else if (armorOpponent.typeName === "M") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message);
+                                msg.channel.send(message + " " + emojiToSend);
                                 return;
                               });
                             }
@@ -138,7 +142,7 @@ exports.duel = async function (
                           msg.author.toString(),
                           target,
                           message => {
-                            msg.channel.send(message);
+                            msg.channel.send(message + " " + emojiToSend);
                             msg.channel.send(
                               "(" +
                               msg.author.toString() +
@@ -155,7 +159,7 @@ exports.duel = async function (
                           target,
                           msg.author.toString(),
                           message => {
-                            msg.channel.send(message);
+                            msg.channel.send(message + " " + emojiToSend);
                             msg.channel.send(
                               "(" +
                               msg.author.toString() +
@@ -173,7 +177,7 @@ exports.duel = async function (
                           msg.author.toString() +
                           " et " +
                           target +
-                          " ! :o"
+                          " ! " + emojiToSend
                         );
                         return;
                       }
@@ -189,7 +193,7 @@ exports.duel = async function (
                     msg.author.toString(),
                     "<@" + targetId + ">",
                     message => {
-                      msg.channel.send(message);
+                      msg.channel.send(message + " " + emojiToSend);
                     }
                   );
                 } else if (win > 50) {
@@ -198,7 +202,7 @@ exports.duel = async function (
                     "<@" + targetId + ">",
                     msg.author.toString(),
                     message => {
-                      msg.channel.send(message);
+                      msg.channel.send(message + " " + emojiToSend);
                     }
                   );
                 } else {
@@ -210,7 +214,7 @@ exports.duel = async function (
                     "<@" +
                     targetId +
                     ">" +
-                    " ! :o"
+                    " ! " + emojiToSend
                   );
                 }
                 return;

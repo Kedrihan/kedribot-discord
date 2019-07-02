@@ -165,7 +165,7 @@ module.exports = {
    E : Noms des participants
    S : vide
    */
-  updateChar: function (authorId) {
+  updateChar: async function (authorId) {
     this.getChar(authorId, (charAuthor) => {
       if (null != charAuthor) {
         this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, (apiChar) => {

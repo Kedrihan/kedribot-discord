@@ -1,7 +1,7 @@
 var exports = (module.exports = {});
 const func = require("./includes/functionsDuel.js");
 let percentWinAuthor = 50;
-exports.duel = function (
+exports.duel = async function (
   msg,
   emojis,
   commandPrefix,
@@ -34,8 +34,8 @@ exports.duel = function (
         let targetId = target.replace(/[\\<>@!]/g, "");
 
         if (serverMembers.get(targetId) != undefined) {
-          func.updateChar(msg.author.id);
-          func.updateChar(targetId);
+          await func.updateChar(msg.author.id);
+          await func.updateChar(targetId);
           func.getChar(targetId, opponentChar => {
             func.getChar(msg.author.id, authorChar => {
               if (

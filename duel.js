@@ -26,21 +26,27 @@ exports.duel = async function (
     if (msg.channel.name === "duel") {
       if (msg.content === commandPrefix + "royalrumble") {
         func.getAllDbChar(allChars => {
-          let rd = Math.floor(Math.random() * allChars.length-1);
-          let first = allChars[rd];
-          allChars.splice(rd, 1);
-          rd = Math.floor(Math.random() * allChars.length-1);
-          let second = allChars[rd];
-          allChars.splice(rd, 1);
-          rd = Math.floor(Math.random() * allChars.length-1);
-          let third = allChars[rd];
-          allChars.splice(rd, 1);
-          console.log(allChars)
+          let first = null;
+          let second = null;
+          let third = null;
+          while (first == null || second == null || third == null) {
+            let rd = Math.floor(Math.random() * allChars.length - 1);
+            first = allChars[rd];
+            allChars.splice(rd, 1);
+            rd = Math.floor(Math.random() * allChars.length - 1);
+            second = allChars[rd];
+            allChars.splice(rd, 1);
+            rd = Math.floor(Math.random() * allChars.length - 1);
+            third = allChars[rd];
+            allChars.splice(rd, 1);
+          }
           msg.channel.send("Top 3 de ce Royal Rumble by KedriBot : ")
-          msg.channel.send("1er : "+ first.name+"-"+first.server);
-          msg.channel.send("2eme : "+ second.name+"-"+second.server);
-          msg.channel.send("3eme : "+ third.name+"-"+third.server);
+          msg.channel.send("1er : " + first.charName + "-" + first.charRealm);
+          msg.channel.send("2eme : " + second.charName + "-" + second.charRealm);
+          msg.channel.send("3eme : " + third.charName + "-" + third.charRealm);
+
         });
+        return;
       }
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&

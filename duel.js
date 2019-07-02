@@ -101,7 +101,7 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
 
@@ -109,7 +109,7 @@ exports.duel = async function (
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             }
@@ -119,14 +119,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "T") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             }
@@ -136,14 +136,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "C") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             }
@@ -153,14 +153,14 @@ exports.duel = async function (
                               func.fleeAway(authorChar.class, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "M") {
                               func.fleeAway(opponentChar.class, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
-                                msg.channel.send(message + " " + emojiToSend);
+                                msg.channel.send(message + " ");
                                 return;
                               });
                             }

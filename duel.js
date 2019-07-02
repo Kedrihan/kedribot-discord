@@ -41,7 +41,7 @@ exports.duel = async function (
             third = allChars[rd];
             allChars.splice(rd, 1);
           }
-          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot (avec " + total + " participants) : ")
+          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot (avec " + total + " participant(s)) : ")
           msg.channel.send("1er : " + first.charName + "-" + first.charRealm);
           msg.channel.send("2eme : " + second.charName + "-" + second.charRealm);
           msg.channel.send("3eme : " + third.charName + "-" + third.charRealm);

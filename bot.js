@@ -53,12 +53,12 @@ client.on('message', msg => {
     let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde];
 
-    if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
+    /*if (funcGlobal.isCommand(msg.content, commandPrefix, commandsList)) {
         let cd = funcGlobal.setCooldown(msg.content, CooldownManager);
         if(cd) {
             return;
         }
-    }
+    }*/
 
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
         msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");

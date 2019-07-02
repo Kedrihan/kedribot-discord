@@ -62,7 +62,23 @@ module.exports = {
       }
     });
   },
-
+  /*
+    Fonction getAllDbChar
+    R : Récupérer tous les personnages en base
+    E : Vide
+    S : Tous les personnages de la bdd
+    */
+   getAllDbChar: function (callback) {
+    let sql = "SELECT * FROM linkedChar";
+    connection.query(sql, authorId, (err, res) => {
+      if (typeof res[0] != "undefined") {
+        return callback(res);
+      }
+      else {
+        return callback(null);
+      }
+    });
+  },
   /*
     Fonction linkChar
     R : Permet à un utilisateur de lier son personnage à son pseudo Discord en base

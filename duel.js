@@ -24,6 +24,24 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
+      if (msg.content === commandPrefix + "royalrumble") {
+        func.getAllDbChar(allChars => {
+          let rd = Math.floor(Math.random() * allChars.length-1);
+          let first = allChars(rd);
+          allChars.splice(rd, 1);
+          rd = Math.floor(Math.random() * allChars.length-1);
+          let second = allChars(rd);
+          allChars.splice(rd, 1);
+          rd = Math.floor(Math.random() * allChars.length-1);
+          let third = allChars(rd);
+          allChars.splice(rd, 1);
+
+          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot : ")
+          msg.channel.send("1er : "+ first.name+"-"+first.server);
+          msg.channel.send("2eme : "+ second.name+"-"+second.server);
+          msg.channel.send("3eme : "+ third.name+"-"+third.server);
+        });
+      }
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&
         msg.content.split(" ")[1].match(/[\\<>@!\d]/g)
@@ -39,12 +57,12 @@ exports.duel = async function (
         if (randEmoji === 4 || emojiToSend == null) {
           emojiToSend = emojis[5];
         }
-        if((targetId === "252187834616774656" && msg.author.id === "288659667268141056") || (targetId === "288659667268141056" && msg.author.id === "252187834616774656")) {
-          msg.channel.send("La bromance entre "+msg.author.toString()+" et <@"+targetId+"> est trop puissante, le duel est annulé !");
+        if ((targetId === "252187834616774656" && msg.author.id === "288659667268141056") || (targetId === "288659667268141056" && msg.author.id === "252187834616774656")) {
+          msg.channel.send("La bromance entre " + msg.author.toString() + " et <@" + targetId + "> est trop puissante, le duel est annulé !");
           return;
         }
-        if(targetId === msg.author.id) {
-          msg.channel.send("Un peu de bon sens "+msg.author.toString()+" ! Tu ne peux pas te combattre toi-même !");
+        if (targetId === msg.author.id) {
+          msg.channel.send("Un peu de bon sens " + msg.author.toString() + " ! Tu ne peux pas te combattre toi-même !");
           return;
         }
         if (serverMembers.get(targetId) != undefined) {

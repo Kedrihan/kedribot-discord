@@ -29,6 +29,7 @@ exports.duel = async function (
           let first = null;
           let second = null;
           let third = null;
+          let total = allChars.length;
           while (first == null || second == null || third == null) {
             let rd = Math.floor(Math.random() * allChars.length - 1);
             first = allChars[rd];
@@ -40,7 +41,7 @@ exports.duel = async function (
             third = allChars[rd];
             allChars.splice(rd, 1);
           }
-          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot : ")
+          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot (avec " + total + " participants) : ")
           msg.channel.send("1er : " + first.charName + "-" + first.charRealm);
           msg.channel.send("2eme : " + second.charName + "-" + second.charRealm);
           msg.channel.send("3eme : " + third.charName + "-" + third.charRealm);

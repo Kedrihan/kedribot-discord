@@ -36,6 +36,9 @@ exports.duel = async function (
           randEmoji = 3;
         }
         let emojiToSend = emojis[randEmoji];
+        if (randEmoji === 4 || emojiToSend == null) {
+          emojiToSend = emojis[5];
+        }
         if((targetId === "252187834616774656" && msg.author.id === "288659667268141056") || (targetId === "288659667268141056" && msg.author.id === "252187834616774656")) {
           msg.channel.send("La bromance entre "+msg.author.toString()+" et <@"+targetId+"> est trop puissante, le duel est annulé !");
           return;

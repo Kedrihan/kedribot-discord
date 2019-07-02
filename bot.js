@@ -6,7 +6,7 @@ let duel = require("./duel.js");
 let funcGlobal = require("./includes/functions.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu","devine","duel", "link","alcool","jusdepomme","commu","unlink"]
+let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink"]
 
 
 const commandPrefix = '!';
@@ -20,9 +20,9 @@ var CooldownManager = {
         '!duel': 1543848572,
         '!link': 1543848572,
         '!alcool': 1543848572,
-		'!jusdepomme': 1543848572,
+        '!jusdepomme': 1543848572,
         '!commu': 1543848572,
-        '!unlink':1543848572,
+        '!unlink': 1543848572,
     },
 
     canUse: function (commandName) {
@@ -37,10 +37,10 @@ var CooldownManager = {
     }
 };
 client.on('guildMemberAdd', member => {
-	member.addRole("308398054023626752").catch(console.error);
+    member.addRole("308398054023626752").catch(console.error);
 });
 client.on('guildMemberRemove', member => {
-	pendu.removeUserRanking(member);
+    pendu.removeUserRanking(member);
 });
 client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
@@ -59,12 +59,22 @@ client.on('message', msg => {
             return;
         }
     }*/
+    for (const cmd of commandsList) {
+        if (message.indexOf(commandPrefix + cmd) > -1) {
+            if (cooldownManager.canUse(message.split(' ')[0])) {
+                cooldownManager.touch(message.split(' ')[0]);
+            }
+            else {
+                return;
+            }
+        }
+    }
 
     if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
         msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
     }
     if (msg.content === commandPrefix + "commu") {
-        msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> "+emojis[4]);
+        msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
     }
     pendu.pendu(msg, emojis, commandPrefix, client);
     duel.duel(msg, emojis, commandPrefix, msg.guild.members);
@@ -72,4 +82,4 @@ client.on('message', msg => {
 
 client.login(AuthDetails.token).catch((err) => {
     console.log(err);
-  });;
+});;

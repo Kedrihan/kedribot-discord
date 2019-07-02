@@ -24,7 +24,6 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
-      console.log("ça marche")
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&
         msg.content.split(" ")[1].match(/[\\<>@!\d]/g)

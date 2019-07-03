@@ -1,6 +1,7 @@
 var exports = (module.exports = {});
 const func = require("./includes/functionsDuel.js");
 let percentWinAuthor = 50;
+let royalrumbleNumber = 0;
 exports.duel = async function (
   msg,
   emojis,
@@ -41,10 +42,11 @@ exports.duel = async function (
             third = allChars[rd];
             allChars.splice(rd, 1);
           }
-          msg.channel.send("Top 3 de ce Royal Rumble by KedriBot (avec " + total + " participant(s)) : ")
+          msg.channel.send("Top 3 de ce Royal Rumble Edition #" + royalrumbleNumber + " by KedriBot (avec " + total + " participant(s)) : ")
           msg.channel.send("1er : " + first.charName + "-" + first.charRealm);
           msg.channel.send("2eme : " + second.charName + "-" + second.charRealm);
           msg.channel.send("3eme : " + third.charName + "-" + third.charRealm);
+          royalrumbleNumber++;
 
         });
         return;

@@ -246,17 +246,18 @@ exports.duel = async function (
                       );
                     }
                     if (winBool != null) {
+                      let xp = 0
                       if (winBool && authorChar.discLevel <= opponentChar.discLevel) {
-                        let xp = 10
+                        xp = 10
                       }
                       else if (winBool && authorChar.discLevel > opponentChar.discLevel) {
-                        let xp = 5
+                        xp = 5
                       }
                       else if (!winBool && authorChar.discLevel <= opponentChar.discLevel) {
-                        let xp = 3
+                        xp = 3
                       }
                       else if (!winBool && authorChar.discLevel > opponentChar.discLevel) {
-                        let xp = -2
+                        xp = -2
                       }
 
                       if (authorChar.xp + xp < 100) {

@@ -47,8 +47,7 @@ module.exports = {
   getChar: function (authorId, callback) {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName IS NOT NULL";
     connection.query(sql, [authorId], (err, res) => {
-      if (err) console.log(err);
-      console.log(res);
+
       if (typeof res[0] != "undefined") {
         let charReturn = {
           idDiscord: res[0].idDiscord,

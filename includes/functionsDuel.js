@@ -241,7 +241,7 @@ module.exports = {
  E : id de l'utilisateur, montant d'xp
  S : Message texte
  */
-  manageXp: async function (id, xp) {
+  manageXp: function (id, xp) {
     this.getChar(id, (res) => {
       if (null != res) {
         let sql = "UPDATE linkedChar SET xp=? WHERE idDiscord=?";
@@ -293,7 +293,7 @@ R : Met en gagnant l'utilisateur voulu et enlève le flag de l'ancien gagnant
 E : Les ID du nouveau et de l'ancien gagnant
 S : vide
 */
-  levelUp: async function (char) {
+  levelUp: function (char) {
 
     let sql = "UPDATE linkedChar SET discLevel=?, xp=? WHERE idDiscord=?";
     connection.query(sql, [char.discLevel + 1, 0, char.idDiscord], (err) => {

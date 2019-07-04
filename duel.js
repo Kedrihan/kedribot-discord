@@ -210,6 +210,7 @@ exports.duel = async function (
                             break;
                         }
                       }
+                      return;
                     }
 
                     let win = Math.floor(Math.random() * Math.floor(100));
@@ -276,6 +277,7 @@ exports.duel = async function (
                     return;
                   });
                 });
+                return;
               } else {
                 //Faire duel 100% random si l'auteur de la commande n'a pas de perso link OU que l'utilisateur tag en paramètre n'en a pas OU que les persos n'ont pas le même level
                 let win = Math.floor(Math.random() * Math.floor(100));

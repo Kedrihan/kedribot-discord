@@ -11,23 +11,7 @@ exports.duel = async function (
   CooldownManager
 ) {
   try {
-    //Manage 24hours CD for RoyalRumble
-    for (const cmd of commandsList) {
-      if (msg.content.indexOf(commandPrefix + cmd) > -1) {
-        if (cmd === "royalrumble") {
-          if (CooldownManager.canUseRR(msg.content.split(' ')[0])) {
-            CooldownManager.touch(msg.content.split(' ')[0]);
-          }
-          else {
-            func.getWinner((champ) => {
-              let nextRR = new Date(this.store["!royalrumble"]);
-              msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un à la date et heure suivante : " + nextRR.toLocaleDateString('fr-FR'));
-            })
-            return;
-          }
-        }
-      }
-    }
+
     if (msg.channel.name === "botcommands") {
       if (
         msg.content.split(" ")[0] === commandPrefix + "link" &&
@@ -58,6 +42,20 @@ exports.duel = async function (
     }
     if (msg.channel.name === "duel") {
       if (msg.content === commandPrefix + "royalrumble") {
+        
+        //Manage 24hours CD for RoyalRumble
+        if (CooldownManager.canUseRR(commandPrefix + "royalrumble")) {
+          CooldownManager.touch(commandPrefix + "royalrumble");
+        }
+        else {
+          func.getWinner((champ) => {
+            let nextRR = new Date(this.store["!royalrumble"]);
+            msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un à la date et heure suivante : " + nextRR.toLocaleDateString('fr-FR'));
+            return;
+          })
+          return;
+        }
+
         func.getAllDbChar(allChars => {
           let first = null;
           let second = null;
@@ -86,10 +84,10 @@ exports.duel = async function (
             old.removeRole("596313698751086592").catch(console.error);
             func.setRRWinner(first.idDiscord, oldW.idDiscord);
             champion.addRole("596313698751086592").catch(console.error)
+            return;
           });
 
         });
-        return;
       }
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&

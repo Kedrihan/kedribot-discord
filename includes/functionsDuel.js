@@ -51,6 +51,7 @@ module.exports = {
       console.log(res);
       if (typeof res[0] != "undefined") {
         let charReturn = {
+          idDiscord: res[0].idDiscord,
           class: res[0].charClass,
           level: res[0].level,
           ilvl: res[0].ilvl,

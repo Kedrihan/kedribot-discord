@@ -282,7 +282,7 @@ exports.duel = async function (
                 let win = Math.floor(Math.random() * Math.floor(100));
                 if (win < 50) {
                   //Win de l'auteur
-                  func.winMessage(
+                  func.winMessageNoChar(
                     msg.author.toString(),
                     "<@" + targetId + ">",
                     message => {
@@ -291,7 +291,7 @@ exports.duel = async function (
                   );
                 } else if (win > 50) {
                   //win de l'opposant
-                  func.winMessage(
+                  func.winMessageNoChar(
                     "<@" + targetId + ">",
                     msg.author.toString(),
                     message => {

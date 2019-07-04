@@ -200,6 +200,36 @@ module.exports = {
     });
   },
   /*
+    Fonction winMessageNoChar
+    R : Récupère un message de victoire aléatoire et le formate
+    E : Noms des participants
+    S : Message textuel
+    */
+   winMessageNoChar: function (winner, looser, callback) {
+    let sql = "SELECT COUNT(phrase) FROM winPhrases";
+    let message = "";
+    connection.query(sql, (err, res) => {
+      if (err) console.log(err);
+      if (typeof res != "undefined") {
+        sql = "SELECT phrase FROM winPhrases WHERE id=?";
+        let rand = Math.floor(
+          Math.random() * Math.floor(res[0]["COUNT(phrase)"] + 1)
+        );
+        if (rand === 0) {
+          rand = 1;
+        }
+        connection.query(sql, [rand], (err, res) => {
+          if (err) console.log(err);
+          if (typeof res != "undefined") {
+            message = res[0].phrase.replace("{X}", winner);
+            message = message.replace("{Y}", looser);
+            return callback(message);
+          }
+        });
+      }
+    });
+  },
+  /*
    Fonction updateChar
    R : Met à jour le personnage lié a un participant du duel si besoin
    E : Noms des participants

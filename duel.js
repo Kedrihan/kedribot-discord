@@ -218,7 +218,7 @@ exports.duel = async function (
                     if (win < percentWinAuthor) {
                       //Win de l'auteur
                       winBool = true;
-                      await func.winMessage(
+                      func.winMessage(
                         authorChar,
                         opponentChar,
                         message => {
@@ -228,7 +228,7 @@ exports.duel = async function (
                     } else if (win > percentWinAuthor) {
                       //win de l'opposant
                       winBool = false;
-                      await func.winMessage(
+                      func.winMessage(
                         opponentChar,
                         authorChar,
                         message => {
@@ -276,6 +276,7 @@ exports.duel = async function (
 
                     return;
                   });
+                  return;
                 });
                 return;
               } else {

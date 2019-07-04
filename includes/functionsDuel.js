@@ -175,7 +175,7 @@ module.exports = {
     E : Noms des participants
     S : Message textuel
     */
-  winMessage: async function (winner, looser, callback) {
+  winMessage: function (winner, looser, callback) {
     let sql = "SELECT COUNT(phrase) FROM winPhrases";
     let message = "";
     connection.query(sql, (err, res) => {
@@ -188,7 +188,7 @@ module.exports = {
         if (rand === 0) {
           rand = 1;
         }
-        await connection.query(sql, [rand], (err, res) => {
+        connection.query(sql, [rand], (err, res) => {
           if (err) console.log(err);
           if (typeof res != "undefined") {
             message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");

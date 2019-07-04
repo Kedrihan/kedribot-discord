@@ -47,6 +47,7 @@ module.exports = {
   getChar: function (authorId, callback) {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName IS NOT NULL";
     connection.query(sql, authorId, (err, res) => {
+      if (err) console.log(err);
       if (typeof res != "undefined") {
         let charReturn = {
           class: res[0].charClass,
@@ -73,6 +74,7 @@ module.exports = {
   getAllDbChar: function (callback) {
     let sql = "SELECT * FROM linkedChar WHERE charName IS NOT NULL";
     connection.query(sql, (err, res) => {
+      if (err) console.log(err);
       if (typeof res[0] != "undefined") {
         return callback(res);
       }
@@ -94,6 +96,7 @@ module.exports = {
       }
       let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
       connection.query(sql, authorId, (err, res) => {
+        if (err) console.log(err);
         if (typeof res[0] != "undefined" && res[0].charName != null) {
           return callback("Vous avez déjà un personnage de lié.");
         }

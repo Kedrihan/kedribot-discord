@@ -45,10 +45,10 @@ module.exports = {
     S : objet
     */
   getChar: function (authorId, callback) {
-    let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName IS NOT NULL";
+    let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
     connection.query(sql, authorId, (err, res) => {
       if (err) console.log(err);
-      if (typeof res != "undefined") {
+      if (typeof res != "undefined" && res[0].charName != null) {
         let charReturn = {
           class: res[0].charClass,
           level: res[0].level,

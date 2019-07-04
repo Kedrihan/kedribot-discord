@@ -42,6 +42,11 @@ exports.duel = async function (
           msg.channel.send(message);
         })
       }
+      if (msg.content === commandPrefix + "profile") {
+        func.getChar(msg.author.id, (char) => {
+          msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.charName + "-" + char.charRealm + ", bisou :)")
+        })
+      }
     }
     if (msg.channel.name === "duel") {
       if (msg.content === commandPrefix + "royalrumble") {

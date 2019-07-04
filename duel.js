@@ -46,9 +46,8 @@ exports.duel = async function (
       }
       if (msg.content === commandPrefix + "profile") {
         func.getChar(msg.author.id, (char) => {
-          console.log(char)
-          if (char != null && char.charName != null) {
-            msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.charName + "-" + char.charRealm + ", bisou :)")
+          if (char != null && char.name != null) {
+            msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.name + "-" + char.server + ", bisou :)")
           }
           else {
             msg.channel.send("Vous n'avez pas lié de personnage :(")

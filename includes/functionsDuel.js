@@ -42,7 +42,7 @@ module.exports = {
     Fonction getChar
     R : Récupérer le personnage de l'utilisateur en base
     E : ID de l'utilisateur
-    S : objet CharFromAPI
+    S : objet
     */
   getChar: function (authorId, callback) {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName NOT NULL";

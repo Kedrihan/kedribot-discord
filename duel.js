@@ -36,16 +36,24 @@ exports.duel = async function (
         func.linkChar(msg.content.split(" ")[1], msg.author.id, message => {
           msg.channel.send(message);
         });
+        return;
       }
       if (msg.content === commandPrefix + "unlink") {
         func.unlinkChar(msg.author.id, message => {
           msg.channel.send(message);
         })
+        return;
       }
       if (msg.content === commandPrefix + "profile") {
         func.getChar(msg.author.id, (char) => {
-          msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.charName + "-" + char.charRealm + ", bisou :)")
-        })
+          if (char != null && char.charName != null) {
+            msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.charName + "-" + char.charRealm + ", bisou :)")
+          }
+          else {
+            msg.channel.send("Vous n'avez pas lié de personnage :(")
+          }
+        });
+        return;
       }
     }
     if (msg.channel.name === "duel") {

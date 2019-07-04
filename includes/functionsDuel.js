@@ -45,7 +45,7 @@ module.exports = {
     S : objet
     */
   getChar: function (authorId, callback) {
-    let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName NOT NULL";
+    let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName IS NOT NULL";
     connection.query(sql, authorId, (err, res) => {
       if (typeof res != "undefined") {
         let charReturn = {
@@ -71,7 +71,7 @@ module.exports = {
     S : Tous les personnages de la bdd
     */
   getAllDbChar: function (callback) {
-    let sql = "SELECT * FROM linkedChar WHERE charName NOT NULL";
+    let sql = "SELECT * FROM linkedChar WHERE charName IS NOT NULL";
     connection.query(sql, (err, res) => {
       if (typeof res[0] != "undefined") {
         return callback(res);
@@ -206,7 +206,7 @@ module.exports = {
       if (null != charAuthor) {
         this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, (apiChar) => {
           if (null != apiChar && (charAuthor.ilvl != apiChar.ilvl || charAuthor.level != apiChar.level)) {
-            let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=? AND charName NOT NULL";
+            let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=? AND charName IS NOT NULL";
             connection.query(sql, [apiChar.ilvl, apiChar.level, authorId], (err) => {
               if (err) console.log(err);
             });

@@ -175,7 +175,7 @@ module.exports = {
     E : Noms des participants
     S : Message textuel
     */
-  winMessage: function (winner, looser, callback) {
+  winMessage: async function (winner, looser, callback) {
     let sql = "SELECT COUNT(phrase) FROM winPhrases";
     let message = "";
     connection.query(sql, (err, res) => {

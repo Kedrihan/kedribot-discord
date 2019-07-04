@@ -45,7 +45,7 @@ module.exports = {
     S : objet CharFromAPI
     */
   getChar: function (authorId, callback) {
-    let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
+    let sql = "SELECT * FROM linkedChar WHERE idDiscord=? AND charName NOT NULL";
     connection.query(sql, authorId, (err, res) => {
       if (typeof res[0] != "undefined") {
         let charReturn = {
@@ -53,7 +53,9 @@ module.exports = {
           level: res[0].level,
           ilvl: res[0].ilvl,
           server: res[0].charRealm,
-          name: res[0].charName
+          name: res[0].charName,
+          xp: res[0].xp,
+          discLevel: res[0].discLevel
         };
         return callback(charReturn);
       }
@@ -68,8 +70,8 @@ module.exports = {
     E : Vide
     S : Tous les personnages de la bdd
     */
-   getAllDbChar: function (callback) {
-    let sql = "SELECT * FROM linkedChar";
+  getAllDbChar: function (callback) {
+    let sql = "SELECT * FROM linkedChar WHERE charName NOT NULL";
     connection.query(sql, (err, res) => {
       if (typeof res[0] != "undefined") {
         return callback(res);
@@ -87,19 +89,21 @@ module.exports = {
     */
   linkChar: function (fullCharName, authorId, callback) {
     this.getCharFromAPI(fullCharName, charObj => {
+      if (charObj.name === "") {
+        return callback("Personnage non trouvé. Vérifiez la commande.");
+      }
       let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
       connection.query(sql, authorId, (err, res) => {
-        if (typeof res[0] != "undefined")
+        if (typeof res[0] != "undefined" && res[0].charName != null) {
           return callback("Vous avez déjà un personnage de lié.");
-
-        if (charObj.name === "") {
-          return callback("Personnage non trouvé. Vérifiez la commande.");
-        } else {
+        }
+        //si présent en base on l'update
+        else if (typeof res[0] != "undefined" && res[0].charName === null) {
           sql =
-            "INSERT INTO linkedChar (idDiscord, charName, charRealm, charClass, ilvl, level) VALUES (?, ?, ?, ?, ?, ?)";
+            "UPDATE linkedChar SET charName=?, charRealm=?, charClass=?, ilvl=?, level=? WHERE idDiscord=?";
           connection.query(
             sql,
-            [authorId, charObj.name, charObj.server, charObj.class, charObj.ilvl, charObj.level],
+            [charObj.name, charObj.server, charObj.class, charObj.ilvl, charObj.level, authorId],
             err => {
               if (err) console.log(err);
               return callback(
@@ -109,6 +113,22 @@ module.exports = {
             }
           );
         }
+
+        //si non présent en base on l'ajoute
+        sql =
+          "INSERT INTO linkedChar (idDiscord, charName, charRealm, charClass, ilvl, level) VALUES (?, ?, ?, ?, ?, ?)";
+        connection.query(
+          sql,
+          [authorId, charObj.name, charObj.server, charObj.class, charObj.ilvl, charObj.level],
+          err => {
+            if (err) console.log(err);
+            return callback(
+              "Vous avez lié votre profil Discord à votre personnage " +
+              fullCharName
+            );
+          }
+        );
+
       });
     });
   },
@@ -167,8 +187,8 @@ module.exports = {
         connection.query(sql, [rand], (err, res) => {
           if (err) console.log(err);
           if (typeof res != "undefined") {
-            message = res[0].phrase.replace("{X}", winner);
-            message = message.replace("{Y}", looser);
+            message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");
+            message = message.replace("{Y}", "<@" + looser.idDiscord + "> (level " + winner.discLevel + ")");
             return callback(message);
           }
         });
@@ -186,7 +206,7 @@ module.exports = {
       if (null != charAuthor) {
         this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, (apiChar) => {
           if (null != apiChar && (charAuthor.ilvl != apiChar.ilvl || charAuthor.level != apiChar.level)) {
-            let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=?";
+            let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=? AND charName NOT NULL";
             connection.query(sql, [apiChar.ilvl, apiChar.level, authorId], (err) => {
               if (err) console.log(err);
             });
@@ -204,8 +224,8 @@ module.exports = {
   unlinkChar: function (id, callback) {
     this.getChar(id, (res) => {
       if (null != res) {
-        let sql = "DELETE FROM linkedChar WHERE idDiscord=?";
-        connection.query(sql, [id], (err) => {
+        let sql = "UPDATE linkedChar SET charName=?, charRealm=?, charClass=?, ilvl=?, level=? WHERE idDiscord=?";
+        connection.query(sql, [null, null, null, null, null, id], (err) => {
           if (err) console.log(err);
           return callback("Vous avez bien délié votre personnage.");
         });
@@ -214,5 +234,71 @@ module.exports = {
         return callback("Vous n'avez pas de personnage lié.")
       }
     })
-  }
+  },
+  /*
+ Fonction manageXp
+ R : Donne ou enlève de l'xp selon l'issue du duel
+ E : id de l'utilisateur, montant d'xp
+ S : Message texte
+ */
+  manageXp: async function (id, xp) {
+    this.getChar(id, (res) => {
+      if (null != res) {
+        let sql = "UPDATE linkedChar SET xp=? WHERE idDiscord=?";
+        connection.query(sql, [res.xp + xp, id], (err) => {
+          if (err) console.log(err);
+        });
+      }
+    })
+  },
+  /*
+Fonction getWinner
+R : Récupère le gagnant du RoyalRumble
+E : vide
+S : le gagnant
+*/
+  getWinner: function (callback) {
+
+    let sql = "SELECT * FROM linkedChar WHERE rumbleChamp=?";
+    connection.query(sql, [true], (err, res) => {
+      if (err) console.log(err);
+      if (typeof res[0] != 'undefined') {
+        return callback(res[0]);
+      }
+    });
+
+  },
+  /*
+Fonction setRRWinner
+R : Met en gagnant l'utilisateur voulu et enlève le flag de l'ancien gagnant
+E : Les ID du nouveau et de l'ancien gagnant
+S : vide
+*/
+  setRRWinner: function (idNew, idOld) {
+
+    let sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
+    connection.query(sql, [true, idNew], (err) => {
+      if (err) console.log(err);
+      sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
+      connection.query(sql, [false, idOld], (err) => {
+        if (err) console.log(err);
+
+      });
+    });
+
+  },
+  /*
+Fonction levelUp
+R : Met en gagnant l'utilisateur voulu et enlève le flag de l'ancien gagnant
+E : Les ID du nouveau et de l'ancien gagnant
+S : vide
+*/
+  levelUp: async function (char) {
+
+    let sql = "UPDATE linkedChar SET discLevel=?, xp=? WHERE idDiscord=?";
+    connection.query(sql, [char.discLevel + 1, 0, char.idDiscord], (err) => {
+      if (err) console.log(err);
+    });
+
+  },
 };

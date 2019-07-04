@@ -30,7 +30,11 @@ var CooldownManager = {
         // (because the value is less then the current time)
         return this.store[commandName] + this.cooldownTime < Date.now();
     },
-
+    canUseRR: function (commandName) {
+        // Check if the last time you've used the command + 24h for RoyalRumble
+        // (because the value is less then the current time)
+        return this.store[commandName] + 86400000 < Date.now();
+    },
     touch: function (commandName) {
         // Store the current timestamp in the store based on the current commandName
         this.store[commandName] = Date.now();
@@ -60,15 +64,17 @@ client.on('message', msg => {
     let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
     let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
-    
+
     //CD
     for (const cmd of commandsList) {
         if (msg.content.indexOf(commandPrefix + cmd) > -1) {
-            if (CooldownManager.canUse(msg.content.split(' ')[0])) {
-                CooldownManager.touch(msg.content.split(' ')[0]);
-            }
-            else {
-                return;
+            if (cmd != "royalrumble") {
+                if (CooldownManager.canUse(msg.content.split(' ')[0])) {
+                    CooldownManager.touch(msg.content.split(' ')[0]);
+                }
+                else {
+                    return;
+                }
             }
         }
     }
@@ -80,7 +86,7 @@ client.on('message', msg => {
         msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
     }
     pendu.pendu(msg, emojis, commandPrefix, client);
-    duel.duel(msg, emojis, commandPrefix, msg.guild.members);
+    duel.duel(msg, emojis, commandPrefix, msg.guild.members, commandsList, CooldownManager);
 });
 
 client.login(AuthDetails.token).catch((err) => {

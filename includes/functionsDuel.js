@@ -46,7 +46,7 @@ module.exports = {
     */
   getChar: function (authorId, callback) {
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
-    connection.query(sql, authorId, (err, res) => {
+    connection.query(sql, [authorId], (err, res) => {
       if (err) console.log(err);
       if (typeof res != "undefined" && res[0].charName != null) {
         let charReturn = {
@@ -95,7 +95,7 @@ module.exports = {
         return callback("Personnage non trouvé. Vérifiez la commande.");
       }
       let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
-      connection.query(sql, authorId, (err, res) => {
+      connection.query(sql, [authorId], (err, res) => {
         if (err) console.log(err);
         if (typeof res[0] != "undefined" && res[0].charName != null) {
           return callback("Vous avez déjà un personnage de lié.");

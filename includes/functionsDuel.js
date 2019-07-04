@@ -188,7 +188,7 @@ module.exports = {
         if (rand === 0) {
           rand = 1;
         }
-        connection.query(sql, [rand], (err, res) => {
+        await connection.query(sql, [rand], (err, res) => {
           if (err) console.log(err);
           if (typeof res != "undefined") {
             message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");

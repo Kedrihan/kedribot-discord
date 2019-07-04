@@ -41,8 +41,8 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
-      if (msg.content === commandPrefix + "royalrumble") {
-        
+      /*if (msg.content === commandPrefix + "royalrumble") {
+
         //Manage 24hours CD for RoyalRumble
         if (CooldownManager.canUseRR(commandPrefix + "royalrumble")) {
           CooldownManager.touch(commandPrefix + "royalrumble");
@@ -88,7 +88,7 @@ exports.duel = async function (
           });
 
         });
-      }
+      }*/
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&
         msg.content.split(" ")[1].match(/[\\<>@!\d]/g)

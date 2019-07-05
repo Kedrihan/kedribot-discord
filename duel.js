@@ -50,7 +50,8 @@ exports.duel = async function (
         else {
           func.getWinner((champ) => {
             let nextRR = new Date(CooldownManager.store["!royalrumble"] + 86400000);
-            msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un à la date et heure suivante : " + nextRR.toLocaleDateString('fr-FR'));
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+            msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un le " + nextRR.toLocaleDateString('fr-FR', options));
             return;
           })
           return;

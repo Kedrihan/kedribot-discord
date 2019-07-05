@@ -41,7 +41,7 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
-      /*nif (msg.content === commandPrefix + "royalrumble") {
+      if (msg.content === commandPrefix + "royalrumble") {
 
         //Manage 24hours CD for RoyalRumble
         if (CooldownManager.canUseRR(commandPrefix + "royalrumble")) {
@@ -49,7 +49,7 @@ exports.duel = async function (
         }
         else {
           func.getWinner((champ) => {
-            let nextRR = new Date(this.store["!royalrumble"]);
+            let nextRR = new Date(CooldownManager.store["!royalrumble"]);
             msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un à la date et heure suivante : " + nextRR.toLocaleDateString('fr-FR'));
             return;
           })
@@ -76,19 +76,20 @@ exports.duel = async function (
           msg.channel.send("1er : " + first.charName + "-" + first.charRealm);
           msg.channel.send("2eme : " + second.charName + "-" + second.charRealm);
           msg.channel.send("3eme : " + third.charName + "-" + third.charRealm);
-          royalrumbleNumber++;
-          msg.channel.send("<@" + first.idDiscord + "> devient le/la nouveau/nouvelle champion(ne) du Royal Rumble pour 24 heures minimum ! " + emojis[1])
+
           let champion = serverMembers.get(first.idDiscord);
           func.getWinner((oldW) => {
             let old = serverMembers.get(oldW.idDiscord);
             old.removeRole("596313698751086592").catch(console.error);
             func.setRRWinner(first.idDiscord, oldW.idDiscord);
             champion.addRole("596313698751086592").catch(console.error)
+            royalrumbleNumber++;
+            msg.channel.send("<@" + first.idDiscord + "> devient le/la nouveau/nouvelle champion(ne) du Royal Rumble pour 24 heures minimum ! " + emojis[1])
             return;
           });
 
         });
-      }*/
+      }
       if (
         msg.content.split(" ")[0] === commandPrefix + "duel" &&
         msg.content.split(" ")[1].match(/[\\<>@!\d]/g)
@@ -260,8 +261,10 @@ exports.duel = async function (
                       }
 
                       if (authorChar.xp + xp < 100) {
+
                         func.manageXp(authorChar.idDiscord, xp);
-                        msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience ! (CHEH si c'est -2 :)))) )")
+                        setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience ! (CHEH si c'est -2 :)))) )") }, 1000);
+
                       }
                       else {
                         func.levelUp(authorChar, (res) => {

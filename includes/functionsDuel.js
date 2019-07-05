@@ -192,7 +192,7 @@ module.exports = {
           if (err) console.log(err);
           if (typeof res != "undefined") {
             message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");
-            message = message.replace("{Y}", "<@" + looser.idDiscord + "> (level " + winner.discLevel + ")");
+            message = message.replace("{Y}", "<@" + looser.idDiscord + "> (level " + looser.discLevel + ")");
             return callback(message);
           }
         });

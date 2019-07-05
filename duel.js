@@ -41,7 +41,7 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
-      /*if (msg.content === commandPrefix + "royalrumble") {
+      /*nif (msg.content === commandPrefix + "royalrumble") {
 
         //Manage 24hours CD for RoyalRumble
         if (CooldownManager.canUseRR(commandPrefix + "royalrumble")) {
@@ -266,7 +266,9 @@ exports.duel = async function (
                       else {
                         func.levelUp(authorChar);
                         func.manageXp(authorChar.idDiscord, authorChar.xp + xp - 100);
-                        msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + authorChar.discLevel + 1 + "!")
+                        console.log(authorChar.xp + xp - 100);
+                        let newLvl = authorChar.discLevel + 1;
+                        msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
                       }
 
                     }

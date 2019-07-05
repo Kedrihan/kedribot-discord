@@ -264,11 +264,14 @@ exports.duel = async function (
                         msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience ! (CHEH si c'est -2 :)))) )")
                       }
                       else {
-                        func.levelUp(authorChar);
-                        func.manageXp(authorChar.idDiscord, authorChar.xp + xp - 100);
-                        console.log(authorChar.xp + xp - 100);
-                        let newLvl = authorChar.discLevel + 1;
-                        msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
+                        func.levelUp(authorChar, (res) => {
+                          if (res) {
+                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - 100);
+                            let newLvl = authorChar.discLevel + 1;
+                            msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
+                          }
+                        });
+
                       }
 
                     }

@@ -327,11 +327,12 @@ R : Met en gagnant l'utilisateur voulu et enlève le flag de l'ancien gagnant
 E : Les ID du nouveau et de l'ancien gagnant
 S : vide
 */
-  levelUp: function (char) {
+  levelUp: function (char, callback) {
 
     let sql = "UPDATE linkedChar SET discLevel=?, xp=? WHERE idDiscord=?";
     connection.query(sql, [char.discLevel + 1, 0, char.idDiscord], (err) => {
       if (err) console.log(err);
+      return callback(true)
     });
 
   },

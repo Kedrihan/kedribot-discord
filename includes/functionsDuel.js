@@ -116,6 +116,7 @@ module.exports = {
               );
             }
           );
+          return;
         }
 
         //si non présent en base on l'ajoute

@@ -52,7 +52,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
                 messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
                 let embed = {
-                    "title": "> " + messageTabFaireDeviner + " <",
+                    "title": "> `" + messageTabFaireDeviner + "` <",
                     "description": func.affPendu(erreurs),
                     "color": 2719929,
                     "fields": [
@@ -68,7 +68,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                       },
                       {
                         "name": "Lettres",
-                        "value": "alphabet.toString().toUpperCase()",
+                        "value": "//",
                         "inline": true
                       }
                     ]
@@ -79,9 +79,10 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
         if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
             tries++;
+            alphabet.push(lettreDemandee);
             lettreDemandee = msg.content.charAt(8);
             embed = {
-                "title": "> " + messageTabFaireDeviner + " <",
+                "title": "> `" + messageTabFaireDeviner + "` <",
                 "description": func.affPendu(erreurs),
                 "color": 2719929,
                 "fields": [
@@ -124,7 +125,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                     penduIsLaunched = false;
                     return;
                 }
-                alphabet.push(lettreDemandee);
+                
                 msg.channel.send({embed});
             } else {
                 while (arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {

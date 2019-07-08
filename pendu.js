@@ -79,32 +79,33 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
         if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
             tries++;
-            alphabet.push(lettreDemandee);
             lettreDemandee = msg.content.charAt(8);
-            embed = {
-                "title": "> `" + messageTabFaireDeviner + "` <",
-                "description": func.affPendu(erreurs),
-                "color": 2719929,
-                "fields": [
-                  {
-                    "name": "Erreurs",
-                    "value": erreurs + "/10",
-                    "inline": true
-                  },
-                  {
-                    "name": "Essais",
-                    "value": tries,
-                    "inline": true
-                  },
-                  {
-                    "name": "Lettres",
-                    "value": alphabet.toString().toUpperCase(),
-                    "inline": true
-                  }
-                ]
-              };
+            alphabet.push(lettreDemandee);
+            
             if (alphabet.includes(lettreDemandee.toLowerCase())) {
                 let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";
+                embed = {
+                    "title": "> `" + messageTabFaireDeviner + "` <",
+                    "description": func.affPendu(erreurs),
+                    "color": 2719929,
+                    "fields": [
+                      {
+                        "name": "Erreurs",
+                        "value": erreurs + "/10",
+                        "inline": true
+                      },
+                      {
+                        "name": "Essais",
+                        "value": tries,
+                        "inline": true
+                      },
+                      {
+                        "name": "Lettres",
+                        "value": alphabet.toString().toUpperCase(),
+                        "inline": true
+                      }
+                    ]
+                  };
                 msg.channel.send(messageDejaDemandee);
                 msg.channel.send({embed});
                 return;
@@ -113,6 +114,28 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 erreurs++;
                 if (erreurs < 10) {
                     let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente.``";
+                    embed = {
+                        "title": "> `" + messageTabFaireDeviner + "` <",
+                        "description": func.affPendu(erreurs),
+                        "color": 2719929,
+                        "fields": [
+                          {
+                            "name": "Erreurs",
+                            "value": erreurs + "/10",
+                            "inline": true
+                          },
+                          {
+                            "name": "Essais",
+                            "value": tries,
+                            "inline": true
+                          },
+                          {
+                            "name": "Lettres",
+                            "value": alphabet.toString().toUpperCase(),
+                            "inline": true
+                          }
+                        ]
+                      };
                     msg.channel.send(messageErreur);
                     msg.channel.send({embed});
                 } else {
@@ -144,6 +167,28 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                     return;
                 } else {
                     func.winLetter(msg.author);
+                    embed = {
+                        "title": "> `" + messageTabFaireDeviner + "` <",
+                        "description": func.affPendu(erreurs),
+                        "color": 2719929,
+                        "fields": [
+                          {
+                            "name": "Erreurs",
+                            "value": erreurs + "/10",
+                            "inline": true
+                          },
+                          {
+                            "name": "Essais",
+                            "value": tries,
+                            "inline": true
+                          },
+                          {
+                            "name": "Lettres",
+                            "value": alphabet.toString().toUpperCase(),
+                            "inline": true
+                          }
+                        ]
+                      };
                     msg.channel.send({embed});
                 }
             }
@@ -165,6 +210,28 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 erreurs++;
                 if (erreurs <= 10) {
                     let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot.``";
+                    embed = {
+                        "title": "> `" + messageTabFaireDeviner + "` <",
+                        "description": func.affPendu(erreurs),
+                        "color": 2719929,
+                        "fields": [
+                          {
+                            "name": "Erreurs",
+                            "value": erreurs + "/10",
+                            "inline": true
+                          },
+                          {
+                            "name": "Essais",
+                            "value": tries,
+                            "inline": true
+                          },
+                          {
+                            "name": "Lettres",
+                            "value": alphabet.toString().toUpperCase(),
+                            "inline": true
+                          }
+                        ]
+                      };
                     msg.channel.send(messageErreur);
                     msg.channel.send({embed});
                 } else {

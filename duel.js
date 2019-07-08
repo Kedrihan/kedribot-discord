@@ -41,14 +41,13 @@ exports.duel = async function (
       }
       if (msg.content === commandPrefix + "linkchars") {
         func.getAllDbChar((chars) => {
-          let msg = "```Liste des personnes ayant un personnage lié sur Discord : ";
-          console.logs(chars);
+          let message = "```Liste des personnes ayant un personnage lié sur Discord : ";
           for (let i = 0; i < chars.length; i++) {
             let usr = serverMembers.get(chars[i].idDiscord);
-            msg = msg.concat("\n", usr.user.username + " - niveau de duel : " + chars[i].discLevel);
+            message = message.concat("\n", usr.user.username + " - niveau de duel : " + chars[i].discLevel);
           }
-          msg = msg.concat(" ", "```");
-          message.channel.send(msg);
+          message = message.concat(" ", "```");
+          msg.channel.send(message);
         });
       }
     }

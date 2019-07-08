@@ -209,7 +209,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 return;
             } else {
                 erreurs++;
-                if (erreurs <= 10) {
+                if (erreurs < 10) {
                     let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot.``";
                     embed = {
                         "title": "> `" + messageTabFaireDeviner + "` <",

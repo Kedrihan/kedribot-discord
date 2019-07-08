@@ -45,33 +45,34 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 arrayMotAFaireDeviner.push(letter.toUpperCase());
             }
 
-            let embed = {
-                "title": "> " + messageTabFaireDeviner + " <",
-                "description": func.affPendu(erreurs),
-                "color": 2719929,
-                "fields": [
-                  {
-                    "name": "Erreurs",
-                    "value": erreurs + "/10",
-                    "inline": true
-                  },
-                  {
-                    "name": "Essais",
-                    "value": tries,
-                    "inline": true
-                  },
-                  {
-                    "name": "Lettres",
-                    "value": alphabet.toString().toUpperCase(),
-                    "inline": true
-                  }
-                ]
-              };
+            
             if (arrayMotAFaireDeviner.length === motAFaireDeviner.length) {
                 let messageInitOk1 = "``Le mot est choisi ! Pour demander une lettre, merci de rentrer la commande " + commandPrefix + "devine LETTRE où LETTRE est à remplacer par celle que vous voulez faire deviner, et si vous avez une idée du mot complet, faites " + commandPrefix + "devine MOT (et il y a 8 secondes de délai entre 2 commandes)``";
                 msg.channel.send(messageInitOk1);
 
                 messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
+                let embed = {
+                    "title": "> " + messageTabFaireDeviner + " <",
+                    "description": func.affPendu(erreurs),
+                    "color": 2719929,
+                    "fields": [
+                      {
+                        "name": "Erreurs",
+                        "value": erreurs + "/10",
+                        "inline": true
+                      },
+                      {
+                        "name": "Essais",
+                        "value": tries,
+                        "inline": true
+                      },
+                      {
+                        "name": "Lettres",
+                        "value": alphabet.toString().toUpperCase(),
+                        "inline": true
+                      }
+                    ]
+                  };
                 msg.channel.send({embed});
             }
         }

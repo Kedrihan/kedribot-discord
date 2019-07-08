@@ -41,7 +41,7 @@ exports.duel = async function (
       }
       if (msg.content === commandPrefix + "linkchars") {
         console.log(msg.content);
-        func.getAllDbChar((chars) => {
+        /*func.getAllDbChar((chars) => {
           console.log(chars);
           let message = "```Liste des personnes ayant un personnage lié sur Discord : ";
           for (let i = 0; i < chars.length; i++) {
@@ -50,7 +50,8 @@ exports.duel = async function (
           }
           message = message.concat(" ", "```");
           msg.channel.send(message);
-        });
+        });*/
+        msg.channel.send("Jambon !")
         return;
       }
     }

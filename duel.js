@@ -49,7 +49,6 @@ exports.duel = async function (
           msg = msg.concat(" ", "```");
           message.channel.send(msg);
         });
-        return;
       }
     }
     if (msg.channel.name === "duel") {

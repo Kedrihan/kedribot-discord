@@ -98,7 +98,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                   },
                   {
                     "name": "Lettres",
-                    "value": ""+alphabet.toString().toUpperCase(),
+                    "value": alphabet.toString().toUpperCase(),
                     "inline": true
                   }
                 ]
@@ -132,7 +132,6 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                     arrayMotAFaireDeviner.splice(arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase()), 1, ' ');
                     messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
                 }
-                alphabet.splice(alphabet.indexOf(lettreDemandee.toLowerCase()), 1);
                 if (tirets.indexOf('_') === -1) {
                     func.winWord(msg.author);
                     embed = {

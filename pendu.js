@@ -47,7 +47,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
             let embed = {
                 "title": "> " + messageTabFaireDeviner + " <",
-                "description": func.affPendu(erreur),
+                "description": func.affPendu(erreurs),
                 "color": 2719929,
                 "fields": [
                   {

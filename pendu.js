@@ -68,12 +68,11 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                       },
                       {
                         "name": "Lettres",
-                        "value": " "+alphabet.toString().toUpperCase(),
+                        "value": "alphabet.toString().toUpperCase()",
                         "inline": true
                       }
                     ]
                   };
-                  console.log(embed)
                 msg.channel.send({embed});
             }
         }

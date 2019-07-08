@@ -5,7 +5,7 @@ let pendu = require("./pendu.js");
 let duel = require("./duel.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "linkchars"]
+let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "charslink"]
 
 
 const commandPrefix = '!';
@@ -24,7 +24,7 @@ var CooldownManager = {
         '!unlink': 1543848572,
         '!royalrumble': 1543848572,
         '!profile': 1543848572,
-        '!linkchars': 1543848572,
+        '!charslink': 1543848572,
     },
 
     canUse: function (commandName) {

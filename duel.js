@@ -39,6 +39,18 @@ exports.duel = async function (
         });
         return;
       }
+      if (msg.content === commandPrefix + "linkchars") {
+        func.getAllDbChar((chars) => {
+          let msg = "```Liste des personnes ayant un personnage lié sur Discord : ";
+          for (let i = 0; i < chars.length; i++) {
+            let usr = serverMembers.get(chars[i].idDiscord);
+            msg = msg.concat("\n", usr.user.username + " - niveau de duel : " + chars[i].discLevel);
+          }
+          msg = msg.concat(" ", "```");
+          message.channel.send(msg);
+        });
+        return;
+      }
     }
     if (msg.channel.name === "duel") {
       if (msg.content === commandPrefix + "royalrumble") {
@@ -49,9 +61,9 @@ exports.duel = async function (
         }
         else {
           func.getWinner((champ) => {
-            let nextRR = new Date(CooldownManager.store["!royalrumble"] + 86400000);
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-            msg.channel.send("Le/la champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un le " + nextRR.toLocaleDateString('fr-FR', options));
+            let nextRR = new Date(CooldownManager.store["!royalrumble"] + 871240000);
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            msg.channel.send("Le(a) champion(ne) actuel(le) du Royal Rumble est <@" + champ.idDiscord + "> ! Vous pourrez en relancer un le " + nextRR.toLocaleDateString('fr-FR', options));
             return;
           })
           return;
@@ -85,7 +97,7 @@ exports.duel = async function (
             func.setRRWinner(first.idDiscord, oldW.idDiscord);
             champion.addRole("596313698751086592").catch(console.error)
             royalrumbleNumber++;
-            msg.channel.send("<@" + first.idDiscord + "> devient le/la nouveau/nouvelle champion(ne) du Royal Rumble pour 24 heures minimum ! " + emojis[1])
+            msg.channel.send("<@" + first.idDiscord + "> devient le(a) nouveau(elle) champion(ne) du Royal Rumble pour 24 heures minimum ! " + emojis[1])
             return;
           });
 
@@ -113,6 +125,9 @@ exports.duel = async function (
         if (targetId === msg.author.id) {
           msg.channel.send("Un peu de bon sens " + msg.author.toString() + " ! Tu ne peux pas te combattre toi-même !");
           return;
+        }
+        if (targetId === "534293066731880458") {
+          msg.channel.send("Cherche pas à me défier, je te bas dans tous les cas. (Et arrête de me tag stp " + emojis[3] + ")");
         }
         if (serverMembers.get(targetId) != undefined) {
           await func.updateChar(msg.author.id);
@@ -264,7 +279,12 @@ exports.duel = async function (
                       if (authorChar.xp + xp < 100) {
 
                         func.manageXp(authorChar.idDiscord, xp);
-                        setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience ! (CHEH si c'est -2 :)))) )") }, 1000);
+                        if (xp != -2) {
+                          setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience !") }, 1000);
+                        }
+                        else {
+                          setTimeout(function () { msg.channel.send(msg.author.toString() + " a perdu 2 points d'expérience ! CHEH !") }, 1000);
+                        }
 
                       }
                       else {

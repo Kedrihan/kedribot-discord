@@ -5,7 +5,7 @@ let pendu = require("./pendu.js");
 let duel = require("./duel.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile"]
+let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "linkchars"]
 
 
 const commandPrefix = '!';
@@ -24,6 +24,7 @@ var CooldownManager = {
         '!unlink': 1543848572,
         '!royalrumble': 1543848572,
         '!profile': 1543848572,
+        '!linkchars': 1543848572,
     },
 
     canUse: function (commandName) {
@@ -51,6 +52,7 @@ client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
         return;
     }
+
     let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
     let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");
     let cmonBruh = msg.guild.emojis.find(emoji => emoji.name === "cmonBruh");
@@ -65,7 +67,9 @@ client.on('message', msg => {
     let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
     let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
-
+    if(msg.content.includes("534293066731880458") && !msg.content.includes(commandPrefix+"duel")) {
+        msg.channel.send("Arrête de me tag stp "+FeelsBaguetteMan)
+    }
     //CD
     for (const cmd of commandsList) {
         if (msg.content.indexOf(commandPrefix + cmd) > -1) {

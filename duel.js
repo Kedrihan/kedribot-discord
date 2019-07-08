@@ -128,6 +128,7 @@ exports.duel = async function (
         }
         if (targetId === "534293066731880458") {
           msg.channel.send("Cherche pas à me défier, je te bas dans tous les cas. (Et arrête de me tag stp " + emojis[3] + ")");
+          return;
         }
         if (serverMembers.get(targetId) != undefined) {
           await func.updateChar(msg.author.id);

@@ -69,6 +69,7 @@ client.on('message', msg => {
     let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
     if(msg.content.includes("534293066731880458") && !msg.content.includes(commandPrefix+"duel")) {
         msg.channel.send("Arrête de me tag stp "+FeelsBaguetteMan)
+        return;
     }
     //CD
     for (const cmd of commandsList) {

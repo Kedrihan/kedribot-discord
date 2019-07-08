@@ -126,7 +126,6 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                     return;
                 }
                 
-                msg.channel.send({embed});
             } else {
                 while (arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
                     tirets[arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase())] = lettreDemandee.toUpperCase();

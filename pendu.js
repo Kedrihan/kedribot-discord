@@ -68,7 +68,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                       },
                       {
                         "name": "Lettres",
-                        "value": alphabet.toString().toUpperCase(),
+                        "value": " "+alphabet.toString().toUpperCase(),
                         "inline": true
                       }
                     ]
@@ -97,7 +97,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                   },
                   {
                     "name": "Lettres",
-                    "value": alphabet.toString().toUpperCase(),
+                    "value": ""+alphabet.toString().toUpperCase(),
                     "inline": true
                   }
                 ]
@@ -146,7 +146,6 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 } else {
                     func.winLetter(msg.author);
                     msg.channel.send({embed});
-                    msg.channel.send("``Lettres restantes : "+ alphabet.toString().toUpperCase()+"``");
                 }
             }
 

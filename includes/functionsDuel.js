@@ -77,7 +77,6 @@ module.exports = {
     connection.query(sql, (err, res) => {
       if (err) console.log(err);
       if (typeof res[0] != "undefined") {
-        console.log("cc jsuis dans functions")
         return callback(res);
       }
       else {

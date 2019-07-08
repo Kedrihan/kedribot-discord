@@ -39,7 +39,7 @@ exports.duel = async function (
         });
         return;
       }
-      if (msg.content === "fhglsiergfumzqerjghu") {
+      if (msg.content === commandPrefix + "linkchars") {
         console.log(msg.content);
         /*func.getAllDbChar((chars) => {
           console.log(chars);

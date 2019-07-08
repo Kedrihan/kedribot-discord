@@ -80,7 +80,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
             lettreDemandee = msg.content.charAt(8);
             embed = {
                 "title": "> " + messageTabFaireDeviner + " <",
-                "description": func.affPendu(erreur),
+                "description": func.affPendu(erreurs),
                 "color": 2719929,
                 "fields": [
                   {
@@ -135,7 +135,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                     func.winWord(msg.author);
                     embed = {
                         "title": "Victoire !",
-                        "description": func.affPendu(erreur) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
+                        "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
                         "color": 5025616
                       };
                     msg.channel.send({embed});
@@ -154,7 +154,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                 func.winWord(msg.author);
                 embed = {
                     "title": "Victoire !",
-                    "description": func.affPendu(erreur) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
+                    "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
                     "color": 5025616
                   };
                 msg.channel.send({embed});

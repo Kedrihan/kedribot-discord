@@ -66,6 +66,9 @@ module.exports = {
   affPendu: function (failures) {
     let hang = ""
     switch (failures) {
+      case 0:
+        hang = "``` \n      \n \n \n \n```";
+        break;
       case 1:
         hang = "``` \n      \n \n \n \n━┻━```";
         break;

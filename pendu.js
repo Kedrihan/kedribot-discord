@@ -73,6 +73,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
                       }
                     ]
                   };
+                  console.log(embed)
                 msg.channel.send({embed});
             }
         }

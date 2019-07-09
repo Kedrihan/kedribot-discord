@@ -15,14 +15,13 @@ module.exports = {
   getCharFromAPI: function (charName, userId, callback) {
     let char = charName.split("-")[0];
     let server = charName.split("-")[1];
-    if(userId === "509480067168993311") {
-      let orig = charName.split("-")[2]
-    }
-    else {
-      let orig = "eu";
-    }
+    
     blizzard.getApplicationToken().then(response => {
       blizzard.defaults.token = response.data.access_token;
+      let orig = "eu"
+      if(charName.split("-")[2] != undefined) {
+        orig = charName.split("-")[2]
+      }
       blizzard.wow
         .character(["items"], {
           origin: orig,

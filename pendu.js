@@ -173,7 +173,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
               if (char.xp + 2 >= 100) {
                 funcXp.levelUp(char, (res) => {
                   if (res) {
-                    func.manageXp(char.idDiscord, char.xp + 2 - 100);
+                    funcXp.manageXp(char.idDiscord, char.xp + 2 - 100);
                     let lvl = char.discLevel + 1
                     msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
                   }
@@ -217,7 +217,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
               if (char.xp + 1 >= 100) {
                 funcXp.levelUp(char, (res) => {
                   if (res) {
-                    func.manageXp(char.idDiscord, char.xp + 1 - 100);
+                    funcXp.manageXp(char.idDiscord, char.xp + 1 - 100);
                     let lvl = char.discLevel + 1
                     msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
                   }
@@ -247,7 +247,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
             if (char.xp + 2 >= 100) {
               funcXp.levelUp(char, (res) => {
                 if (res) {
-                  func.manageXp(char.idDiscord, char.xp + 2 - 100);
+                  funcXp.manageXp(char.idDiscord, char.xp + 2 - 100);
                   let lvl = char.discLevel + 1
                   msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
                 }

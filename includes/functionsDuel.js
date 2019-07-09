@@ -16,7 +16,7 @@ module.exports = {
     let char = charName.split("-")[0];
     let server = charName.split("-")[1];
     if(userId === "509480067168993311") {
-      let orig = charName.split("-")[3]
+      let orig = charName.split("-")[2]
     }
     else {
       let orig = "eu";

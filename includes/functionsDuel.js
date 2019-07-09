@@ -12,15 +12,20 @@ module.exports = {
     E : Nom du personnage, serveur du personnage
     S : un objet
     */
-  getCharFromAPI: function (charName, callback) {
+  getCharFromAPI: function (charName, userId, callback) {
     let char = charName.split("-")[0];
     let server = charName.split("-")[1];
-
+    if(userId === "509480067168993311") {
+      let orig = "na";
+    }
+    else {
+      let orig = "eu";
+    }
     blizzard.getApplicationToken().then(response => {
       blizzard.defaults.token = response.data.access_token;
       blizzard.wow
         .character(["items"], {
-          origin: "eu",
+          origin: orig,
           realm: server.toLowerCase(),
           name: char.toLowerCase(),
           locale: "fr_FR"
@@ -91,7 +96,7 @@ module.exports = {
     S : Vide
     */
   linkChar: function (fullCharName, authorId, callback) {
-    this.getCharFromAPI(fullCharName, charObj => {
+    this.getCharFromAPI(fullCharName, authorId, charObj => {
       if (charObj.name === "") {
         return callback("Personnage non trouvé. Vérifiez la commande.");
       }
@@ -239,7 +244,7 @@ module.exports = {
   updateChar: async function (authorId) {
     this.getChar(authorId, (charAuthor) => {
       if (null != charAuthor) {
-        this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, (apiChar) => {
+        this.getCharFromAPI(charAuthor.name + "-" + charAuthor.server, authorId, (apiChar) => {
           if (null != apiChar && (charAuthor.ilvl != apiChar.ilvl || charAuthor.level != apiChar.level)) {
             let sql = "UPDATE linkedChar SET ilvl=?, level=? WHERE idDiscord=? AND charName IS NOT NULL";
             connection.query(sql, [apiChar.ilvl, apiChar.level, authorId], (err) => {

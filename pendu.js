@@ -1,5 +1,6 @@
 var exports = module.exports = {};
 const func = require("./includes/functionsHangman.js");
+const funcXp = require("./includes/functionsDuel.js");
 let penduIsLaunched = false;
 let erreurs = 0;
 let tirets = [];
@@ -14,255 +15,313 @@ let dico = ["cruella", "abaissement", "abaisser", "abandon", "abandonnant", "aba
 let mod = ["aexillium", "kedrihan", "cruelladk"];
 let scores = {};
 
-exports.removeUserRanking = function(member) {
-    func.removeUserRank(member);
+exports.removeUserRanking = function (member) {
+  func.removeUserRank(member);
 };
 
 exports.pendu = function (msg, emojis, commandPrefix, client) {
-    if (msg.channel.name === "pendu") {
-        if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
-            msg.channel.send({embed});
-        }
-        if (msg.content === commandPrefix + "pendu" && !penduIsLaunched) {
-            penduIsLaunched = true;
-
-            motAFaireDeviner = dico[Math.floor(Math.random() * dico.length)];
-            alphabet = [];
-            erreurs = 0;
-            tiretsLength = 0;
-            arrayMotAFaireDeviner = [];
-            tirets = [];
-            tries = 0;
-            for (let letter of motAFaireDeviner) {
-                if (letter !== "-") {
-                    tirets.push("_");
-                    tiretsLength++;
-                } else {
-                    tirets.push(letter);
-
-                }
-
-                arrayMotAFaireDeviner.push(letter.toUpperCase());
-            }
-
-            
-            if (arrayMotAFaireDeviner.length === motAFaireDeviner.length) {
-                let messageInitOk1 = "``Le mot est choisi ! Pour demander une lettre, merci de rentrer la commande " + commandPrefix + "devine LETTRE où LETTRE est à remplacer par celle que vous voulez faire deviner, et si vous avez une idée du mot complet, faites " + commandPrefix + "devine MOT (et il y a 8 secondes de délai entre 2 commandes)``";
-                msg.channel.send(messageInitOk1);
-
-                messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
-                let embed = {
-                    "title": "> `" + messageTabFaireDeviner + "` <",
-                    "description": func.affPendu(erreurs),
-                    "color": 2719929,
-                    "fields": [
-                      {
-                        "name": "Erreurs",
-                        "value": erreurs + "/10",
-                        "inline": true
-                      },
-                      {
-                        "name": "Essais",
-                        "value": tries,
-                        "inline": true
-                      },
-                      {
-                        "name": "Lettres",
-                        "value": "//",
-                        "inline": true
-                      }
-                    ]
-                  };
-                msg.channel.send({embed});
-            }
-        }
-
-        if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
-            tries++;
-            lettreDemandee = msg.content.charAt(8);
-
-            if (alphabet.includes(lettreDemandee.toLowerCase())) {
-                let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";
-                embed = {
-                    "title": "> `" + messageTabFaireDeviner + "` <",
-                    "description": func.affPendu(erreurs),
-                    "color": 2719929,
-                    "fields": [
-                      {
-                        "name": "Erreurs",
-                        "value": erreurs + "/10",
-                        "inline": true
-                      },
-                      {
-                        "name": "Essais",
-                        "value": tries,
-                        "inline": true
-                      },
-                      {
-                        "name": "Lettres",
-                        "value": alphabet.toString().toUpperCase(),
-                        "inline": true
-                      }
-                    ]
-                  };
-                msg.channel.send(messageDejaDemandee);
-                msg.channel.send({embed});
-                return;
-            }
-            if (!arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
-                erreurs++;
-                if (erreurs < 10) {
-                    let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente.``";
-                    alphabet.push(lettreDemandee);
-                    embed = {
-                        "title": "> `" + messageTabFaireDeviner + "` <",
-                        "description": func.affPendu(erreurs),
-                        "color": 2719929,
-                        "fields": [
-                          {
-                            "name": "Erreurs",
-                            "value": erreurs + "/10",
-                            "inline": true
-                          },
-                          {
-                            "name": "Essais",
-                            "value": tries,
-                            "inline": true
-                          },
-                          {
-                            "name": "Lettres",
-                            "value": alphabet.toString().toUpperCase(),
-                            "inline": true
-                          }
-                        ]
-                      };
-                    msg.channel.send(messageErreur);
-                    msg.channel.send({embed});
-                } else {
-                    embed = {
-                        "title": "Défaite !",
-                        "description": func.affPendu(10) + "Vous êtes pendu ! Le mot a trouver était `" + motAFaireDeviner.toUpperCase() + "`",
-                        "color": 15158332
-                      };
-                    msg.channel.send({embed});
-                    penduIsLaunched = false;
-                    return;
-                }
-                
-            } else {
-                while (arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
-                    tirets[arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase())] = lettreDemandee.toUpperCase();
-                    arrayMotAFaireDeviner.splice(arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase()), 1, ' ');
-                    messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
-                }
-                if (tirets.indexOf('_') === -1) {
-                    func.winWord(msg.author);
-                    embed = {
-                        "title": "Victoire !",
-                        "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
-                        "color": 5025616
-                      };
-                    msg.channel.send({embed});
-                    penduIsLaunched = false;
-                    return;
-                } else {
-                    func.winLetter(msg.author);
-                    alphabet.push(lettreDemandee);
-                    embed = {
-                        "title": "> `" + messageTabFaireDeviner + "` <",
-                        "description": func.affPendu(erreurs),
-                        "color": 2719929,
-                        "fields": [
-                          {
-                            "name": "Erreurs",
-                            "value": erreurs + "/10",
-                            "inline": true
-                          },
-                          {
-                            "name": "Essais",
-                            "value": tries,
-                            "inline": true
-                          },
-                          {
-                            "name": "Lettres",
-                            "value": alphabet.toString().toUpperCase(),
-                            "inline": true
-                          }
-                        ]
-                      };
-                    msg.channel.send({embed});
-                }
-            }
-
-        }
-        if (penduIsLaunched && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.split(' ').length === 2 && msg.content.split(' ')[1].match(/^[a-zA-Z-]+$/) && msg.content.length > 9) {
-            tries++
-            if (msg.content.split(' ')[1].toLowerCase() === motAFaireDeviner.toLowerCase()) {
-                func.winWord(msg.author);
-                embed = {
-                    "title": "Victoire !",
-                    "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
-                    "color": 5025616
-                  };
-                msg.channel.send({embed});
-                penduIsLaunched = false;
-                return;
-            } else {
-                erreurs++;
-                if (erreurs < 10) {
-                    let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot.``";
-                    embed = {
-                        "title": "> `" + messageTabFaireDeviner + "` <",
-                        "description": func.affPendu(erreurs),
-                        "color": 2719929,
-                        "fields": [
-                          {
-                            "name": "Erreurs",
-                            "value": erreurs + "/10",
-                            "inline": true
-                          },
-                          {
-                            "name": "Essais",
-                            "value": tries,
-                            "inline": true
-                          },
-                          {
-                            "name": "Lettres",
-                            "value": alphabet.toString().toUpperCase(),
-                            "inline": true
-                          }
-                        ]
-                      };
-                    msg.channel.send(messageErreur);
-                    msg.channel.send({embed});
-                } else {
-                    embed = {
-                        "title": "Défaite !",
-                        "description": func.affPendu(10) + "Vous êtes pendu ! Le mot a trouver était `" + motAFaireDeviner.toUpperCase() + "`",
-                        "color": 15158332
-                      };
-                    msg.channel.send({embed});
-                    penduIsLaunched = false;
-                    return;
-                }
-
-
-            }
-        }
-
-        if (penduIsLaunched && msg.content === commandPrefix + "lettres" && msg.author.username === "Kedrihan") {
-            let messageAlpha = "``Lettres restantes : " + alphabet.toString().toUpperCase() + "``";
-            msg.author.send(messageAlpha);
-            msg.author.send(motAFaireDeviner);
-        }
-        if (penduIsLaunched && msg.content === commandPrefix + "pendu stop" && mod.includes(msg.author.username.toLowerCase())) {
-            penduIsLaunched = false;
-            let messageOver = "``Le modérateur ``" + msg.author.toString() + "`` a mit fin au pendu. ``";
-            msg.channel.send(messageOver);
-        }
-        if (msg.content.split(' ')[0] === commandPrefix + "classement" && msg.content.split(' ').length === 2 && msg.content.split(' ')[1].match(/^\d+$/)) {
-            let limit = msg.content.split(' ')[1];
-            func.getTopFive(msg, limit, client);
-        }
+  if (msg.channel.name === "pendu") {
+    if (msg.content === commandPrefix + "pendu" && penduIsLaunched) {
+      msg.channel.send({ embed });
     }
+    if (msg.content === commandPrefix + "pendu" && !penduIsLaunched) {
+      penduIsLaunched = true;
+
+      motAFaireDeviner = dico[Math.floor(Math.random() * dico.length)];
+      alphabet = [];
+      erreurs = 0;
+      tiretsLength = 0;
+      arrayMotAFaireDeviner = [];
+      tirets = [];
+      tries = 0;
+      for (let letter of motAFaireDeviner) {
+        if (letter !== "-") {
+          tirets.push("_");
+          tiretsLength++;
+        } else {
+          tirets.push(letter);
+
+        }
+
+        arrayMotAFaireDeviner.push(letter.toUpperCase());
+      }
+
+
+      if (arrayMotAFaireDeviner.length === motAFaireDeviner.length) {
+        let messageInitOk1 = "``Le mot est choisi ! Pour demander une lettre, merci de rentrer la commande " + commandPrefix + "devine LETTRE où LETTRE est à remplacer par celle que vous voulez faire deviner, et si vous avez une idée du mot complet, faites " + commandPrefix + "devine MOT (et il y a 8 secondes de délai entre 2 commandes)``";
+        msg.channel.send(messageInitOk1);
+
+        messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
+        let embed = {
+          "title": "> `" + messageTabFaireDeviner + "` <",
+          "description": func.affPendu(erreurs),
+          "color": 2719929,
+          "fields": [
+            {
+              "name": "Erreurs",
+              "value": erreurs + "/10",
+              "inline": true
+            },
+            {
+              "name": "Essais",
+              "value": tries,
+              "inline": true
+            },
+            {
+              "name": "Lettres",
+              "value": "//",
+              "inline": true
+            }
+          ]
+        };
+        msg.channel.send({ embed });
+      }
+    }
+
+    if (penduIsLaunched && msg.content.length === 9 && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.charAt(8).match(/^[a-zA-Z]$/)) {
+      tries++;
+      lettreDemandee = msg.content.charAt(8);
+
+      if (alphabet.includes(lettreDemandee.toLowerCase())) {
+        let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";
+        embed = {
+          "title": "> `" + messageTabFaireDeviner + "` <",
+          "description": func.affPendu(erreurs),
+          "color": 2719929,
+          "fields": [
+            {
+              "name": "Erreurs",
+              "value": erreurs + "/10",
+              "inline": true
+            },
+            {
+              "name": "Essais",
+              "value": tries,
+              "inline": true
+            },
+            {
+              "name": "Lettres",
+              "value": alphabet.toString().toUpperCase(),
+              "inline": true
+            }
+          ]
+        };
+        msg.channel.send(messageDejaDemandee);
+        msg.channel.send({ embed });
+        return;
+      }
+      if (!arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
+        erreurs++;
+        if (erreurs < 10) {
+          let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente.``";
+          alphabet.push(lettreDemandee);
+          embed = {
+            "title": "> `" + messageTabFaireDeviner + "` <",
+            "description": func.affPendu(erreurs),
+            "color": 2719929,
+            "fields": [
+              {
+                "name": "Erreurs",
+                "value": erreurs + "/10",
+                "inline": true
+              },
+              {
+                "name": "Essais",
+                "value": tries,
+                "inline": true
+              },
+              {
+                "name": "Lettres",
+                "value": alphabet.toString().toUpperCase(),
+                "inline": true
+              }
+            ]
+          };
+          msg.channel.send(messageErreur);
+          msg.channel.send({ embed });
+        } else {
+          embed = {
+            "title": "Défaite !",
+            "description": func.affPendu(10) + "Vous êtes pendu ! Le mot a trouver était `" + motAFaireDeviner.toUpperCase() + "`",
+            "color": 15158332
+          };
+          funcXp.getChar(msg.author.id, char => {
+            if (char != null) {
+              funcXp.manageXp(msg.author.id, -2);
+            }
+          });
+          msg.channel.send({ embed });
+          penduIsLaunched = false;
+          return;
+        }
+
+      } else {
+        while (arrayMotAFaireDeviner.includes(lettreDemandee.toUpperCase())) {
+          tirets[arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase())] = lettreDemandee.toUpperCase();
+          arrayMotAFaireDeviner.splice(arrayMotAFaireDeviner.indexOf(lettreDemandee.toUpperCase()), 1, ' ');
+          messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
+        }
+        if (tirets.indexOf('_') === -1) {
+          func.winWord(msg.author);
+          embed = {
+            "title": "Victoire !",
+            "description": func.affPendu(erreurs) + " Bravo " + msg.author.username + " ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais !",
+            "color": 5025616
+          };
+          funcXp.getChar(msg.author.id, char => {
+            if (char != null) {
+              if (char.xp + 2 >= 100) {
+                funcXp.levelUp(char, (res) => {
+                  if (res) {
+                    func.manageXp(char.idDiscord, char.xp + 2 - 100);
+                    let lvl = char.discLevel + 1
+                    msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
+                  }
+                });
+              }
+              else {
+                funcXp.manageXp(msg.author.id, 2);
+              }
+            }
+          });
+          msg.channel.send({ embed });
+          penduIsLaunched = false;
+          return;
+        } else {
+          func.winLetter(msg.author);
+          alphabet.push(lettreDemandee);
+          embed = {
+            "title": "> `" + messageTabFaireDeviner + "` <",
+            "description": func.affPendu(erreurs),
+            "color": 2719929,
+            "fields": [
+              {
+                "name": "Erreurs",
+                "value": erreurs + "/10",
+                "inline": true
+              },
+              {
+                "name": "Essais",
+                "value": tries,
+                "inline": true
+              },
+              {
+                "name": "Lettres",
+                "value": alphabet.toString().toUpperCase(),
+                "inline": true
+              }
+            ]
+          };
+          funcXp.getChar(msg.author.id, char => {
+            if (char != null) {
+              if (char.xp + 1 >= 100) {
+                funcXp.levelUp(char, (res) => {
+                  if (res) {
+                    func.manageXp(char.idDiscord, char.xp + 1 - 100);
+                    let lvl = char.discLevel + 1
+                    msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
+                  }
+                });
+              }
+              else {
+                funcXp.manageXp(msg.author.id, 1);
+              }
+            }
+          });
+          msg.channel.send({ embed });
+        }
+      }
+
+    }
+    if (penduIsLaunched && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.split(' ').length === 2 && msg.content.split(' ')[1].match(/^[a-zA-Z-]+$/) && msg.content.length > 9) {
+      tries++
+      if (msg.content.split(' ')[1].toLowerCase() === motAFaireDeviner.toLowerCase()) {
+        func.winWord(msg.author);
+        embed = {
+          "title": "Victoire !",
+          "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
+          "color": 5025616
+        };
+        funcXp.getChar(msg.author.id, char => {
+          if (char != null) {
+            if (char.xp + 2 >= 100) {
+              funcXp.levelUp(char, (res) => {
+                if (res) {
+                  func.manageXp(char.idDiscord, char.xp + 2 - 100);
+                  let lvl = char.discLevel + 1
+                  msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
+                }
+              });
+            }
+            else {
+              funcXp.manageXp(msg.author.id, 2);
+            }
+          }
+        });
+        msg.channel.send({ embed });
+        penduIsLaunched = false;
+        return;
+      } else {
+        erreurs++;
+        if (erreurs < 10) {
+          let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot.``";
+          embed = {
+            "title": "> `" + messageTabFaireDeviner + "` <",
+            "description": func.affPendu(erreurs),
+            "color": 2719929,
+            "fields": [
+              {
+                "name": "Erreurs",
+                "value": erreurs + "/10",
+                "inline": true
+              },
+              {
+                "name": "Essais",
+                "value": tries,
+                "inline": true
+              },
+              {
+                "name": "Lettres",
+                "value": alphabet.toString().toUpperCase(),
+                "inline": true
+              }
+            ]
+          };
+          msg.channel.send(messageErreur);
+          msg.channel.send({ embed });
+        } else {
+          embed = {
+            "title": "Défaite !",
+            "description": func.affPendu(10) + "Vous êtes pendu ! Le mot a trouver était `" + motAFaireDeviner.toUpperCase() + "`",
+            "color": 15158332
+          };
+          funcXp.getChar(msg.author.id, char => {
+            if (char != null) {
+              funcXp.manageXp(msg.author.id, -2);
+            }
+          });
+          msg.channel.send({ embed });
+          penduIsLaunched = false;
+          return;
+        }
+
+
+      }
+    }
+
+    if (penduIsLaunched && msg.content === commandPrefix + "lettres" && msg.author.username === "Kedrihan") {
+      let messageAlpha = "``Lettres restantes : " + alphabet.toString().toUpperCase() + "``";
+      msg.author.send(messageAlpha);
+      msg.author.send(motAFaireDeviner);
+    }
+    if (penduIsLaunched && msg.content === commandPrefix + "pendu stop" && mod.includes(msg.author.username.toLowerCase())) {
+      penduIsLaunched = false;
+      let messageOver = "``Le modérateur ``" + msg.author.toString() + "`` a mit fin au pendu. ``";
+      msg.channel.send(messageOver);
+    }
+    if (msg.content.split(' ')[0] === commandPrefix + "classement" && msg.content.split(' ').length === 2 && msg.content.split(' ')[1].match(/^\d+$/)) {
+      let limit = msg.content.split(' ')[1];
+      func.getTopFive(msg, limit, client);
+    }
+  }
 };

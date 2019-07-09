@@ -26,17 +26,17 @@ module.exports = {
       }
     });
   },
-  winWord: function (user) {
+  winWord: function (user, bonus = 2) {
     let sql = "SELECT * FROM ranking WHERE id_user=?";
     connection.query(sql, [user.id], (err, res) => {
       if (err) console.log(err);
       if (res[0] === undefined) {
         sql = "INSERT INTO ranking (id_user, score) VALUES (?, ?)";
-        connection.query(sql, [user.id, 2], (err, res) => {
+        connection.query(sql, [user.id, bonus], (err, res) => {
           if (err) console.log(err);
         });
       } else {
-        res[0].score += 2;
+        res[0].score += bonus;
         sql = "UPDATE ranking SET score=? WHERE id_user=?";
         connection.query(sql, [res[0].score, user.id], (err, res) => {
           if (err) console.log(err);

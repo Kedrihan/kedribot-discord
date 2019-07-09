@@ -236,7 +236,13 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
     if (penduIsLaunched && msg.content.split(' ')[0] === commandPrefix + "devine" && msg.content.split(' ').length === 2 && msg.content.split(' ')[1].match(/^[a-zA-Z-]+$/) && msg.content.length > 9) {
       tries++
       if (msg.content.split(' ')[1].toLowerCase() === motAFaireDeviner.toLowerCase()) {
-        func.winWord(msg.author);
+        let bonus = 2;
+        let t = Array.from(tirets);
+        while (t.indexOf("_") > -1) {
+          t.splice(t.indexOf("_"), 1);
+          bonus++;
+        }
+        func.winWord(msg.author, bonus);
         embed = {
           "title": "Victoire !",
           "description": func.affPendu(erreurs) + " Bravo ! Vous avez trouvé le mot `" + motAFaireDeviner.toUpperCase() + "` avec **" + erreurs + "** erreurs et **" + tries + "** essais!",
@@ -244,17 +250,17 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
         };
         funcXp.getChar(msg.author.id, char => {
           if (char != null) {
-            if (char.xp + 2 >= 100) {
+            if (char.xp + bonus >= 100) {
               funcXp.levelUp(char, (res) => {
                 if (res) {
-                  funcXp.manageXp(char.idDiscord, char.xp + 2 - 100);
+                  funcXp.manageXp(char.idDiscord, char.xp + bonus - 100);
                   let lvl = char.discLevel + 1
                   msg.channel.send(msg.author.toString() + " passe niveau " + lvl + " !");
                 }
               });
             }
             else {
-              funcXp.manageXp(msg.author.id, 2);
+              funcXp.manageXp(msg.author.id, bonus);
             }
           }
         });

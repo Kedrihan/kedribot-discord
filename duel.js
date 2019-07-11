@@ -81,25 +81,33 @@ exports.duel = async function (
           let titleL = func.adaptCell(" Défaites Duel ", maxLosD)
           let titleF = func.adaptCell(" Fuites Duel ", maxDuelF)
 
-          message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
           if (maxUsrNme < titlePs.length - 2) {
             maxUsrNme = titlePs.length
+            nbrTUsr = func.getDashNumbers(maxUsrNme);
           }
           if (maxDLvl < titleLvl.length - 2) {
             maxDLvl = titleLvl.length
+            nbrTLvl = func.getDashNumbers(maxDLvl);
           }
           if (maxWinRR < titleRR.length - 2) {
             maxWinRR = titleRR.length
+            nbrTRR = func.getDashNumbers(maxWinRR);
           }
           if (maxWinD < titleW.length - 2) {
             maxWinD = titleW.length
+            nbrTW = func.getDashNumbers(maxWinD);
           }
           if (maxLosD < titleL.length - 2) {
             maxLosD = titleL.length
+            nbrTL = func.getDashNumbers(maxLosD);
           }
           if (maxDuelF < titleF.length - 2) {
             maxDuelF = titleF.length
+            nbrTF = func.getDashNumbers(maxDuelF);
           }
+
+          message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
+
           for (let i = 0; i < chars.length; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
@@ -123,7 +131,7 @@ exports.duel = async function (
               chmpDuelF = func.adaptCell(chmpDuelF, maxDuelF)
 
 
-              let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+-"
+              let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+"
               message = message.concat("\n", ccat);
             }
           }

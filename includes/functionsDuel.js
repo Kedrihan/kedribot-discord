@@ -358,7 +358,7 @@ E : String, taille max voulue
 S : string pour formatter le tableau
 */
   adaptCell: function (str, max) {
-    while (str.length < max) {
+    while (str.length < max + 2) {
       str = str + " ";
     }
     return str;

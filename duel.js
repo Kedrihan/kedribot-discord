@@ -42,6 +42,7 @@ exports.duel = async function (
       }
       if (msg.content === commandPrefix + "charslink") {
         func.getAllDbChar((chars) => {
+          func.buildHtml(chars, serverMembers)
           let usernames = [];
           let winD = [];
           let loseD = [];

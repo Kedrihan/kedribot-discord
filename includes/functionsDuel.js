@@ -4,6 +4,7 @@ const blizzard = require("blizzard.js").initialize({
   key: AuthDetails.blizzardClientId,
   secret: AuthDetails.blizzardClientSecret
 });
+let fs = require('fs');
 
 module.exports = {
   /*
@@ -362,5 +363,27 @@ S : string pour formatter le tableau
       str = str + " ";
     }
     return str;
+  },
+  /*
+Fonction buildHtml
+R : Créer le fichier HTML affichant le tableau des scores
+E : String, taille max voulue
+S : string pour formatter le tableau
+*/
+  buildHtml: function (chars, serverMembers) {
+    let text = "<table><thead><tr><th>Pseudo</th><th>Niveau</th><th>Victoires au RoyalRumble</th><th>Victoires Duel</th><th>Défaites Duel</th><thFuites Duel></th></tr></thead><tbody>";
+    for (let i = 0; i < chars.length; i++) {
+      let usr = serverMembers.get(chars[i].idDiscord);
+
+      text = text + "<tr><td>" + usr.user.username + "</td><td>" + chars[i].discLevel + "</td><td>" + chars[i].winRR + "</td><td>" + chars[i].winDuel + "</td><td>" + chars[i].losDuel + "</td><td>" + chars[i].nbFuites + "</td></tr>"
+
+    }
+    text = text + "</tbody></table>"
+
+    fs.writeFile('../../../site-perso/public/charslink.html', text, function (err) {
+      // If an error occurred, show it and return
+      if (err) return console.error(err);
+      // Successfully wrote to the file!
+    });
   },
 };

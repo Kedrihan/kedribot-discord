@@ -31,7 +31,8 @@ exports.duel = async function (
       if (msg.content === commandPrefix + "profile") {
         func.getChar(msg.author.id, (char) => {
           if (char != null && char.name != null) {
-            msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/100 points d'expérience, et ton personnage lié est " + char.name + "-" + char.server + ", bisou :)")
+            let xpLvl = (100 * (char.discLevel + 1));
+            msg.channel.send("Salut " + msg.author.toString() + ", tu es niveau " + char.discLevel + " avec " + char.xp + "/" + xpLvl + " points d'expérience, et ton personnage lié est " + char.name + "-" + char.server + ", bisou :)")
           }
           else {
             msg.channel.send("Vous n'avez pas lié de personnage :(")
@@ -41,10 +42,40 @@ exports.duel = async function (
       }
       if (msg.content === commandPrefix + "charslink") {
         func.getAllDbChar((chars) => {
-          let message = "```Liste des personnes ayant un personnage lié sur Discord : ";
+          let usernames = [];
+          let winD = [];
+          let loseD = [];
+          let winRR = [];
+          let fDuel = [];
+          let dLvl = [];
           for (let i = 0; i < chars.length; i++) {
             let usr = serverMembers.get(chars[i].idDiscord);
-            message = message.concat("\n", usr.user.username + " - niveau de duel : " + chars[i].discLevel);
+            usernames.push(usr.user.username);
+            winD.push(chars[i].winDuel);
+            loseD.push(chars[i].losDuel);
+            winRR.push(chars[i].winRR);
+            fDuel.push(chars[i].nbFuites);
+            dLvl.push(chars[i].discLevel);
+          }
+          let maxUsrNme = Math.max(...(usernames.map(el => el.length)));
+          let maxWinD = Math.max(winD);
+          let maxLosD = Math.max(loseD);
+          let maxWinRR = Math.max(winRR);
+          let maxDuelF = Math.max(fDuel);
+          let maxDLvl = Math.max(dLvl);
+          let nbrTUsr = func.getDashNumbers(maxUsrNme);
+          let nbrTLvl = func.getDashNumbers(maxDLvl.length);
+          let nbrTRR = func.getDashNumbers(maxWinRR.length);
+          let nbrTW = func.getDashNumbers(maxWinD.length);
+          let nbrTL = func.getDashNumbers(maxLosD.length);
+          let nbrTF = func.getDashNumbers(maxDuelF.length);
+          let message = "```+---------------------------------------------------------+\n| Liste des personnes ayant un personnage lié sur Discord |\n+---------------------------------------------------------+";
+          //message = message.concat("\n", "| P | " + chars[i].discLevel + " | " + chars[i].winRR + " | " + chars[i].winDuel + " | " + chars[i].losDuel + " | " + chars[i].nbFuites + " |\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+")
+          for (let i = 0; i < chars.length; i++) {
+            let usr = serverMembers.get(chars[i].idDiscord);
+
+            let ccat = "| " + usr.user.username + " | " + chars[i].discLevel + " | " + chars[i].winRR + " | " + chars[i].winDuel + " | " + chars[i].losDuel + " | " + chars[i].nbFuites + " |\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
+            message = message.concat("\n", ccat);
           }
           message = message.concat(" ", "```");
           msg.channel.send(message);
@@ -277,7 +308,7 @@ exports.duel = async function (
                         xp = -2
                       }
 
-                      if (authorChar.xp + xp < 100) {
+                      if (authorChar.xp + xp < (100 * (char.discLevel + 1))) {
 
                         func.manageXp(authorChar.idDiscord, xp);
                         if (xp != -2) {
@@ -291,7 +322,7 @@ exports.duel = async function (
                       else {
                         func.levelUp(authorChar, (res) => {
                           if (res) {
-                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - 100);
+                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (char.discLevel + 1)));
                             let newLvl = authorChar.discLevel + 1;
                             msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
                           }

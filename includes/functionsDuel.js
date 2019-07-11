@@ -15,11 +15,11 @@ module.exports = {
   getCharFromAPI: function (charName, userId, callback) {
     let char = charName.split("-")[0];
     let server = charName.split("-")[1];
-    
+
     blizzard.getApplicationToken().then(response => {
       blizzard.defaults.token = response.data.access_token;
       let orig = "eu"
-      if(charName.split("-")[2] != undefined) {
+      if (charName.split("-")[2] != undefined) {
         orig = charName.split("-")[2]
       }
       blizzard.wow
@@ -210,7 +210,7 @@ module.exports = {
     E : Noms des participants
     S : Message textuel
     */
-   winMessageNoChar: function (winner, looser, callback) {
+  winMessageNoChar: function (winner, looser, callback) {
     let sql = "SELECT COUNT(phrase) FROM winPhrases";
     let message = "";
     connection.query(sql, (err, res) => {
@@ -340,5 +340,18 @@ S : vide
       return callback(true)
     });
 
+  },
+  /*
+Fonction getDashNumbers
+R : Pour le format du tableau de charslink
+E : String
+S : string avec des tirets pour formatter le tableau
+*/
+  getDashNumbers: function (str) {
+    let res = "";
+    for (let i = 0; i < str.length + 2; i++) {
+      res = res + "-"
+    }
+    return res;
   },
 };

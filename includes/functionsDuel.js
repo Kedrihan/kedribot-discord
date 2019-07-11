@@ -62,7 +62,11 @@ module.exports = {
           server: res[0].charRealm,
           name: res[0].charName,
           xp: res[0].xp,
-          discLevel: res[0].discLevel
+          discLevel: res[0].discLevel,
+          winnerRR: res[0].rumbleChamp,
+          winDuel: res[0].winDuel,
+          losDuel: res[0].losDuel,
+          nbFuites: res[0].nbFuites
         };
         return callback(charReturn);
       }
@@ -167,10 +171,15 @@ module.exports = {
     */
   fleeAway: function (classFlee, callback) {
     let sql = "SELECT phrase FROM fleeCatchPhrases WHERE classId=?";
-    connection.query(sql, [classFlee], (err, res) => {
+    connection.query(sql, [classFlee.class], (err, res) => {
       if (err) console.log(err);
       if (typeof res[0] != "undefined") {
-        return callback(res[0].phrase);
+        sql = "UPDATE linkedChar SET nbFuites=? WHERE idDiscord=?";
+        connection.query(sql, [classFlee.nbFuites + 1, classFlee.idDiscord], (err1) => {
+          if (err1) console.log(err1);
+          return callback(res[0].phrase);
+        });
+
       }
     });
   },
@@ -197,9 +206,18 @@ module.exports = {
         connection.query(sql, [rand], (err, res) => {
           if (err) console.log(err);
           if (typeof res != "undefined") {
-            message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");
-            message = message.replace("{Y}", "<@" + looser.idDiscord + "> (level " + looser.discLevel + ")");
-            return callback(message);
+            sql = "UPDATE linkedChar SET winDuel=? WHERE idDiscord=?"
+            connection.query(sql, [winner.winDuel + 1, winner.idDiscord], (err) => {
+              if (err) console.log(err);
+              sql = "UPDATE linkedChar SET losDuel=? WHERE idDiscord=?"
+              connection.query(sql, [looser.losDuel + 1, looser.idDiscord], (err) => {
+                if (err) console.log(err);
+                message = res[0].phrase.replace("{X}", "<@" + winner.idDiscord + "> (level " + winner.discLevel + ")");
+                message = message.replace("{Y}", "<@" + looser.idDiscord + "> (level " + looser.discLevel + ")");
+                return callback(message);
+              })
+            })
+
           }
         });
       }
@@ -316,15 +334,18 @@ S : vide
 */
   setRRWinner: function (idNew, idOld) {
 
-    let sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
-    connection.query(sql, [true, idNew], (err) => {
-      if (err) console.log(err);
-      sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
-      connection.query(sql, [false, idOld], (err) => {
+    this.getWinner((winner) => {
+      let sql = "UPDATE linkedChar SET rumbleChamp=?, winRR=? WHERE idDiscord=?";
+      connection.query(sql, [true, winner.winRR + 1, idNew], (err) => {
         if (err) console.log(err);
+        sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
+        connection.query(sql, [false, idOld], (err) => {
+          if (err) console.log(err);
 
+        });
       });
-    });
+    })
+
 
   },
   /*
@@ -380,7 +401,7 @@ S : string pour formatter le tableau
     }
     text = text + "<style type=\"text/css\">table{border-collapse:collapse;} th,td {border:1px solid black;}</style></tbody></table></body></html>"
 
-    fs.writeFile(__dirname+'/../../../site-perso/public/charslink.html', text, function (err) {
+    fs.writeFile(__dirname + '/../../../site-perso/public/charslink.html', text, function (err) {
       // If an error occurred, show it and return
       if (err) return console.error(err);
       // Successfully wrote to the file!

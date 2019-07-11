@@ -249,14 +249,19 @@ exports.duel = async function (
                     } else {
                       percentWinAuthor -= diffIlvl;
                     }
-
+                    if(authorChar.winnerRR) {
+                      percentWinAuthor += 5
+                    }
+                    if(opponentChar.winnerRR) {
+                      percentWinAuthor -= 5
+                    }
                     let flee = Math.floor(Math.random() * Math.floor(100));
                     if (flee < 15) {
                       if (armorAuthor != null && armorOpponent != null) {
                         switch (armorAuthor.typeName) {
                           case "T":
                             if (armorOpponent.typeName === "C") {
-                              func.fleeAway(authorChar.class, message => {
+                              func.fleeAway(authorChar, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
                                 msg.channel.send(message + " ");
@@ -264,7 +269,7 @@ exports.duel = async function (
                               });
 
                             } else if (armorOpponent.typeName === "P") {
-                              func.fleeAway(opponentChar.class, message => {
+                              func.fleeAway(opponentChar, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
                                 msg.channel.send(message + " ");
@@ -274,14 +279,14 @@ exports.duel = async function (
                             break;
                           case "C":
                             if (armorOpponent.typeName === "M") {
-                              func.fleeAway(authorChar.class, message => {
+                              func.fleeAway(authorChar, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
                                 msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "T") {
-                              func.fleeAway(opponentChar.class, message => {
+                              func.fleeAway(opponentChar, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
                                 msg.channel.send(message + " ");
@@ -291,14 +296,14 @@ exports.duel = async function (
                             break;
                           case "M":
                             if (armorOpponent.typeName === "P") {
-                              func.fleeAway(authorChar.class, message => {
+                              func.fleeAway(authorChar, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
                                 msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "C") {
-                              func.fleeAway(opponentChar.class, message => {
+                              func.fleeAway(opponentChar, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
                                 msg.channel.send(message + " ");
@@ -308,14 +313,14 @@ exports.duel = async function (
                             break;
                           case "P":
                             if (armorOpponent.typeName === "T") {
-                              func.fleeAway(authorChar.class, message => {
+                              func.fleeAway(authorChar, message => {
                                 message = message.replace("{X}", msg.author.toString());
                                 message = message.replace("{Y}", target);
                                 msg.channel.send(message + " ");
                                 return;
                               });
                             } else if (armorOpponent.typeName === "M") {
-                              func.fleeAway(opponentChar.class, message => {
+                              func.fleeAway(opponentChar, message => {
                                 message = message.replace("{X}", target);
                                 message = message.replace("{Y}", msg.author.toString());
                                 msg.channel.send(message + " ");

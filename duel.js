@@ -49,7 +49,7 @@ exports.duel = async function (
           let winRR = [];
           let fDuel = [];
           let dLvl = [];
-          for (let i = 0; i < chars.length; i++) {
+          for (let i = 0; i < 10; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
               usernames.push(usr.user.username);
@@ -115,7 +115,7 @@ exports.duel = async function (
 
           message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
 
-          for (let i = 0; i < chars.length; i++) {
+          for (let i = 0; i < 10; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
 
@@ -143,8 +143,8 @@ exports.duel = async function (
             }
           }
           message = message.concat(" ", "```");
-          message = message.concat("\n", "__Note : sur ce tableau, uniquement les membres niveau 1 minimum sont affichés.__")
-          message = message.concat("\n", "Si vous ne pouvez pas voir ce tableau correctement, suivez ce lien pour le consulter en ligne : https://kedrihan.fr/charslink.html (il n'est pas mis à jour en temps réel)")
+          message = message.concat("\n", "__Note : sur ce tableau, uniquement les 10 premiers membres niveau 1 ou plus sont affichés.__")
+          message = message.concat("\n", "Si vous ne pouvez pas voir ce tableau correctement ou que vous voulez consulter son intégralité, suivez ce lien pour le consulter en ligne : https://kedrihan.fr/charslink.html (il n'est pas mis à jour en temps réel)")
           msg.channel.send(message);
 
         });
@@ -381,7 +381,7 @@ exports.duel = async function (
                         xp = -2
                       }
 
-                      if (authorChar.xp + xp < (100 * (char.discLevel + 1))) {
+                      if (authorChar.xp + xp < (100 * (authorChar.discLevel + 1))) {
 
                         func.manageXp(authorChar.idDiscord, xp);
                         if (xp != -2) {
@@ -395,7 +395,7 @@ exports.duel = async function (
                       else {
                         func.levelUp(authorChar, (res) => {
                           if (res) {
-                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (char.discLevel + 1)));
+                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (authorChar.discLevel + 1)));
                             let newLvl = authorChar.discLevel + 1;
                             msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
                           }

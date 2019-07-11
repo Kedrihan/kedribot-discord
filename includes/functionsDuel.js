@@ -344,7 +344,7 @@ S : vide
   /*
 Fonction getDashNumbers
 R : Pour le format du tableau de charslink
-E : String
+E : taille d'une string
 S : string avec des tirets pour formatter le tableau
 */
   getDashNumbers: function (lgth) {
@@ -352,4 +352,16 @@ S : string avec des tirets pour formatter le tableau
 
     return res;
   },
+    /*
+Fonction adaptCell
+R : Pour le format du tableau de charslink, adapte la taille de cellule
+E : String, taille max voulue
+S : string pour formatter le tableau
+*/
+adaptCell: function (str, max) {
+  while (str.length < max + 2) {
+    str = str + " ";
+  }
+  return str;
+},
 };

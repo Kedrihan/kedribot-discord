@@ -64,49 +64,50 @@ exports.duel = async function (
           let maxDuelF = Math.max(fDuel);
           let maxDLvl = Math.max(dLvl);
           let nbrTUsr = func.getDashNumbers(maxUsrNme);
-          let nbrTLvl = func.getDashNumbers(maxDLvl.length);
-          let nbrTRR = func.getDashNumbers(maxWinRR.length);
-          let nbrTW = func.getDashNumbers(maxWinD.length);
-          let nbrTL = func.getDashNumbers(maxLosD.length);
-          let nbrTF = func.getDashNumbers(maxDuelF.length);
-          let message = "```+---------------------------------------------------------+\n| Liste des personnes ayant un personnage lié sur Discord |\n+---------------------------------------------------------+";
-          //message = message.concat("\n", "| P | " + chars[i].discLevel + " | " + chars[i].winRR + " | " + chars[i].winDuel + " | " + chars[i].losDuel + " | " + chars[i].nbFuites + " |\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+")
+          let nbrTLvl = func.getDashNumbers(maxDLvl.toString().length);
+          let nbrTRR = func.getDashNumbers(maxWinRR.toString().length);
+          let nbrTW = func.getDashNumbers(maxWinD.toString().length);
+          let nbrTL = func.getDashNumbers(maxLosD.toString().length);
+          let nbrTF = func.getDashNumbers(maxDuelF.toString().length);
+
+          let message = "```";
+
+          let titlePs = func.adaptCell(" Pseudo ", maxUsrNme)
+          let titleLvl = func.adaptCell(" Niveau ", maxDLvl.toString().length)
+          let titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR.toString().length)
+          let titleW = func.adaptCell(" Victoires Duel ", maxWinD.toString().length)
+          let titleL = func.adaptCell(" Défaites Duel ", maxLosD.toString().length)
+          let titleF = func.adaptCell(" Fuites Duel ", maxDuelF.toString().length)
+          message = message.concat("\n", "|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+")
           for (let i = 0; i < chars.length; i++) {
+            if (chars[i].discLevel != 0) {
+              let usr = serverMembers.get(chars[i].idDiscord);
 
-            let usr = serverMembers.get(chars[i].idDiscord);
+              let chmpUsrNme = " " + usr.user.username + " ";
+              chmpUsrNme = func.adaptCell(chmpUsrNme, maxUsrNme)
 
-            let chmpUsrNme = " " + usr.user.username + " ";
-            while (chmpUsrNme.length < maxUsrNme + 2) {
-              chmpUsrNme = chmpUsrNme + " ";
-            }
-            let chmpLvl = " " + chars[i].discLevel + " ";
-            while (chmpLvl.length < maxDLvl.length) {
-              chmpLvl = chmpLvl + " ";
-            }
-            let chmpWinRR = " " + chars[i].winRR + " ";
-            while (chmpWinRR.length < maxWinRR.length + 2) {
-              chmpWinRR = chmpWinRR + " ";
-            }
-            let chmpWinD = " " + chars[i].winDuel + " ";
-            while (chmpWinD.length < maxWinD.length + 2) {
-              chmpWinD = chmpWinD + " ";
-            }
-            let chmpLoseD = " " + chars[i].losDuel + " ";
-            while (chmpLoseD.length < maxLosD.length + 2) {
-              chmpLoseD = chmpLoseD + " ";
-            }
-            let chmpDuelF = " " + chars[i].nbFuites + " ";
-            while (chmpDuelF.length < maxDuelF.length + 2) {
-              chmpDuelF = chmpDuelF + " ";
-            }
+              let chmpLvl = " " + chars[i].discLevel + " ";
+              chmpLvl = func.adaptCell(chmpLvl, maxDLvl.toString().length)
+
+              let chmpWinRR = " " + chars[i].winRR + " ";
+              chmpWinRR = func.adaptCell(chmpWinRR, maxWinRR.toString().length)
+
+              let chmpWinD = " " + chars[i].winDuel + " ";
+              chmpWinD = func.adaptCell(chmpWinD, maxWinD.toString().length)
+
+              let chmpLoseD = " " + chars[i].losDuel + " ";
+              chmpLoseD = func.adaptCell(chmpLoseD, maxLosD.toString().length)
+
+              let chmpDuelF = " " + chars[i].nbFuites + " ";
+              chmpDuelF = func.adaptCell(chmpDuelF, maxDuelF.toString().length)
 
 
-
-            let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
-            message = message.concat("\n", ccat);
+              let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
+              message = message.concat("\n", ccat);
+            }
+            message = message.concat(" ", "```");
+            msg.channel.send(message);
           }
-          message = message.concat(" ", "```");
-          msg.channel.send(message);
         });
         return;
       }

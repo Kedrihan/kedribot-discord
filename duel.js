@@ -74,12 +74,12 @@ exports.duel = async function (
 
           let message = "```";
 
-          let titlePs = func.adaptCell(" Pseudo ", maxUsrNme - 2)
-          let titleLvl = func.adaptCell(" Niveau ", maxDLvl - 2)
-          let titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR - 2)
-          let titleW = func.adaptCell(" Victoires Duel ", maxWinD - 2)
-          let titleL = func.adaptCell(" Défaites Duel ", maxLosD - 2)
-          let titleF = func.adaptCell(" Fuites Duel ", maxDuelF - 2)
+          let titlePs = func.adaptCell(" Pseudo ", maxUsrNme)
+          let titleLvl = func.adaptCell(" Niveau ", maxDLvl)
+          let titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR)
+          let titleW = func.adaptCell(" Victoires Duel ", maxWinD)
+          let titleL = func.adaptCell(" Défaites Duel ", maxLosD)
+          let titleF = func.adaptCell(" Fuites Duel ", maxDuelF)
 
           if (maxUsrNme < titlePs.length - 2) {
             maxUsrNme = titlePs.length

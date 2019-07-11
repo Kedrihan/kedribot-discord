@@ -84,26 +84,32 @@ exports.duel = async function (
           if (maxUsrNme < titlePs.length - 2) {
             maxUsrNme = titlePs.length
             nbrTUsr = func.getDashNumbers(maxUsrNme);
+            titlePs = func.adaptCell(" Pseudo ", maxUsrNme)
           }
           if (maxDLvl < titleLvl.length - 2) {
             maxDLvl = titleLvl.length
             nbrTLvl = func.getDashNumbers(maxDLvl);
+            titleLvl = func.adaptCell(" Niveau ", maxDLvl)
           }
           if (maxWinRR < titleRR.length - 2) {
             maxWinRR = titleRR.length
             nbrTRR = func.getDashNumbers(maxWinRR);
+            titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR)
           }
           if (maxWinD < titleW.length - 2) {
             maxWinD = titleW.length
             nbrTW = func.getDashNumbers(maxWinD);
+            titleW = func.adaptCell(" Victoires Duel ", maxWinD)
           }
           if (maxLosD < titleL.length - 2) {
             maxLosD = titleL.length
             nbrTL = func.getDashNumbers(maxLosD);
+            titleL = func.adaptCell(" Défaites Duel ", maxLosD)
           }
           if (maxDuelF < titleF.length - 2) {
             maxDuelF = titleF.length
             nbrTF = func.getDashNumbers(maxDuelF);
+            titleF = func.adaptCell(" Fuites Duel ", maxDuelF)
           }
 
           message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")

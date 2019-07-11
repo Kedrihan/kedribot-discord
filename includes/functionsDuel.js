@@ -347,11 +347,9 @@ R : Pour le format du tableau de charslink
 E : String
 S : string avec des tirets pour formatter le tableau
 */
-  getDashNumbers: function (str) {
-    let res = "";
-    for (let i = 0; i < str.length + 2; i++) {
-      res = res + "-"
-    }
+  getDashNumbers: function (lgth) {
+    let res = "-".repeat(lgth+2);
+
     return res;
   },
 };

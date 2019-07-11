@@ -72,9 +72,37 @@ exports.duel = async function (
           let message = "```+---------------------------------------------------------+\n| Liste des personnes ayant un personnage lié sur Discord |\n+---------------------------------------------------------+";
           //message = message.concat("\n", "| P | " + chars[i].discLevel + " | " + chars[i].winRR + " | " + chars[i].winDuel + " | " + chars[i].losDuel + " | " + chars[i].nbFuites + " |\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+")
           for (let i = 0; i < chars.length; i++) {
+
             let usr = serverMembers.get(chars[i].idDiscord);
 
-            let ccat = "| " + usr.user.username + " | " + chars[i].discLevel + " | " + chars[i].winRR + " | " + chars[i].winDuel + " | " + chars[i].losDuel + " | " + chars[i].nbFuites + " |\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
+            let chmpUsrNme = " " + usr.user.username + " ";
+            while (chmpUsrNme.length < maxUsrNme + 2) {
+              chmpUsrNme = chmpUsrNme + " ";
+            }
+            let chmpLvl = " " + chars[i].discLevel + " ";
+            while (chmpLvl.length < maxDLvl.length) {
+              chmpLvl = chmpLvl + " ";
+            }
+            let chmpWinRR = " " + chars[i].winRR + " ";
+            while (chmpWinRR.length < maxWinRR.length + 2) {
+              chmpWinRR = chmpWinRR + " ";
+            }
+            let chmpWinD = " " + chars[i].winDuel + " ";
+            while (chmpWinD.length < maxWinD.length + 2) {
+              chmpWinD = chmpWinD + " ";
+            }
+            let chmpLoseD = " " + chars[i].losDuel + " ";
+            while (chmpLoseD.length < maxLosD.length + 2) {
+              chmpLoseD = chmpLoseD + " ";
+            }
+            let chmpDuelF = " " + chars[i].nbFuites + " ";
+            while (chmpDuelF.length < maxDuelF.length + 2) {
+              chmpDuelF = chmpDuelF + " ";
+            }
+
+
+
+            let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
             message = message.concat("\n", ccat);
           }
           message = message.concat(" ", "```");

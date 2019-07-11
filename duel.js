@@ -143,6 +143,8 @@ exports.duel = async function (
             }
           }
           message = message.concat(" ", "```");
+          message = message.concat("\n", "__Note : sur ce tableau, uniquement les membres niveau 1 minimum sont affichés.__")
+          message = message.concat("\n", "Si vous ne pouvez pas voir ce tableau correctement, suivez ce lien pour le consulter en ligne : https://kedrihan.fr/charslink.html (il n'est pas mis à jour en temps réel)")
           msg.channel.send(message);
 
         });

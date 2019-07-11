@@ -371,14 +371,14 @@ E : String, taille max voulue
 S : string pour formatter le tableau
 */
   buildHtml: function (chars, serverMembers) {
-    let text = "<table><thead><tr><th>Pseudo</th><th>Niveau</th><th>Victoires au RoyalRumble</th><th>Victoires Duel</th><th>Défaites Duel</th><thFuites Duel></th></tr></thead><tbody>";
+    let text = "<html><head><title>Salut</title><meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/></head><body><table><thead><tr><th>Pseudo</th><th>Niveau</th><th>Victoires au RoyalRumble</th><th>Victoires Duel</th><th>Défaites Duel</th><thFuites Duel></th></tr></thead><tbody>";
     for (let i = 0; i < chars.length; i++) {
       let usr = serverMembers.get(chars[i].idDiscord);
 
       text = text + "<tr><td>" + usr.user.username + "</td><td>" + chars[i].discLevel + "</td><td>" + chars[i].winRR + "</td><td>" + chars[i].winDuel + "</td><td>" + chars[i].losDuel + "</td><td>" + chars[i].nbFuites + "</td></tr>"
 
     }
-    text = text + "</tbody></table>"
+    text = text + "<style type=\"text/css\">table{border-collapse:collapse;} th,td {border:1px solid black;}</style></tbody></table></body></html>"
 
     fs.writeFile(__dirname+'/../../../site-perso/public/charslink.html', text, function (err) {
       // If an error occurred, show it and return

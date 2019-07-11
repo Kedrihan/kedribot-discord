@@ -77,7 +77,7 @@ module.exports = {
     S : Tous les personnages de la bdd
     */
   getAllDbChar: function (callback) {
-    let sql = "SELECT * FROM linkedChar WHERE charName IS NOT NULL";
+    let sql = "SELECT * FROM linkedChar WHERE charName IS NOT NULL ORDER BY discLevel DESC";
     connection.query(sql, (err, res) => {
       if (err) console.log(err);
       if (typeof res[0] != "undefined") {

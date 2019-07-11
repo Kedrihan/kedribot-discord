@@ -49,7 +49,7 @@ exports.duel = async function (
           let winRR = [];
           let fDuel = [];
           let dLvl = [];
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 5; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
               usernames.push(usr.user.username);
@@ -115,7 +115,7 @@ exports.duel = async function (
 
           message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
 
-          for (let i = 0; i < 10; i++) {
+          for (let i = 0; i < 5; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
 
@@ -143,7 +143,7 @@ exports.duel = async function (
             }
           }
           message = message.concat(" ", "```");
-          message = message.concat("\n", "__Note : sur ce tableau, uniquement les 10 premiers membres niveau 1 ou plus sont affichés.__")
+          message = message.concat("\n", "__Note : sur ce tableau, uniquement les 5 premiers membres niveau 1 ou plus sont affichés.__")
           message = message.concat("\n", "Si vous ne pouvez pas voir ce tableau correctement ou que vous voulez consulter son intégralité, suivez ce lien pour le consulter en ligne : https://kedrihan.fr/charslink.html (il n'est pas mis à jour en temps réel)")
           msg.channel.send(message);
 

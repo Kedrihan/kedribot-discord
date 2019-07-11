@@ -49,36 +49,57 @@ exports.duel = async function (
           let fDuel = [];
           let dLvl = [];
           for (let i = 0; i < chars.length; i++) {
-            let usr = serverMembers.get(chars[i].idDiscord);
-            usernames.push(usr.user.username);
-            winD.push(chars[i].winDuel);
-            loseD.push(chars[i].losDuel);
-            winRR.push(chars[i].winRR);
-            fDuel.push(chars[i].nbFuites);
-            dLvl.push(chars[i].discLevel);
+            if (chars[i].discLevel != 0) {
+              let usr = serverMembers.get(chars[i].idDiscord);
+              usernames.push(usr.user.username);
+              winD.push(chars[i].winDuel);
+              loseD.push(chars[i].losDuel);
+              winRR.push(chars[i].winRR);
+              fDuel.push(chars[i].nbFuites);
+              dLvl.push(chars[i].discLevel);
+            }
           }
           let maxUsrNme = Math.max(...(usernames.map(el => el.length)));
-          let maxWinD = Math.max(winD);
-          let maxLosD = Math.max(loseD);
-          let maxWinRR = Math.max(winRR);
-          let maxDuelF = Math.max(fDuel);
-          let maxDLvl = Math.max(dLvl);
+          let maxWinD = Math.max(winD).toString().length;
+          let maxLosD = Math.max(loseD).toString().length;
+          let maxWinRR = Math.max(winRR).toString().length;
+          let maxDuelF = Math.max(fDuel).toString().length;
+          let maxDLvl = Math.max(dLvl).toString().length;
           let nbrTUsr = func.getDashNumbers(maxUsrNme);
-          let nbrTLvl = func.getDashNumbers(maxDLvl.toString().length);
-          let nbrTRR = func.getDashNumbers(maxWinRR.toString().length);
-          let nbrTW = func.getDashNumbers(maxWinD.toString().length);
-          let nbrTL = func.getDashNumbers(maxLosD.toString().length);
-          let nbrTF = func.getDashNumbers(maxDuelF.toString().length);
+          let nbrTLvl = func.getDashNumbers(maxDLvl);
+          let nbrTRR = func.getDashNumbers(maxWinRR);
+          let nbrTW = func.getDashNumbers(maxWinD);
+          let nbrTL = func.getDashNumbers(maxLosD);
+          let nbrTF = func.getDashNumbers(maxDuelF);
 
           let message = "```";
 
           let titlePs = func.adaptCell(" Pseudo ", maxUsrNme)
-          let titleLvl = func.adaptCell(" Niveau ", maxDLvl.toString().length)
-          let titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR.toString().length)
-          let titleW = func.adaptCell(" Victoires Duel ", maxWinD.toString().length)
-          let titleL = func.adaptCell(" Défaites Duel ", maxLosD.toString().length)
-          let titleF = func.adaptCell(" Fuites Duel ", maxDuelF.toString().length)
-          message = message.concat("\n", "|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+")
+          let titleLvl = func.adaptCell(" Niveau ", maxDLvl)
+          let titleRR = func.adaptCell(" Victoires au RoyalRumble ", maxWinRR)
+          let titleW = func.adaptCell(" Victoires Duel ", maxWinD)
+          let titleL = func.adaptCell(" Défaites Duel ", maxLosD)
+          let titleF = func.adaptCell(" Fuites Duel ", maxDuelF)
+
+          message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
+          if (maxUsrNme < titlePs.length) {
+            maxUsrNme = titlePs.length
+          }
+          if (maxDLvl < titleLvl.length) {
+            maxDLvl = titleLvl.length
+          }
+          if (maxWinRR < titleRR.length) {
+            maxWinRR = titleRR.length
+          }
+          if (maxWinD < titleW.length) {
+            maxWinD = titleW.length
+          }
+          if (maxLosD < titleL.length) {
+            maxLosD = titleL.length
+          }
+          if (maxDuelF < titleF.length) {
+            maxDuelF = titleF.length
+          }
           for (let i = 0; i < chars.length; i++) {
             if (chars[i].discLevel != 0) {
               let usr = serverMembers.get(chars[i].idDiscord);
@@ -87,22 +108,22 @@ exports.duel = async function (
               chmpUsrNme = func.adaptCell(chmpUsrNme, maxUsrNme)
 
               let chmpLvl = " " + chars[i].discLevel + " ";
-              chmpLvl = func.adaptCell(chmpLvl, maxDLvl.toString().length)
+              chmpLvl = func.adaptCell(chmpLvl, maxDLvl)
 
               let chmpWinRR = " " + chars[i].winRR + " ";
-              chmpWinRR = func.adaptCell(chmpWinRR, maxWinRR.toString().length)
+              chmpWinRR = func.adaptCell(chmpWinRR, maxWinRR)
 
               let chmpWinD = " " + chars[i].winDuel + " ";
-              chmpWinD = func.adaptCell(chmpWinD, maxWinD.toString().length)
+              chmpWinD = func.adaptCell(chmpWinD, maxWinD)
 
               let chmpLoseD = " " + chars[i].losDuel + " ";
-              chmpLoseD = func.adaptCell(chmpLoseD, maxLosD.toString().length)
+              chmpLoseD = func.adaptCell(chmpLoseD, maxLosD)
 
               let chmpDuelF = " " + chars[i].nbFuites + " ";
-              chmpDuelF = func.adaptCell(chmpDuelF, maxDuelF.toString().length)
+              chmpDuelF = func.adaptCell(chmpDuelF, maxDuelF)
 
 
-              let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
+              let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+-"
               message = message.concat("\n", ccat);
             }
           }

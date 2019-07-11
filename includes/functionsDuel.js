@@ -348,7 +348,7 @@ E : taille d'une string
 S : string avec des tirets pour formatter le tableau
 */
   getDashNumbers: function (lgth) {
-    let res = "-".repeat(lgth+2);
+    let res = "-".repeat(lgth);
 
     return res;
   },

@@ -380,7 +380,7 @@ S : string pour formatter le tableau
     }
     text = text + "</tbody></table>"
 
-    fs.writeFile(__dirname+'../../../site-perso/public/charslink.html', text, function (err) {
+    fs.writeFile(__dirname+'/../../../site-perso/public/charslink.html', text, function (err) {
       // If an error occurred, show it and return
       if (err) return console.error(err);
       // Successfully wrote to the file!

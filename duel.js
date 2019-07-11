@@ -105,9 +105,10 @@ exports.duel = async function (
               let ccat = "|" + chmpUsrNme + "|" + chmpLvl + "|" + chmpWinRR + "|" + chmpWinD + "|" + chmpLoseD + "|" + chmpDuelF + "|\n+" + nbrTUsr + "+" + nbrTLvl + "+" + nbrTRR + "+" + nbrTW + "+" + nbrTL + "+" + nbrTF + "+"
               message = message.concat("\n", ccat);
             }
-            message = message.concat(" ", "```");
-            msg.channel.send(message);
           }
+          message = message.concat(" ", "```");
+          msg.channel.send(message);
+
         });
         return;
       }

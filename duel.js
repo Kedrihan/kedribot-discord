@@ -82,22 +82,22 @@ exports.duel = async function (
           let titleF = func.adaptCell(" Fuites Duel ", maxDuelF)
 
           message = message.concat("\n", "+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+\n|" + titlePs + "|" + titleLvl + "|" + titleRR + "|" + titleW + "|" + titleL + "|" + titleF + "|\n+-" + nbrTUsr + "-+-" + nbrTLvl + "-+-" + nbrTRR + "-+-" + nbrTW + "-+-" + nbrTL + "-+-" + nbrTF + "-+")
-          if (maxUsrNme < titlePs.length) {
+          if (maxUsrNme < titlePs.length - 2) {
             maxUsrNme = titlePs.length
           }
-          if (maxDLvl < titleLvl.length) {
+          if (maxDLvl < titleLvl.length - 2) {
             maxDLvl = titleLvl.length
           }
-          if (maxWinRR < titleRR.length) {
+          if (maxWinRR < titleRR.length - 2) {
             maxWinRR = titleRR.length
           }
-          if (maxWinD < titleW.length) {
+          if (maxWinD < titleW.length - 2) {
             maxWinD = titleW.length
           }
-          if (maxLosD < titleL.length) {
+          if (maxLosD < titleL.length - 2) {
             maxLosD = titleL.length
           }
-          if (maxDuelF < titleF.length) {
+          if (maxDuelF < titleF.length - 2) {
             maxDuelF = titleF.length
           }
           for (let i = 0; i < chars.length; i++) {

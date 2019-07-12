@@ -249,10 +249,10 @@ exports.duel = async function (
                     } else {
                       percentWinAuthor -= diffIlvl;
                     }
-                    if(authorChar.winnerRR) {
+                    if (authorChar.winnerRR) {
                       percentWinAuthor += 5
                     }
-                    if(opponentChar.winnerRR) {
+                    if (opponentChar.winnerRR) {
                       percentWinAuthor -= 5
                     }
                     let flee = Math.floor(Math.random() * Math.floor(100));
@@ -368,39 +368,66 @@ exports.duel = async function (
                     }
                     if (winBool != null) {
                       let xp = 0
+                      let xpTarget = 0
                       if (winBool && authorChar.discLevel <= opponentChar.discLevel) {
                         xp = 10
+                        xpTarget = -2
                       }
                       else if (winBool && authorChar.discLevel > opponentChar.discLevel) {
                         xp = 5
+                        xpTarget = -1
                       }
                       else if (!winBool && authorChar.discLevel <= opponentChar.discLevel) {
-                        xp = 3
+                        xp = -1
+                        xpTarget = 5
                       }
                       else if (!winBool && authorChar.discLevel > opponentChar.discLevel) {
                         xp = -2
+                        xpTarget = 10
                       }
-
-                      if (authorChar.xp + xp < (100 * (authorChar.discLevel + 1))) {
-
+                      let usr = serverMembers.get(opponentChar.idDiscord)
+                      if (authorChar.xp + xp < (100 * (authorChar.discLevel + 1)) && opponentChar.xp + xpTarget < (100 * (opponentChar.discLevel + 1))) {
+                        
+                        
                         func.manageXp(authorChar.idDiscord, xp);
-                        if (xp != -2) {
-                          setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience !") }, 1000);
+                        func.manageXp(opponentChar.idDiscord, xpTarget);
+                        if (xp > 0) {
+                          setTimeout(function () { msg.channel.send(msg.author.username + " a obtenu " + xp + " points d'expérience !") }, 500);
                         }
                         else {
-                          setTimeout(function () { msg.channel.send(msg.author.toString() + " a perdu 2 points d'expérience ! CHEH !") }, 1000);
+                          setTimeout(function () { msg.channel.send(msg.author.username + " a perdu "+Math.abs(xp)+" point(s) d'expérience ! CHEH !") }, 500);
+                        }
+
+                        if (xpTarget > 0) {
+                          setTimeout(function () { msg.channel.send(usr.user.username + " a obtenu " + xpTarget + " points d'expérience !") }, 500);
+                        }
+                        else {
+                          setTimeout(function () { msg.channel.send(usr.user.username + " a perdu "+Math.abs(xpTarget)+" point(s) d'expérience ! CHEH !") }, 500);
                         }
 
                       }
                       else {
-                        func.levelUp(authorChar, (res) => {
-                          if (res) {
-                            func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (authorChar.discLevel + 1)));
-                            let newLvl = authorChar.discLevel + 1;
-                            
-                            setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!") }, 1000);
-                          }
-                        });
+                        if (authorChar.xp + xp >= (100 * (authorChar.discLevel + 1))) {
+                          func.levelUp(authorChar, (res) => {
+                            if (res) {
+                              func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (authorChar.discLevel + 1)));
+                              let newLvl = authorChar.discLevel + 1;
+
+                              setTimeout(function () { msg.channel.send(msg.author.username + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!") }, 500);
+                            }
+                          });
+                        }
+
+                        if (opponentChar.xp + xpTarget >= (100 * (opponentChar.discLevel + 1))) {
+                          func.levelUp(opponentChar, (res) => {
+                            if (res) {
+                              func.manageXp(opponentChar.idDiscord, opponentChar.xp + xpTarget - (100 * (opponentChar.discLevel + 1)));
+                              let newLvl = opponentChar.discLevel + 1;
+                              setTimeout(function () { msg.channel.send(usr.user.username + " a obtenu " + xpTarget + " points d'expérience et est passé level " + newLvl + "!") }, 500);
+                            }
+                          });
+                        }
+
 
                       }
 

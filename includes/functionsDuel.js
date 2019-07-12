@@ -335,7 +335,7 @@ S : vide
   setRRWinner: function (idNew, idOld) {
 
     let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
-    connection.query(sql, [idOld], (err, res) => {
+    connection.query(sql, [idNew], (err, res) => {
       if (err) console.log(err);
       if (typeof res[0] != 'undefined') {
         sql = "UPDATE linkedChar SET rumbleChamp=?, winRR=? WHERE idDiscord=?";

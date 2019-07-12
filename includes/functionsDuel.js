@@ -334,17 +334,22 @@ S : vide
 */
   setRRWinner: function (idNew, idOld) {
 
-    this.getWinner((winner) => {
-      let sql = "UPDATE linkedChar SET rumbleChamp=?, winRR=? WHERE idDiscord=?";
-      connection.query(sql, [true, winner.winRR + 1, idNew], (err) => {
-        if (err) console.log(err);
-        sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
-        connection.query(sql, [false, idOld], (err) => {
+    let sql = "SELECT * FROM linkedChar WHERE idDiscord=?";
+    connection.query(sql, [idOld], (err, res) => {
+      if (err) console.log(err);
+      if (typeof res[0] != 'undefined') {
+        sql = "UPDATE linkedChar SET rumbleChamp=?, winRR=? WHERE idDiscord=?";
+        connection.query(sql, [true, res[0].winRR + 1, idNew], (err) => {
           if (err) console.log(err);
+          sql = "UPDATE linkedChar SET rumbleChamp=? WHERE idDiscord=?";
+          connection.query(sql, [false, idOld], (err) => {
+            if (err) console.log(err);
 
+          });
         });
-      });
-    })
+      }
+    });
+
 
 
   },

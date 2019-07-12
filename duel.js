@@ -397,7 +397,8 @@ exports.duel = async function (
                           if (res) {
                             func.manageXp(authorChar.idDiscord, authorChar.xp + xp - (100 * (authorChar.discLevel + 1)));
                             let newLvl = authorChar.discLevel + 1;
-                            msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!")
+                            
+                            setTimeout(function () { msg.channel.send(msg.author.toString() + " a obtenu " + xp + " points d'expérience et est passé level " + newLvl + "!") }, 1000);
                           }
                         });
 

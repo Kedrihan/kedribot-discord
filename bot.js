@@ -71,6 +71,11 @@ client.on('message', msg => {
         msg.channel.send("Arrête de me tag stp "+FeelsBaguetteMan)
         return;
     }
+    if(msg.channel.name === "emote-only") {
+        if(!msg.content.toString().match(/<(?:[^\d>]+|:[A-Za-z0-9]+:)\w+>/g)) {
+            msg.delete();
+        }
+    }
     //CD
     for (const cmd of commandsList) {
         if (msg.content.indexOf(commandPrefix + cmd) > -1) {

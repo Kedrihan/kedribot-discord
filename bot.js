@@ -72,7 +72,8 @@ client.on('message', msg => {
         return;
     }
     if(msg.channel.name === "emote-only") {
-        if(!msg.content.toString().match(/<(?:[^\d>]+|:[A-Za-z0-9]+:)\w+>/g)) {
+        const text = msg.content.topString().replace(/:[^:\s]+:|<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g, '').replace(/\s+/g, '');
+        if(text) {
             msg.delete();
         }
     }

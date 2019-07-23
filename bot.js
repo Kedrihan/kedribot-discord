@@ -56,53 +56,54 @@ client.on('message', msg => {
 
 
     mp.mp(msg, client.guilds.get("293502765362315264"));
-
-    let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
-    let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");
-    let cmonBruh = msg.guild.emojis.find(emoji => emoji.name === "cmonBruh");
-    let FeelsBaguetteMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsBaguetteMan");
-    let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
-    let Wowee = msg.guild.emojis.find(emoji => emoji.name === "Wowee");
-    let Pog = msg.guild.emojis.find(emoji => emoji.name === "Pog");
-    let MonkaMega = msg.guild.emojis.find(emoji => emoji.name === "MonkaMega");
-    let BibleThumb = msg.guild.emojis.find(emoji => emoji.name === "BibleThumb");
-    let FeelsCoolMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsCoolMan");
-    let issou = msg.guild.emojis.find(emoji => emoji.name === "issou");
-    let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
-    let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
-    let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
-    if(msg.content.includes("534293066731880458") && !msg.content.includes(commandPrefix+"duel")) {
-        msg.channel.send("Arrête de me tag stp "+FeelsBaguetteMan)
-        return;
-    }
-    if(msg.channel.name === "emote-only") {
-        const text = msg.content.toString().replace(/:[^:\s]+:|<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g, '').replace(/\s+/g, '');
-        if(text) {
-            msg.delete();
+    if (msg.guild !== null) {
+        let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
+        let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");
+        let cmonBruh = msg.guild.emojis.find(emoji => emoji.name === "cmonBruh");
+        let FeelsBaguetteMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsBaguetteMan");
+        let Horde = msg.guild.emojis.find(emoji => emoji.name === "Horde");
+        let Wowee = msg.guild.emojis.find(emoji => emoji.name === "Wowee");
+        let Pog = msg.guild.emojis.find(emoji => emoji.name === "Pog");
+        let MonkaMega = msg.guild.emojis.find(emoji => emoji.name === "MonkaMega");
+        let BibleThumb = msg.guild.emojis.find(emoji => emoji.name === "BibleThumb");
+        let FeelsCoolMan = msg.guild.emojis.find(emoji => emoji.name === "FeelsCoolMan");
+        let issou = msg.guild.emojis.find(emoji => emoji.name === "issou");
+        let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
+        let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
+        let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
+        if (msg.content.includes("534293066731880458") && !msg.content.includes(commandPrefix + "duel")) {
+            msg.channel.send("Arrête de me tag stp " + FeelsBaguetteMan)
+            return;
         }
-    }
-    //CD
-    for (const cmd of commandsList) {
-        if (msg.content.indexOf(commandPrefix + cmd) > -1) {
-            if (cmd != "royalrumble") {
-                if (CooldownManager.canUse(msg.content.split(' ')[0])) {
-                    CooldownManager.touch(msg.content.split(' ')[0]);
-                }
-                else {
-                    return;
+        if (msg.channel.name === "emote-only") {
+            const text = msg.content.toString().replace(/:[^:\s]+:|<:[^:\s]+:[0-9]+>|<a:[^:\s]+:[0-9]+>/g, '').replace(/\s+/g, '');
+            if (text) {
+                msg.delete();
+            }
+        }
+        //CD
+        for (const cmd of commandsList) {
+            if (msg.content.indexOf(commandPrefix + cmd) > -1) {
+                if (cmd != "royalrumble") {
+                    if (CooldownManager.canUse(msg.content.split(' ')[0])) {
+                        CooldownManager.touch(msg.content.split(' ')[0]);
+                    }
+                    else {
+                        return;
+                    }
                 }
             }
         }
-    }
 
-    if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
-        msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
+        if (msg.content === commandPrefix + "alcool" || msg.content === commandPrefix + "jusdepomme") {
+            msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
+        }
+        if (msg.content === commandPrefix + "commu") {
+            msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
+        }
+        pendu.pendu(msg, emojis, commandPrefix, client);
+        duel.duel(msg, emojis, commandPrefix, msg.guild.members, commandsList, CooldownManager);
     }
-    if (msg.content === commandPrefix + "commu") {
-        msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
-    }
-    pendu.pendu(msg, emojis, commandPrefix, client);
-    duel.duel(msg, emojis, commandPrefix, msg.guild.members, commandsList, CooldownManager);
 });
 
 client.login(AuthDetails.token).catch((err) => {

@@ -9,7 +9,7 @@ exports.mp = async function (message, cruellaServerMembers) {
     }
     if(message.guild === null && !message.author.username === "Kedrihan") {
 
-        message.channel.send("Ton message va être transférer à Kedrihan :)");
+        message.channel.send("Ton message va être transféré à Kedrihan :)");
 
         message.channel.recipient = cruellaServerMembers.get("116893981526196227");
 

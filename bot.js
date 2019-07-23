@@ -55,7 +55,7 @@ client.on('message', msg => {
     }
 
 
-    mp.mp(msg, client.guilds.get("293502765362315264"));
+    mp.mp(msg, client.guilds.get("293502765362315264").members);
     if (msg.guild !== null) {
         let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
         let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");

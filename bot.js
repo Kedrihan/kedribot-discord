@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 let pendu = require("./pendu.js");
 let duel = require("./duel.js");
+let mp = require("./mp.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
 let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "charslink"]
@@ -52,6 +53,9 @@ client.on('message', msg => {
     if (msg.author.username === "KedriBot") {
         return;
     }
+
+
+    mp.mp(msg, client.guilds.get("293502765362315264"));
 
     let VoHiYo = msg.guild.emojis.find(emoji => emoji.name === "VoHiYo");
     let POGGERS = msg.guild.emojis.find(emoji => emoji.name === "POGGERS");

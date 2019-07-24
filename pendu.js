@@ -54,7 +54,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
         messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
         let embed = {
-          "title": "> `" + messageTabFaireDeviner + "` <",
+          "title": "`> " + messageTabFaireDeviner + <"`",
           "description": func.affPendu(erreurs),
           "color": 2719929,
           "fields": [
@@ -86,7 +86,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
       if (alphabet.includes(lettreDemandee.toLowerCase())) {
         let messageDejaDemandee = "``La lettre " + lettreDemandee.toUpperCase() + " a déjà été demandée``";
         embed = {
-          "title": "> `" + messageTabFaireDeviner + "` <",
+          "title": "`> " + messageTabFaireDeviner + " <`",
           "description": func.affPendu(erreurs),
           "color": 2719929,
           "fields": [
@@ -117,7 +117,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
           let messageErreur = "``La lettre " + lettreDemandee.toUpperCase() + " n'est pas présente.``";
           alphabet.push(lettreDemandee);
           embed = {
-            "title": "> `" + messageTabFaireDeviner + "` <",
+            "title": "`> " + messageTabFaireDeviner + " <`",
             "description": func.affPendu(erreurs),
             "color": 2719929,
             "fields": [
@@ -192,7 +192,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
           func.winLetter(msg.author);
           alphabet.push(lettreDemandee);
           embed = {
-            "title": "> `" + messageTabFaireDeviner + "` <",
+            "title": "`> " + messageTabFaireDeviner + " <`",
             "description": func.affPendu(erreurs),
             "color": 2719929,
             "fields": [
@@ -273,7 +273,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
         if (erreurs < 10) {
           let messageErreur = "``" + msg.content.split(' ')[1].toUpperCase() + " n'est pas le bon mot.``";
           embed = {
-            "title": "> `" + messageTabFaireDeviner + "` <",
+            "title": "`> " + messageTabFaireDeviner + " <`",
             "description": func.affPendu(erreurs),
             "color": 2719929,
             "fields": [

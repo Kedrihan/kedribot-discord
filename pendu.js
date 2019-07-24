@@ -54,7 +54,7 @@ exports.pendu = function (msg, emojis, commandPrefix, client) {
 
         messageTabFaireDeviner = tirets.toString().replace(new RegExp(",", "g"), ' ');
         let embed = {
-          "title": "`> " + messageTabFaireDeviner + <"`",
+          "title": "`> " + messageTabFaireDeviner + " <`",
           "description": func.affPendu(erreurs),
           "color": 2719929,
           "fields": [

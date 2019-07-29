@@ -1,5 +1,5 @@
 var exports = (module.exports = {});
-let connection = require("./dbHandler.js");
+let connection = require("./includes/dbHandler.js");
 
 exports.mp = function (message, cruellaServerMembers) {
     if (message.guild === null && message.author.username === "Kedrihan") {

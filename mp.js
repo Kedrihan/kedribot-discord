@@ -10,7 +10,7 @@ exports.mp = function (message, cruellaServerMembers) {
                     userToSend = cruellaServerMembers.get(id.id);
                     userToSend.send("_Transmission entrante de la part de Kedrihan_ \n" + message)
                     .then(msg => {
-                        message.channel.send("Message envoyé à "+userToSend.username);
+                        message.channel.send("Message envoyé à "+userToSend.user.username);
                     });
                 });
             }

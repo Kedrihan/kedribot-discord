@@ -400,7 +400,7 @@ S : string pour formatter le tableau
     let text = "<html><head><title>Salut</title><meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/></head><body><table><thead><tr><th>Pseudo</th><th>Niveau</th><th>Victoires au RoyalRumble</th><th>Victoires Duel</th><th>Défaites Duel</th><th>Fuites Duel</th></tr></thead><tbody>";
     for (let i = 0; i < chars.length; i++) {
       let usr = serverMembers.get(chars[i].idDiscord);
-      if(usr !== null) {
+      if(typeof usr !== 'undefined') {
         text = text + "<tr><td>" + usr.user.username + "</td><td>" + chars[i].discLevel + "</td><td>" + chars[i].winRR + "</td><td>" + chars[i].winDuel + "</td><td>" + chars[i].losDuel + "</td><td>" + chars[i].nbFuites + "</td></tr>"
       }
       else {

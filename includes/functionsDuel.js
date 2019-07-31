@@ -400,9 +400,12 @@ S : string pour formatter le tableau
     let text = "<html><head><title>Salut</title><meta http-equiv=\"Content-type\" content=\"text/html; charset=utf-8\"/></head><body><table><thead><tr><th>Pseudo</th><th>Niveau</th><th>Victoires au RoyalRumble</th><th>Victoires Duel</th><th>Défaites Duel</th><th>Fuites Duel</th></tr></thead><tbody>";
     for (let i = 0; i < chars.length; i++) {
       let usr = serverMembers.get(chars[i].idDiscord);
-
-      text = text + "<tr><td>" + usr.user.username + "</td><td>" + chars[i].discLevel + "</td><td>" + chars[i].winRR + "</td><td>" + chars[i].winDuel + "</td><td>" + chars[i].losDuel + "</td><td>" + chars[i].nbFuites + "</td></tr>"
-
+      if(usr !== null) {
+        text = text + "<tr><td>" + usr.user.username + "</td><td>" + chars[i].discLevel + "</td><td>" + chars[i].winRR + "</td><td>" + chars[i].winDuel + "</td><td>" + chars[i].losDuel + "</td><td>" + chars[i].nbFuites + "</td></tr>"
+      }
+      else {
+        this.removeUser(chars[i].idDiscord);
+      }
     }
     text = text + "<style type=\"text/css\">table{border-collapse:collapse; width: 90%;} th,td {border:1px solid black;}</style></tbody></table></body></html>"
 
@@ -410,6 +413,12 @@ S : string pour formatter le tableau
       // If an error occurred, show it and return
       if (err) return console.error(err);
       // Successfully wrote to the file!
+    });
+  },
+  removeUser: function (id) {
+    let sql = "DELETE FROM linkedChar WHERE idDiscord=?";
+    connection.query(sql, [id], (err, res) => {
+      if (err) console.log(err);
     });
   },
 };

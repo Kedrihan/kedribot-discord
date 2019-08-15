@@ -152,7 +152,7 @@ exports.duel = async function (
       }
     }
     if (msg.channel.name === "duel") {
-      if (msg.content === commandPrefix + "royalrumble") {
+      if (false) { //if (msg.content === commandPrefix + "royalrumble") {
 
         //Manage 24hours CD for RoyalRumble
         if (CooldownManager.canUseRR(commandPrefix + "royalrumble")) {

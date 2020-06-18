@@ -6,7 +6,7 @@ let duel = require("./duel.js");
 let mp = require("./mp.js");
 // Get authentication data
 let AuthDetails = require("./includes/auth.json");
-let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "charslink"]
+let commandsList = ["pendu", "devine", "duel", "link", "alcool", "jusdepomme", "commu", "unlink", "royalrumble", "profile", "charslink", "repos"]
 
 
 const commandPrefix = '!';
@@ -26,6 +26,7 @@ var CooldownManager = {
         '!royalrumble': 1543848572,
         '!profile': 1543848572,
         '!charslink': 1543848572,
+        '!repos': 1543848572,
     },
 
     canUse: function (commandName) {
@@ -70,7 +71,8 @@ client.on('message', msg => {
         let issou = msg.guild.emojis.find(emoji => emoji.name === "issou");
         let PagChomp = msg.guild.emojis.find(emoji => emoji.name === "PagChomp");
         let sad = msg.guild.emojis.find(emoji => emoji.name === "sad");
-        let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad];
+        let babyRage = msg.guild.emojis.find(emoji => emoji.name === "Babyrage");
+        let emojis = [VoHiYo, POGGERS, cmonBruh, FeelsBaguetteMan, Horde, Wowee, Pog, MonkaMega, BibleThumb, FeelsCoolMan, issou, PagChomp, sad, babyRage];
         if (msg.content.includes("534293066731880458") && !msg.content.includes(commandPrefix + "duel")) {
             msg.channel.send("Arrête de me tag stp " + FeelsBaguetteMan)
             return;
@@ -100,6 +102,9 @@ client.on('message', msg => {
         }
         if (msg.content === commandPrefix + "commu") {
             msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
+        }
+        if (msg.content === commandPrefix + "repos") {
+            msg.channel.send("Prends ta journée ! " + emojis[12]);
         }
         pendu.pendu(msg, emojis, commandPrefix, client);
         duel.duel(msg, emojis, commandPrefix, msg.guild.members, commandsList, CooldownManager);

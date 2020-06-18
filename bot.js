@@ -104,7 +104,7 @@ client.on('message', msg => {
             msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
         }
         if (msg.content === commandPrefix + "repos") {
-            msg.channel.send("Prends ta journée ! " + emojis[12]);
+            msg.channel.send("Prends ta journée ! " + emojis[13]);
         }
         pendu.pendu(msg, emojis, commandPrefix, client);
         duel.duel(msg, emojis, commandPrefix, msg.guild.members, commandsList, CooldownManager);

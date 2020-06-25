@@ -34,7 +34,7 @@ var CooldownManager = {
         // (because the value is less then the current time)
         return this.store[commandName] + this.cooldownTime < Date.now();
     },
-    canUseRR: function (commandName) {
+    canUseRepos: function (commandName) {
         // Check if the last time you've used the command + 24h for RoyalRumble
         // (because the value is less then the current time)
         return this.store[commandName] + 86400000 < Date.now();
@@ -86,8 +86,16 @@ client.on('message', msg => {
         //CD
         for (const cmd of commandsList) {
             if (msg.content.indexOf(commandPrefix + cmd) > -1) {
-                if (cmd != "royalrumble") {
+                if (cmd != "royalrumble" && cmd != "repos") {
                     if (CooldownManager.canUse(msg.content.split(' ')[0])) {
+                        CooldownManager.touch(msg.content.split(' ')[0]);
+                    }
+                    else {
+                        return;
+                    }
+                }
+                if(cmd == "repos") {
+                    if (CooldownManager.canUseRepos(msg.content.split(' ')[0])) {
                         CooldownManager.touch(msg.content.split(' ')[0]);
                     }
                     else {
@@ -101,7 +109,7 @@ client.on('message', msg => {
             msg.channel.send(emojis[0] + " <http://www.alcool-info-service.fr/> ");
         }
         if (msg.content === commandPrefix + "commu") {
-            msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4]);
+            msg.channel.send(emojis[0] + " <https://worldofwarcraft.com/fr-fr/invite/r9mGL2HbXZ?region=EU&faction=Horde> " + emojis[4] + " et la sous faction : <https://www.worldofwarcraft.com/invite/ewoZ4JSPLk?region=EU&faction=Alliance>"+ emojis[10]);
         }
         if (msg.content === commandPrefix + "repos") {
             msg.channel.send("Prends ta journée ! " + emojis[13]);

@@ -11,7 +11,11 @@ exports.duel = async function (
   CooldownManager
 ) {
   try {
-
+    if (msg.channel.name === "botcommands") {
+      if(msg.content === "vazerty") {
+         msg.channel.send("$lang fr")
+      }
+    }
     if (msg.channel.name === "botcommands") {
       if (
         msg.content.split(" ")[0] === commandPrefix + "link" &&

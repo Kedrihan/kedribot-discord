@@ -44,9 +44,6 @@ var CooldownManager = {
         this.store[commandName] = Date.now();
     }
 };
-client.on('guildMemberAdd', member => {
-    member.addRole("308398054023626752").catch(console.error);
-});
 client.on('guildMemberRemove', member => {
     pendu.removeUserRanking(member);
 });
